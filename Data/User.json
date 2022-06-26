@@ -1,0 +1,16 @@
+{
+    "users": [
+        {
+            "fullname": "John Doe",
+            "birthday": "01/01/1970",
+            "username": "jdoe",
+            "password": "jdoe",
+            "credit_card": "123456789",
+            "cvv": "123",
+            "expiration_date": "01/01/2020",
+            "bill": [
+                "B_[Hotel_id]_[number_of_bills]"
+            ]
+        }
+    ]
+}

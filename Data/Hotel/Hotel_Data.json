@@ -1,0 +1,29 @@
+{
+    "count_hotel": "1",
+    "hotel": [
+        {
+            "hotel_id": "H1",
+            "hotel_name": "Hotel 1",
+            "hotel_address": "Address 1",
+            "number_available_rooms": "10",
+            "room": [
+                {
+                    "room_id": "H1_301S",
+                    "available": "true",
+                    "room_type": "Single",
+                    "price": "100",
+                    "user_book": "jdoe",
+                    "date_check_in": "01/01/2019",
+                    "date_check_out": "01/01/2019",
+                    "decription": "Description 1",
+                    "image": [
+                        {
+                            "image_id": "H1_301S_1",
+                            "image_path": "image1.jpg"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
