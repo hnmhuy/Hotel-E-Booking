@@ -1,27 +1,33 @@
 {
-    "count_hotel": "1",
+    "number_of_hotel": 1,
     "hotel": [
         {
-            "hotel_id": "H1",
-            "hotel_name": "Hotel 1",
-            "hotel_address": "Address 1",
-            "number_available_rooms": "10",
+            "hotel_id": "H0",
+            "hotel_name": "1",
+            "hotel_address": "1",
+            "number_available_room": "2",
             "room": [
                 {
-                    "room_id": "H1_301S",
-                    "available": "true",
+                    "room_id": "H0_0S",
                     "room_type": "Single",
-                    "price": "100",
-                    "user_book": "jdoe",
-                    "date_check_in": "01/01/2019",
-                    "date_check_out": "01/01/2019",
-                    "decription": "Description 1",
-                    "image": [
-                        {
-                            "image_id": "H1_301S_1",
-                            "image_path": "image1.jpg"
-                        }
-                    ]
+                    "room_price": 23453,
+                    "room_availability": true,
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
+                    "description": "Single",
+                    "image_path": null
+                },
+                {
+                    "room_id": "H0_12",
+                    "room_type": "23456234",
+                    "room_price": 2345,
+                    "room_availability": true,
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
+                    "description": "Beautiful",
+                    "image_path": null
                 }
             ]
         }
