@@ -1,5 +1,4 @@
 import json
-from tkinter.messagebox import NO
 import user
 import hotel
 import bill
@@ -13,7 +12,8 @@ def read_hotel_data(file_path):
         return json_object
 
 
-def get_hotel_info(list_hotel, number_of_hotel):
+def get_hotel_info(list_hotel):
+    number_of_hotel = 0
     request = 'y'
     while request == 'y' or request == 'Y':
         name = input("Enter hotel name: ")
@@ -37,6 +37,7 @@ def get_hotel_info(list_hotel, number_of_hotel):
         number_of_hotel += 1
         list_hotel.append(temp_hotel)
         request = input("Do you want to add more hotel? (y/n) ")
+    return number_of_hotel
 
 
 def convert_class_hotel_to_json(list_of_hotel, number_of_hotel):
@@ -88,18 +89,28 @@ def convert_json_to_class_hotel(json_object):
 
 def print_all_hotel(list_hotel):
     for hotel in list_hotel:
-        print(hotel.hotel_id, hotel.hotel_name, hotel.hotel_address,
-              hotel.number_available_room)
+        print("Hotel ID: " + hotel.hotel_id)
+        print("Hotel name: " + hotel.hotel_name)
+        print("Hotel address: " + hotel.hotel_address)
+        print("Number of available room: " + str(hotel.number_available_room))
+        print("List room: ")
         for room in hotel.list_room:
-            print(room.room_id, room.room_type,
-                  room.room_price, room.room_availability)
+            print("Room ID: " + room.room_id)
+            print("Room type: " + room.room_type)
+            print("Room price: " + str(room.room_price))
+            print("Room availability: " + str(room.room_availability))
+            print("User book: " + str(room.user_book))
+            print("Date check in: " + str(room.date_check_in))
+            print("Date check out: " + str(room.date_check_out))
+            print("Description: " + room.description)
+            if room.image_path is not None:
+                for i in range(len(room.image_path)):
+                    print("Image path: " + room.image_path[i])
+            print("\n")
 
 
-def main():
-    list_of_hotel = []
-    number_of_hotel = 0
-    # Create Data Hotel
-
-
-if __name__ == "__main__":
-    main()
+def save_hotel_data(file_path, list_hotel, number_of_hotel):
+    json_object = convert_class_hotel_to_json(list_hotel, number_of_hotel)
+    with open(file_path, "w") as json_file:
+        json_file.write(json_object)
+    json_file.close()

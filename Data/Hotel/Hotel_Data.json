@@ -1,33 +1,242 @@
 {
-    "number_of_hotel": 1,
+    "number_of_hotel": 3,
     "hotel": [
         {
             "hotel_id": "H0",
-            "hotel_name": "1",
-            "hotel_address": "1",
-            "number_available_room": "2",
+            "hotel_name": "Vinpearl Luxury Landmark 81",
+            "hotel_address": "720A, Dien Bien Phu Street Ward 22, Binh Thanh District, Ho Chi Minh",
+            "number_available_room": "4",
             "room": [
                 {
-                    "room_id": "H0_0S",
-                    "room_type": "Single",
-                    "room_price": 23453,
+                    "room_id": "H0_0D",
+                    "room_type": "Double",
+                    "room_price": 5750000,
                     "room_availability": true,
                     "user_book": null,
                     "date_check_in": null,
                     "date_check_out": null,
-                    "description": "Single",
-                    "image_path": null
+                    "description": "City View",
+                    "image_path": [
+                        "H0_0D0",
+                        "H0_Bath"
+                    ]
                 },
                 {
-                    "room_id": "H0_12",
-                    "room_type": "23456234",
-                    "room_price": 2345,
+                    "room_id": "H0_1D",
+                    "room_type": "Double",
+                    "room_price": 5750000,
                     "room_availability": true,
                     "user_book": null,
                     "date_check_in": null,
                     "date_check_out": null,
-                    "description": "Beautiful",
-                    "image_path": null
+                    "description": "City View",
+                    "image_path": [
+                        "H0_1D0",
+                        "H0_Bath"
+                    ]
+                },
+                {
+                    "room_id": "H0_2F",
+                    "room_type": "Family",
+                    "room_price": 7000000,
+                    "room_availability": true,
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
+                    "description": "City View",
+                    "image_path": [
+                        "H0_3F0",
+                        "H0_2F1",
+                        "H0_Bath"
+                    ]
+                },
+                {
+                    "room_id": "H0_3F",
+                    "room_type": "Family",
+                    "room_price": 7000000,
+                    "room_availability": true,
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
+                    "description": "City View",
+                    "image_path": [
+                        "H0_3F0",
+                        "H0_3F1",
+                        "H0_Bath"
+                    ]
+                }
+            ]
+        },
+        {
+            "hotel_id": "H1",
+            "hotel_name": "Caravelle Saigon",
+            "hotel_address": "19-23, Lam Son, District 1, Ho Chi Minh",
+            "number_available_room": "6",
+            "room": [
+                {
+                    "room_id": "H1_0S",
+                    "room_type": "Single",
+                    "room_price": 2800000,
+                    "room_availability": true,
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
+                    "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
+                    "image_path": [
+                        "H1_0S0",
+                        "H0_Bath"
+                    ]
+                },
+                {
+                    "room_id": "H1_1S",
+                    "room_type": "Single",
+                    "room_price": 2800000,
+                    "room_availability": true,
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
+                    "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
+                    "image_path": [
+                        "H1_1S0",
+                        "H0_Bath"
+                    ]
+                },
+                {
+                    "room_id": "H1_2S",
+                    "room_type": "Single",
+                    "room_price": 2800000,
+                    "room_availability": true,
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
+                    "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
+                    "image_path": [
+                        "H1_2S0",
+                        "H0_Bath"
+                    ]
+                },
+                {
+                    "room_id": "H1_3D",
+                    "room_type": "Double",
+                    "room_price": 3200000,
+                    "room_availability": true,
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
+                    "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
+                    "image_path": [
+                        "H1_4D0",
+                        "H0_Bath"
+                    ]
+                },
+                {
+                    "room_id": "H1_4D",
+                    "room_type": "Double",
+                    "room_price": 3200000,
+                    "room_availability": true,
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
+                    "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
+                    "image_path": [
+                        "H1_4D0",
+                        "H0_Bath"
+                    ]
+                },
+                {
+                    "room_id": "H1_5F",
+                    "room_type": "Family",
+                    "room_price": 4000000,
+                    "room_availability": true,
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
+                    "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
+                    "image_path": [
+                        "H1_5F0",
+                        "H1_5F1",
+                        "H0_Bath"
+                    ]
+                }
+            ]
+        },
+        {
+            "hotel_id": "H2",
+            "hotel_name": "Hotel Nikko Saigon",
+            "hotel_address": "235, Nguyen Van Cu Street, Ho Chi Minh",
+            "number_available_room": "5",
+            "room": [
+                {
+                    "room_id": "H2_0S",
+                    "room_type": "Single",
+                    "room_price": 2200000,
+                    "room_availability": true,
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
+                    "description": "* Known for its High reputation in Staff Excellence. \n* Just 25 minutes by car from Tan Son Nhat International Airport.  \n* Peaceful location away from the hustle and bustle of the city. \n* Best Buffet Breakfast serving the widest selection of breakfast food items. \n* Most talked about La Brasserie Seafood Dinner Buffet offering unlimited huge lobsters, crabs and oysters. \n* Stunningly Nikko Garden for outdoor social events accommodating 1,200 guests. \n* Breathtaking Nikko Club Lounge at the 23rd floor providing spectacular view of the city. \n* Complimentary daily drop off shuttle service to city center main tourist's landmarks. \nEXQUISITE SERVICE: EPIC FOOD GOURMET * UNITERRUPTED RELAXATION",
+                    "image_path": [
+                        "H2_0S0",
+                        "H0_Bath"
+                    ]
+                },
+                {
+                    "room_id": "H2_1S",
+                    "room_type": "Single",
+                    "room_price": 2200000,
+                    "room_availability": true,
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
+                    "description": "* Known for its High reputation in Staff Excellence. \n* Just 25 minutes by car from Tan Son Nhat International Airport.  \n* Peaceful location away from the hustle and bustle of the city. \n* Best Buffet Breakfast serving the widest selection of breakfast food items. \n* Most talked about La Brasserie Seafood Dinner Buffet offering unlimited huge lobsters, crabs and oysters. \n* Stunningly Nikko Garden for outdoor social events accommodating 1,200 guests. \n* Breathtaking Nikko Club Lounge at the 23rd floor providing spectacular view of the city. \n* Complimentary daily drop off shuttle service to city center main tourist's landmarks. \nEXQUISITE SERVICE: EPIC FOOD GOURMET * UNITERRUPTED RELAXATION",
+                    "image_path": [
+                        "H2_0S0",
+                        "H0_Bath"
+                    ]
+                },
+                {
+                    "room_id": "H2_2F",
+                    "room_type": "Family",
+                    "room_price": 5000000,
+                    "room_availability": true,
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
+                    "description": "* Known for its High reputation in Staff Excellence. \n* Just 25 minutes by car from Tan Son Nhat International Airport.  \n* Peaceful location away from the hustle and bustle of the city. \n* Best Buffet Breakfast serving the widest selection of breakfast food items. \n* Most talked about La Brasserie Seafood Dinner Buffet offering unlimited huge lobsters, crabs and oysters. \n* Stunningly Nikko Garden for outdoor social events accommodating 1,200 guests. \n* Breathtaking Nikko Club Lounge at the 23rd floor providing spectacular view of the city. \n* Complimentary daily drop off shuttle service to city center main tourist's landmarks. \nEXQUISITE SERVICE: EPIC FOOD GOURMET * UNITERRUPTED RELAXATION",
+                    "image_path": [
+                        "H2_2F0",
+                        "H2_2F1",
+                        "H0_Bath"
+                    ]
+                },
+                {
+                    "room_id": "H2_3D",
+                    "room_type": "Double",
+                    "room_price": 4000000,
+                    "room_availability": true,
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
+                    "description": "* Known for its High reputation in Staff Excellence. \n* Just 25 minutes by car from Tan Son Nhat International Airport.  \n* Peaceful location away from the hustle and bustle of the city. \n* Best Buffet Breakfast serving the widest selection of breakfast food items. \n* Most talked about La Brasserie Seafood Dinner Buffet offering unlimited huge lobsters, crabs and oysters. \n* Stunningly Nikko Garden for outdoor social events accommodating 1,200 guests. \n* Breathtaking Nikko Club Lounge at the 23rd floor providing spectacular view of the city. \n* Complimentary daily drop off shuttle service to city center main tourist's landmarks. \nEXQUISITE SERVICE: EPIC FOOD GOURMET * UNITERRUPTED RELAXATION",
+                    "image_path": [
+                        "H2_3D0",
+                        "H0_Bath"
+                    ]
+                },
+                {
+                    "room_id": "H2_4D",
+                    "room_type": "Double",
+                    "room_price": 4000000,
+                    "room_availability": true,
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
+                    "description": "* Known for its High reputation in Staff Excellence. \n* Just 25 minutes by car from Tan Son Nhat International Airport.  \n* Peaceful location away from the hustle and bustle of the city. \n* Best Buffet Breakfast serving the widest selection of breakfast food items. \n* Most talked about La Brasserie Seafood Dinner Buffet offering unlimited huge lobsters, crabs and oysters. \n* Stunningly Nikko Garden for outdoor social events accommodating 1,200 guests. \n* Breathtaking Nikko Club Lounge at the 23rd floor providing spectacular view of the city. \n* Complimentary daily drop off shuttle service to city center main tourist's landmarks. \nEXQUISITE SERVICE: EPIC FOOD GOURMET * UNITERRUPTED RELAXATION",
+                    "image_path": [
+                        "H2_4D0",
+                        "H2_4D1",
+                        "H0_Bath"
+                    ]
                 }
             ]
         }
