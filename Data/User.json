@@ -11,6 +11,18 @@
             "bill": [
                 "B_[Hotel_id]_[number_of_bills]"
             ]
+        },
+        {
+            "fullname": "John Doe",
+            "birthday": "01/01/1970",
+            "username": "jadoe",
+            "password": "jadoe",
+            "credit_card": "123456789",
+            "cvv": "123",
+            "expiration_date": "01/01/2020",
+            "bill": [
+                "B_[Hotel_id]_[number_of_bills]"
+            ]
         }
     ]
 }

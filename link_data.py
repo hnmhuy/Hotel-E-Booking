@@ -1,4 +1,7 @@
 import json
+from tkinter.messagebox import NO
+
+from jmespath import search
 import user
 import hotel
 import bill
@@ -107,6 +110,70 @@ def print_all_hotel(list_hotel):
                 for i in range(len(room.image_path)):
                     print("Image path: " + room.image_path[i])
             print("\n")
+            print(room.room_id, room.room_type,
+                  room.room_price, room.room_availability)
+
+
+def create_new_user():
+    username = input("Enter username: ")
+
+    password = input("Enter password: ")
+    confirm_password = input("Re-enter password: ")
+
+    while password != confirm_password:
+        print("Password not matched! Please re-enter!")
+        password = input("Enter password: ")
+        confirm_password = input("Re-enter password: ")
+    
+    full_name = input("Enter full name: ")
+    birthday = input("Enter birthday: ")
+    card_id = input("Enter credit card number: ")
+    cvv = input("Enter security code: ")
+    expiry_date = input("Enter expiration date: ")
+
+    new_user = user.User(full_name, birthday, username, password, card_id, cvv, expiry_date)
+
+    return new_user
+
+
+def check_format_date(date):
+    return True
+
+
+def check_user_name(username):
+    return True
+
+
+def check_password(password):
+    return True
+
+
+def check_credit_card(credit_card):
+    return True
+
+
+def check_cvv(cvv):
+    return True
+
+
+def check_expiration_data(expiration_data):
+    return True
+
+
+def create_new_user(fullname, birthdate, username, password, credit_card, cvv, expiration_data):
+    return None
+
+
+def user_unit_test():
+    create_new_user()
+
+def main():
+    list_of_hotel = []
+    number_of_hotel = 0
+    # Create Data Hotel
+
+    user_unit_test()
+
 
 
 def save_hotel_data(file_path, list_hotel, number_of_hotel):
