@@ -108,6 +108,8 @@ def convert_json_to_class_hotel(json_object):
     return list_of_hotel
 
 
+<<<<<<< HEAD
+=======
 def print_all_hotel(list_hotel):
     for hotel in list_hotel:
         print("Hotel ID: " + hotel.hotel_id)
@@ -132,6 +134,7 @@ def print_all_hotel(list_hotel):
                   room.room_price, room.room_availability)
 
 
+>>>>>>> 2ad08e23d3fc082ed5b6a7c42df0bdb5a5f61f12
 def save_hotel_data(file_path, list_hotel, number_of_hotel):
     json_object = convert_class_hotel_to_json(list_hotel, number_of_hotel)
     with open(file_path, "w") as json_file:
@@ -139,6 +142,19 @@ def save_hotel_data(file_path, list_hotel, number_of_hotel):
     json_file.close()
 
 
+<<<<<<< HEAD
+def print_all_hotel(list_hotel):
+    for hotel in list_hotel:
+        hotel.print_hotel_info()
+        hotel.print_list_room()
+
+
+def find_hotel_by_id(list_hotel, hotel_id):
+    for hotel in list_hotel:
+        if hotel.hotel_id == hotel_id:
+            return hotel
+    return None
+=======
 def find_hotel_by_id(hotel_data, hotel_id):
     for hotel in hotel_data:
         if hotel.hotel_id == hotel_id:
@@ -293,3 +309,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+>>>>>>> 2ad08e23d3fc082ed5b6a7c42df0bdb5a5f61f12
