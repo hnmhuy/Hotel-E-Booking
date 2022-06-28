@@ -1,14 +1,32 @@
 import json
 from tkinter.messagebox import NO
 
-from jmespath import search
 import user
 import hotel
 import bill
 import time
 
+# Load data function
 
+
+def load_full_data():
+    data = []
+    root_path = "Hotel/"
+    # Load hotel data
+    hotel_data = []
+    hotel_data = convert_json_to_class_hotel(
+        read_hotel_data(root_path + "/Hotel/Hotel_Data.json"))
+    data.append(hotel_data)
+    data.append(hotel_data.len())
+    # Load user data
+
+    # Load bill data
+
+
+# Hotel functions
 # These function are used to read, write and replace data of hotel in json file
+
+
 def read_hotel_data(file_path):
     with open(file_path, "r") as json_file:
         json_object = json.load(json_file)
@@ -121,6 +139,22 @@ def save_hotel_data(file_path, list_hotel, number_of_hotel):
     json_file.close()
 
 
+def find_hotel_by_id(hotel_data, hotel_id):
+    for hotel in hotel_data:
+        if hotel.hotel_id == hotel_id:
+            return hotel
+    return None
+
+
+def find_room_by_id(hotel, room_id):
+    for room in hotel.list_room:
+        if room.room_id == room_id:
+            return room
+    return None
+
+
+# Users Functions
+
 def create_new_user():
     username = input("Enter username: ")
 
@@ -131,14 +165,15 @@ def create_new_user():
         print("Password not matched! Please re-enter!")
         password = input("Enter password: ")
         confirm_password = input("Re-enter password: ")
-    
+
     full_name = input("Enter full name: ")
     birthday = input("Enter birthday: ")
     card_id = input("Enter credit card number: ")
     cvv = input("Enter security code: ")
     expiry_date = input("Enter expiration date: ")
 
-    new_user = user.User(full_name, birthday, username, password, card_id, cvv, expiry_date)
+    new_user = user.User(full_name, birthday, username,
+                         password, card_id, cvv, expiry_date)
 
     return new_user
 
@@ -158,7 +193,6 @@ def load_data_user(username):
             return user_data
 
     return None
-
 
 
 def check_format_date(date):
@@ -206,7 +240,7 @@ def check_password(password):
         if char in password:
             has_lower = True
             break
-    
+
     if (has_special_characters and has_number and
             has_upper and has_lower):
         return True
