@@ -114,6 +114,13 @@ def print_all_hotel(list_hotel):
                   room.room_price, room.room_availability)
 
 
+def save_hotel_data(file_path, list_hotel, number_of_hotel):
+    json_object = convert_class_hotel_to_json(list_hotel, number_of_hotel)
+    with open(file_path, "w") as json_file:
+        json_file.write(json_object)
+    json_file.close()
+
+
 def create_new_user():
     username = input("Enter username: ")
 
@@ -136,16 +143,75 @@ def create_new_user():
     return new_user
 
 
+def load_data_user(username):
+    data = open("Data/User.json")
+    json_object = json.load(data)
+
+    for find_user in json_object["users"]:
+        if find_user["username"] == username:
+
+            user_data = user.User(find_user["fullname"], find_user["birthday"],
+                                  find_user["username"], find_user["password"],
+                                  find_user["credit_card"], find_user["cvv"],
+                                  find_user["expiration_date"])
+
+            return user_data
+
+    return None
+
+
+
 def check_format_date(date):
     return True
 
 
-def check_user_name(username):
+def check_username_availability(username):
+    data = open("Data/User.json")
+    json_object = json.load(data)
+
+    for search_user in json_object["users"]:
+        if search_user["username"] == username:
+            return False
+
     return True
 
 
 def check_password(password):
-    return True
+    SPECIAL_CHARACTERS = "!@#$%^&*()-+=_"
+    NUMBERS = "123456789"
+    UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    LOWER = "abcdefghijklmnopqrstuvwxyz"
+
+    has_special_characters = False
+    has_number = False
+    has_upper = False
+    has_lower = False
+
+    for char in SPECIAL_CHARACTERS:
+        if char in password:
+            has_special_characters = True
+            break
+
+    for char in NUMBERS:
+        if char in password:
+            has_number = True
+            break
+
+    for char in UPPER:
+        if char in password:
+            has_upper = True
+            break
+
+    for char in LOWER:
+        if char in password:
+            has_lower = True
+            break
+    
+    if (has_special_characters and has_number and
+            has_upper and has_lower):
+        return True
+
+    return False
 
 
 def check_credit_card(credit_card):
@@ -160,24 +226,36 @@ def check_expiration_data(expiration_data):
     return True
 
 
-def create_new_user(fullname, birthdate, username, password, credit_card, cvv, expiration_data):
-    return None
+# def create_new_user(fullname, birthdate, username, password, credit_card, cvv, expiration_data):
+#     return None
 
 
 def user_unit_test():
-    create_new_user()
+    # new_user = create_new_user()
+    # profile = load_data_user("deeznuts")
+
+    # print(new_user.username)
+    # print(profile.password)
+
+    if check_password("Lmao@BRUH123"):
+        print("NICE")
+    else:
+        print("NOT NICE")
+
+    if check_username_availability("deeznuts"):
+        print("AVAILABLE")
+    else:
+        print("NOT AVAILABLE")
+
 
 def main():
     list_of_hotel = []
     number_of_hotel = 0
     # Create Data Hotel
 
+    # Unit test for user
     user_unit_test()
 
 
-
-def save_hotel_data(file_path, list_hotel, number_of_hotel):
-    json_object = convert_class_hotel_to_json(list_hotel, number_of_hotel)
-    with open(file_path, "w") as json_file:
-        json_file.write(json_object)
-    json_file.close()
+if __name__ == "__main__":
+    main()
