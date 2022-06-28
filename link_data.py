@@ -1,11 +1,32 @@
 import json
+from tkinter.messagebox import NO
+
 import user
 import hotel
 import bill
 import time
 
+# Load data function
 
+
+def load_full_data():
+    data = []
+    root_path = "Hotel/"
+    # Load hotel data
+    hotel_data = []
+    hotel_data = convert_json_to_class_hotel(
+        read_hotel_data(root_path + "/Hotel/Hotel_Data.json"))
+    data.append(hotel_data)
+    data.append(hotel_data.len())
+    # Load user data
+
+    # Load bill data
+
+
+# Hotel functions
 # These function are used to read, write and replace data of hotel in json file
+
+
 def read_hotel_data(file_path):
     with open(file_path, "r") as json_file:
         json_object = json.load(json_file)
@@ -87,6 +108,33 @@ def convert_json_to_class_hotel(json_object):
     return list_of_hotel
 
 
+<<<<<<< HEAD
+=======
+def print_all_hotel(list_hotel):
+    for hotel in list_hotel:
+        print("Hotel ID: " + hotel.hotel_id)
+        print("Hotel name: " + hotel.hotel_name)
+        print("Hotel address: " + hotel.hotel_address)
+        print("Number of available room: " + str(hotel.number_available_room))
+        print("List room: ")
+        for room in hotel.list_room:
+            print("Room ID: " + room.room_id)
+            print("Room type: " + room.room_type)
+            print("Room price: " + str(room.room_price))
+            print("Room availability: " + str(room.room_availability))
+            print("User book: " + str(room.user_book))
+            print("Date check in: " + str(room.date_check_in))
+            print("Date check out: " + str(room.date_check_out))
+            print("Description: " + room.description)
+            if room.image_path is not None:
+                for i in range(len(room.image_path)):
+                    print("Image path: " + room.image_path[i])
+            print("\n")
+            print(room.room_id, room.room_type,
+                  room.room_price, room.room_availability)
+
+
+>>>>>>> 2ad08e23d3fc082ed5b6a7c42df0bdb5a5f61f12
 def save_hotel_data(file_path, list_hotel, number_of_hotel):
     json_object = convert_class_hotel_to_json(list_hotel, number_of_hotel)
     with open(file_path, "w") as json_file:
@@ -94,6 +142,7 @@ def save_hotel_data(file_path, list_hotel, number_of_hotel):
     json_file.close()
 
 
+<<<<<<< HEAD
 def print_all_hotel(list_hotel):
     for hotel in list_hotel:
         hotel.print_hotel_info()
@@ -105,3 +154,159 @@ def find_hotel_by_id(list_hotel, hotel_id):
         if hotel.hotel_id == hotel_id:
             return hotel
     return None
+=======
+def find_hotel_by_id(hotel_data, hotel_id):
+    for hotel in hotel_data:
+        if hotel.hotel_id == hotel_id:
+            return hotel
+    return None
+
+
+def find_room_by_id(hotel, room_id):
+    for room in hotel.list_room:
+        if room.room_id == room_id:
+            return room
+    return None
+
+
+# Users Functions
+
+def create_new_user():
+    username = input("Enter username: ")
+
+    password = input("Enter password: ")
+    confirm_password = input("Re-enter password: ")
+
+    while password != confirm_password:
+        print("Password not matched! Please re-enter!")
+        password = input("Enter password: ")
+        confirm_password = input("Re-enter password: ")
+
+    full_name = input("Enter full name: ")
+    birthday = input("Enter birthday: ")
+    card_id = input("Enter credit card number: ")
+    cvv = input("Enter security code: ")
+    expiry_date = input("Enter expiration date: ")
+
+    new_user = user.User(full_name, birthday, username,
+                         password, card_id, cvv, expiry_date)
+
+    return new_user
+
+
+def load_data_user(username):
+    data = open("Data/User.json")
+    json_object = json.load(data)
+
+    for find_user in json_object["users"]:
+        if find_user["username"] == username:
+
+            user_data = user.User(find_user["fullname"], find_user["birthday"],
+                                  find_user["username"], find_user["password"],
+                                  find_user["credit_card"], find_user["cvv"],
+                                  find_user["expiration_date"])
+
+            return user_data
+
+    return None
+
+
+def check_format_date(date):
+    return True
+
+
+def check_username_availability(username):
+    data = open("Data/User.json")
+    json_object = json.load(data)
+
+    for search_user in json_object["users"]:
+        if search_user["username"] == username:
+            return False
+
+    return True
+
+
+def check_password(password):
+    SPECIAL_CHARACTERS = "!@#$%^&*()-+=_"
+    NUMBERS = "123456789"
+    UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    LOWER = "abcdefghijklmnopqrstuvwxyz"
+
+    has_special_characters = False
+    has_number = False
+    has_upper = False
+    has_lower = False
+
+    for char in SPECIAL_CHARACTERS:
+        if char in password:
+            has_special_characters = True
+            break
+
+    for char in NUMBERS:
+        if char in password:
+            has_number = True
+            break
+
+    for char in UPPER:
+        if char in password:
+            has_upper = True
+            break
+
+    for char in LOWER:
+        if char in password:
+            has_lower = True
+            break
+
+    if (has_special_characters and has_number and
+            has_upper and has_lower):
+        return True
+
+    return False
+
+
+def check_credit_card(credit_card):
+    return True
+
+
+def check_cvv(cvv):
+    return True
+
+
+def check_expiration_data(expiration_data):
+    return True
+
+
+# def create_new_user(fullname, birthdate, username, password, credit_card, cvv, expiration_data):
+#     return None
+
+
+def user_unit_test():
+    # new_user = create_new_user()
+    # profile = load_data_user("deeznuts")
+
+    # print(new_user.username)
+    # print(profile.password)
+
+    if check_password("Lmao@BRUH123"):
+        print("NICE")
+    else:
+        print("NOT NICE")
+
+    if check_username_availability("deeznuts"):
+        print("AVAILABLE")
+    else:
+        print("NOT AVAILABLE")
+
+
+def main():
+    list_of_hotel = []
+    number_of_hotel = 0
+    # Create Data Hotel
+
+    # Unit test for user
+    user_unit_test()
+
+
+if __name__ == "__main__":
+    main()
+>>>>>>> 2ad08e23d3fc082ed5b6a7c42df0bdb5a5f61f12

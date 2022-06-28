@@ -9,8 +9,15 @@ class Room:
         self.room_price = room_price
         self.room_availability = room_availability
         self.user_book = user_book
-        self.date_check_in = date_check_in
-        self.date_check_out = date_check_out
+        if date_check_in != None:
+            self.date_check_in = time.strptime(self.date_check_in, "%d/%m/%Y")
+        else:
+            self.date_check_in = None
+        if date_check_out != None:
+            self.date_check_out = time.strptime(
+                self.date_check_out, "%d/%m/%Y")
+        else:
+            self.date_check_out = None
         self.description = description
         self.image_path = image_path
 
