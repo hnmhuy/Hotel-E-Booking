@@ -108,33 +108,6 @@ def convert_json_to_class_hotel(json_object):
     return list_of_hotel
 
 
-<<<<<<< HEAD
-=======
-def print_all_hotel(list_hotel):
-    for hotel in list_hotel:
-        print("Hotel ID: " + hotel.hotel_id)
-        print("Hotel name: " + hotel.hotel_name)
-        print("Hotel address: " + hotel.hotel_address)
-        print("Number of available room: " + str(hotel.number_available_room))
-        print("List room: ")
-        for room in hotel.list_room:
-            print("Room ID: " + room.room_id)
-            print("Room type: " + room.room_type)
-            print("Room price: " + str(room.room_price))
-            print("Room availability: " + str(room.room_availability))
-            print("User book: " + str(room.user_book))
-            print("Date check in: " + str(room.date_check_in))
-            print("Date check out: " + str(room.date_check_out))
-            print("Description: " + room.description)
-            if room.image_path is not None:
-                for i in range(len(room.image_path)):
-                    print("Image path: " + room.image_path[i])
-            print("\n")
-            print(room.room_id, room.room_type,
-                  room.room_price, room.room_availability)
-
-
->>>>>>> 2ad08e23d3fc082ed5b6a7c42df0bdb5a5f61f12
 def save_hotel_data(file_path, list_hotel, number_of_hotel):
     json_object = convert_class_hotel_to_json(list_hotel, number_of_hotel)
     with open(file_path, "w") as json_file:
@@ -142,19 +115,6 @@ def save_hotel_data(file_path, list_hotel, number_of_hotel):
     json_file.close()
 
 
-<<<<<<< HEAD
-def print_all_hotel(list_hotel):
-    for hotel in list_hotel:
-        hotel.print_hotel_info()
-        hotel.print_list_room()
-
-
-def find_hotel_by_id(list_hotel, hotel_id):
-    for hotel in list_hotel:
-        if hotel.hotel_id == hotel_id:
-            return hotel
-    return None
-=======
 def find_hotel_by_id(hotel_data, hotel_id):
     for hotel in hotel_data:
         if hotel.hotel_id == hotel_id:
@@ -309,4 +269,3 @@ def main():
 
 if __name__ == "__main__":
     main()
->>>>>>> 2ad08e23d3fc082ed5b6a7c42df0bdb5a5f61f12
