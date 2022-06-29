@@ -1,10 +1,9 @@
 import json
-from tkinter.messagebox import NO
-
 import user
 import hotel
-import bill
+from bill import Bill
 import time
+import bill
 
 # Load data function
 
@@ -18,9 +17,14 @@ def load_full_data():
         read_hotel_data(root_path + "/Hotel/Hotel_Data.json"))
     data.append(hotel_data)
     data.append(hotel_data.len())
-    # Load user data
-
     # Load bill data
+    bill_data = []
+    bill_data = convert_json_to_class_bill(
+        load_data_bill_json(root_path + "/Bill.json"))
+    data.append(bill_data)
+    data.append(bill_data.len())
+
+    return data
 
 
 # Hotel functions
@@ -115,21 +119,12 @@ def save_hotel_data(file_path, list_hotel, number_of_hotel):
     json_file.close()
 
 
-def find_hotel_by_id(hotel_data, hotel_id):
-    for hotel in hotel_data:
-        if hotel.hotel_id == hotel_id:
-            return hotel
-    return None
+def decode_room_id(room_id):
+    room_id = room_id.split("_")
+    return room_id[0], room_id[1]
 
+# USER FUNCTIONS
 
-def find_room_by_id(hotel, room_id):
-    for room in hotel.list_room:
-        if room.room_id == room_id:
-            return room
-    return None
-
-
-# Users Functions
 
 def create_new_user():
     username = input("Enter username: ")
@@ -257,12 +252,42 @@ def user_unit_test():
     else:
         print("NOT AVAILABLE")
 
+# BILL FUNCTIONS
+
+
+def load_data_bill_json(file_path):
+    data = open(file_path)
+    json_object = json.load(data)
+    return json_object
+
+
+def convert_json_to_class_bill(json_object):
+    number_of_bill = int(json_object["number_of_bill"])
+    list_of_bill = []
+    for i in range(number_of_bill):
+        temp_bill = Bill(json_object["bill_list"][i]["bill_id"], json_object["bill_list"][i]["list_room_id"], json_object["bill_list"][i]["user_book"],
+                         json_object["bill_list"][i]["time_book"], json_object["bill_list"][i]["total_price"])
+        list_of_bill.append(temp_bill)
+    return list_of_bill
+
+
+def covert_class_bill_to_json(list_of_bill, number_of_bill):
+    json_object = {
+        "number_of_bill": number_of_bill,
+        "bill_list": []
+    }
+    for i in range(number_of_bill):
+        json_object["bill_list"].append({
+            "bill_id": list_of_bill[i].bill_id,
+            "list_room_id": list_of_bill[i].list_room_id,
+            "user_book": list_of_bill[i].user_book,
+            "time_book": list_of_bill[i].time_book,
+            "total_price": list_of_bill[i].total_price
+        })
+    return json_object
+
 
 def main():
-    list_of_hotel = []
-    number_of_hotel = 0
-    # Create Data Hotel
-
     # Unit test for user
     user_unit_test()
 

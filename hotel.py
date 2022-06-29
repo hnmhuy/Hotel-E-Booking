@@ -72,3 +72,16 @@ def ret_hotel_id(hotel_name, hotel_list):
         if hotel.hotel_name == hotel_name:
             return hotel.hotel_id
     return None
+
+
+def find_hotel_by_id(hotel_data, hotel_id):
+    for hotel in hotel_data:
+        if hotel.hotel_id == hotel_id:
+            return hotel
+    return None
+
+
+def find_room_by_id(hotel_data, room_id):
+    for room in hotel_data.list_room:
+        if room.room_id == room_id:
+            return room
