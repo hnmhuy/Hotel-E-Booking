@@ -111,7 +111,6 @@ def convert_json_to_class_hotel(json_object):
         list_of_hotel.append(temp_hotel)
     return list_of_hotel
 
-
 def save_hotel_data(file_path, list_hotel, number_of_hotel):
     json_object = convert_class_hotel_to_json(list_hotel, number_of_hotel)
     with open(file_path, "w") as json_file:
@@ -123,8 +122,20 @@ def decode_room_id(room_id):
     room_id = room_id.split("_")
     return room_id[0], room_id[1]
 
-# USER FUNCTIONS
+def find_hotel_by_id(hotel_data, hotel_id):
+    for hotel in hotel_data:
+        if hotel.hotel_id == hotel_id:
+            return hotel
+    return None
 
+
+def find_room_by_id(hotel, room_id):
+    for room in hotel.list_room:
+        if room.room_id == room_id:
+            return room
+    return None
+
+# USER FUNCTIONS
 
 def create_new_user():
     username = input("Enter username: ")
