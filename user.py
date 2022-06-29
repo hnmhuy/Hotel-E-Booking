@@ -12,24 +12,3 @@ class User:
         self.credit_card = credit_card
         self.cvv = cvv  # 3 or 4 digits
         self.expiration_data = expiration_data
-
-    # def get_full_name(self):
-    #     return self.fullname
-
-    # def get_birthdate(self):
-    #     return self.birthdate
-
-    # def get_username(self):
-    #     return self.username
-
-    # def get_password(self):
-    #     return self.password
-
-    # def get_credit_card(self):
-    #     return self.credit_card
-
-    # def get_cvv(self):
-    #     return self.cvv
-
-    # def get_expiration_data(self):
-    #     return self.expiration_data
