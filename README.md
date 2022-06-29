@@ -13,3 +13,8 @@
 
     - bill_id = 'B'+'Hotel_id'+[number_of_bill]
     Ex: BH1_1
+
+## Format time in this project
+
+    - Time check in and check out: dd/mm/yyyy (in python "%d/%m/%Y")
+    - Time for creating bill: "%H:%M:%S %d/%m/%Y"
