@@ -137,131 +137,110 @@ def find_room_by_id(hotel, room_id):
 
 # USER FUNCTIONS
 
-def create_new_user():
-    username = input("Enter username: ")
-
-    password = input("Enter password: ")
-    confirm_password = input("Re-enter password: ")
-
-    while password != confirm_password:
-        print("Password not matched! Please re-enter!")
-        password = input("Enter password: ")
-        confirm_password = input("Re-enter password: ")
-
-    full_name = input("Enter full name: ")
-    birthday = input("Enter birthday: ")
-    card_id = input("Enter credit card number: ")
-    cvv = input("Enter security code: ")
-    expiry_date = input("Enter expiration date: ")
-
-    new_user = user.User(full_name, birthday, username,
-                         password, card_id, cvv, expiry_date)
-
-    return new_user
-
-
-def load_data_user(username):
-    data = open("Data/User.json")
-    json_object = json.load(data)
-
-    for find_user in json_object["users"]:
-        if find_user["username"] == username:
-
-            user_data = user.User(find_user["fullname"], find_user["birthday"],
-                                  find_user["username"], find_user["password"],
-                                  find_user["credit_card"], find_user["cvv"],
-                                  find_user["expiration_date"])
-
-            return user_data
-
-    return None
-
-
-def check_format_date(date):
-    return True
-
-
-def check_username_availability(username):
-    data = open("Data/User.json")
-    json_object = json.load(data)
-
-    for search_user in json_object["users"]:
-        if search_user["username"] == username:
-            return False
-
-    return True
-
-
-def check_password(password):
-    SPECIAL_CHARACTERS = "!@#$%^&*()-+=_"
-    NUMBERS = "123456789"
-    UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    LOWER = "abcdefghijklmnopqrstuvwxyz"
-
-    has_special_characters = False
-    has_number = False
-    has_upper = False
-    has_lower = False
-
-    for char in SPECIAL_CHARACTERS:
-        if char in password:
-            has_special_characters = True
-            break
-
-    for char in NUMBERS:
-        if char in password:
-            has_number = True
-            break
-
-    for char in UPPER:
-        if char in password:
-            has_upper = True
-            break
-
-    for char in LOWER:
-        if char in password:
-            has_lower = True
-            break
-
-    if (has_special_characters and has_number and
-            has_upper and has_lower):
-        return True
-
-    return False
-
-
-def check_credit_card(credit_card):
-    return True
-
-
-def check_cvv(cvv):
-    return True
-
-
-def check_expiration_data(expiration_data):
-    return True
-
 
 # def create_new_user(fullname, birthdate, username, password, credit_card, cvv, expiration_data):
 #     return None
 
 
+def load_data_user():
+    '''
+    This function returns a list of users
+    in the database as a list of dictionaries
+    '''
+
+    data = open("Data/User.json")
+    json_object = json.load(data)
+    data.close()
+
+    return json_object["users"]
+
+
+def change_user_data(username, target_key, change_value):
+    file = open("Data/User.json")
+    json_object = json.load(file)
+
+    found = False
+
+    for find_user in json_object["users"]:
+        if find_user["username"] == username:
+            find_user[target_key] = change_value
+            found = True
+            break
+
+    file.close()
+
+    if not found: return False
+
+    new_data = json.dumps(json_object, indent = 4)
+
+    file = open("Data/User.json", "w")
+    file.write(new_data)
+
+    return True
+    
+
+def save_data_user(user_list):
+    user_data = {"users" : user_list}
+
+    json_data = json.dumps(user_data, indent = 4)
+
+    file = open("Data/User.json", "w")
+    file.write(json_data)
+
+    file.close()
+
+    return True
+
+
 def user_unit_test():
-    # new_user = create_new_user()
+    # new_user = user.User.create_new_user()
     # profile = load_data_user("deeznuts")
 
     # print(new_user.username)
     # print(profile.password)
+    
+    # DATA USE FOR TESTING ONLY
+    # user_list = [
+    #     {
+    #         "fullname": "John Doe",
+    #         "birthday": "01/01/1970",
+    #         "username": "jdoe",
+    #         "password": "jdoe",
+    #         "credit_card": "123456789",
+    #         "cvv": "666",
+    #         "expiration_date": "01/2020",
+    #         "bill": []
+    #     },
+    #     {
+    #         "fullname": "Coin Card",
+    #         "birthday": "19/12/2003",
+    #         "username": "yeee",
+    #         "password": "deeznuts",
+    #         "credit_card": "123456789",
+    #         "cvv": "666",
+    #         "expiration_date": "01/2024",
+    #         "bill": []
+    #     },
+    #     {
+    #         "fullname": "Leroy Jenkins",
+    #         "birthday": "6/9/1969",
+    #         "username": "deeznuts",
+    #         "password": "bruhbruhlmao",
+    #         "credit_card": "1234123412",
+    #         "cvv": "123",
+    #         "expiration_date": "06/2025"
+    #     }
+    # ]
+    
+    # save_data_user(user_list)
 
-    if check_password("Lmao@BRUH123"):
-        print("NICE")
+    # user_list = load_data_user()
+    # print(user_list)
+    
+    if change_user_data("deeznuts", "cvv", "420"):
+        print("Success")
     else:
-        print("NOT NICE")
-
-    if check_username_availability("deeznuts"):
-        print("AVAILABLE")
-    else:
-        print("NOT AVAILABLE")
+        print("Failed")
 
 # BILL FUNCTIONS
 
@@ -299,6 +278,7 @@ def covert_class_bill_to_json(list_of_bill, number_of_bill):
 
 
 def main():
+
     # Unit test for user
     user_unit_test()
 
