@@ -25,8 +25,6 @@ try:
     client.connect( (HOST, SERVER_PORT) )
     print("client address:",client.getsockname())
 
-    list = ["duchieuvn","15","nam"]
-
     msg = None
     while (msg != "x"):
         msg = input("talk: ")
