@@ -74,6 +74,8 @@ def main():
     file_path = root_path + "/Hotel/Hotel_Data.json"
     hotel_data = link_data.convert_json_to_class_hotel(
         link_data.read_hotel_data(file_path))
+    
+    # test push main
 
 
 if __name__ == "__main__":
