@@ -18,9 +18,6 @@ def main():
     hotel_data = link_data.convert_json_to_class_hotel(
         link_data.read_hotel_data(file_path))
 
-    # Test printing hotel data
-    link_data.print_all_hotel(hotel_data)
-
 
 if __name__ == "__main__":
     main()

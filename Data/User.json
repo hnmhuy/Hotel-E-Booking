@@ -8,9 +8,7 @@
             "credit_card": "123456789",
             "cvv": "123",
             "expiration_date": "01/01/2020",
-            "bill": [
-                "B_[Hotel_id]_[number_of_bills]"
-            ]
+            "bill": []
         },
         {
             "fullname": "Huybu",
@@ -20,9 +18,7 @@
             "credit_card": "123456789",
             "cvv": "123",
             "expiration_date": "01/01/2024",
-            "bill": [
-                "B_[Hotel_id]_[number_of_bills]"
-            ]
+            "bill": []
         }
     ]
 }
