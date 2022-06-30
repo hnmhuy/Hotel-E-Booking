@@ -6,6 +6,23 @@ import link_data
 import hotel
 import user
 import bill
+LOGIN = "login"
+def CheckLogin(conn):
+    account_list = recvList(conn)
+     
+def recvList(conn):
+    list = []
+
+    item = conn.recv(1024).decode(FORMAT)
+
+    while (item != "end"):
+        
+        list.append(item)
+        #response
+        conn.sendall(item.encode(FORMAT))
+        item = conn.recv(1024).decode(FORMAT)
+    
+    return list
 
 def handleClient(conn: socket, addr):
     
@@ -14,6 +31,13 @@ def handleClient(conn: socket, addr):
     while (msg != "x"):
         msg = conn.recv(1024).decode(FORMAT)
         print("client ",addr, "says", msg)
+        
+        if(msg == LOGIN):
+            conn.sendall(msg.encode(FORMAT))
+            list = recvList(conn)
+            print("received: ")
+            print(list)
+
     print("client" , addr, "has left the sever")
     print(conn.getsockname(), "closed")
     conn.close()
@@ -27,7 +51,7 @@ FORMAT = "utf8"
 
 def main():
 
-    # You can wirte the functions for socket here
+    # You can write the functions for socket here
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
     s.bind((HOST, SERVER_PORT))
     s.listen()
@@ -47,6 +71,7 @@ def main():
         
         nClient += 1
     print("End")
+    input()
     s.close();
     # Here is used to test functions in link_data.py
     # Load hotel data from file
