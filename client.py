@@ -1,8 +1,14 @@
 import socket
+from PIL import Image
+import pickle
+import sys
+
+from server import BUFFER_IMG
 
 HOST = "127.0.0.1"
-SERVER_PORT = 65432
+SERVER_PORT = 65500
 FORMAT = "utf8"
+BUFFER_IMG = 4096
 
 
 def sendList(client, list):
@@ -29,12 +35,33 @@ try:
     print("reply:", reply)
     msg = None
     while (msg != "x"):
-        msg = input("talk: ")
-        client.sendall(msg.encode(FORMAT))
-        if (msg == "list"):
-            # wait response
-            client.recv(1024)
-            sendList(client, list)
+        user_info = ["benn", "122345", "end"]
+        sendList(client, user_info)
+        print("user_info:", user_info)
+        print("Received:", client.recv(1024).decode(FORMAT))
+        # msg = input("talk: ")
+        # client.sendall(msg.encode(FORMAT))
+        # if (msg == "list"):
+        #     # wait response
+        #     client.recv(1024)
+        #     sendList(client, list)
+        # elif (msg == "img"):
+        #     # Receive the number of packet
+        #     num_packet = int(client.recv(1024).decode(FORMAT))
+        #     print("num_packet:", num_packet)
+        #     with open("test.jpg", "wb") as f:
+        #         for i in range(num_packet):
+        #             data = client.recv(BUFFER_IMG)
+        #             f.write(data)
+        #     f.close()
+        # Ask to see the image
+        # print("Do you want to see the image? (y/n)")
+        # answer = input()
+        # if (answer == "y"):
+        #     img = Image.open("test.jpg")
+        #     img.show()
+        # else:
+        #     print("Image is not shown")
 
 
 except:
