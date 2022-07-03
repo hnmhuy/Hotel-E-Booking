@@ -1,0 +1,12 @@
+{
+    "number_of_bill": "1",
+    "bill_list": [
+        {
+            "bill_id": "B",
+            "list_room_id": "1",
+            "user_book": "1",
+            "time_book": "Sun Jun 26 07:36:18 2022",
+            "total_price": "1"
+        }
+    ]
+}
