@@ -4,11 +4,20 @@ import pickle
 import sys
 
 from server import BUFFER_IMG
+import user
 
 HOST = "127.0.0.1"
 SERVER_PORT = 65500
 FORMAT = "utf8"
 BUFFER_IMG = 4096
+
+# Constant for all server functions
+LOGIN = "login"
+SIGNUP = "signup"
+SEARCHING = "searching"
+BOOKING = "booking"
+CANCEL_BOOKING = "cancel booking"
+EXIT = "exit"
 
 
 def sendList(client, list):
@@ -22,23 +31,102 @@ def sendList(client, list):
     client.send(msg.encode(FORMAT))
 
 
+def Login(client):
+    account = []
+    print("Please input username and password")
+    username = input('Username:')
+    password = input('Password:')
+    bool = user.User.check_username_availability(
+        username) and user.User.check_password(password)
+    while (bool == False):
+        print('Please try again')
+        print('The maximum length of username is 32 letters ')
+        print('The min of pass is 4 and must have lowercase, uppercase, number, special character')
+        username = input('Username:')
+        password = input('Password:')
+        bool = user.User.check_username_availability(
+            username) and user.User.check_password(password)
+    account.append(username)
+    account.append(password)
+    sendList(client, account)
+
+
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print("CLIENT SIDE")
 
 
 try:
     client.connect((HOST, SERVER_PORT))
-    print("client address:", client.getsockname())
-    print("client:", HOST, SERVER_PORT)
     print("Connected to server")
-    reply = client.recv(1024).decode(FORMAT)
-    print("reply:", reply)
-    msg = None
-    while (msg != "x"):
-        user_info = ["benn", "122345", "end"]
-        sendList(client, user_info)
-        print("user_info:", user_info)
-        print("Received:", client.recv(1024).decode(FORMAT))
+    is_login = False
+    request = []
+    while True:
+        # print("1. Login")
+        # print("2. Sign up")
+        # print("\n")
+        # choice = input("Please choose: ")
+        # if choice == "1":
+        #     request.append(LOGIN)
+        #     user_name = input("Username: ")
+        #     user_password = input("Password: ")
+        #     request.append(user_name)
+        #     request.append(user_password)
+        #     sendList(client, request)
+        #     is_login = client.recv(1024).decode(FORMAT)
+        #     if is_login == "True":
+        #         print("Login success")
+        #         break
+        #     else:
+        #         print("Login failed")
+        #         continue
+        # elif choice == "2":
+        #     request.append(SIGNUP)
+        #     user_name = input("Username: ")
+        #     user_password = input("Password: ")
+        #     request.append(user_name)
+        #     request.append(user_password)
+        #     sendList(client, request)
+        #     is_login = client.recv(1024).decode(FORMAT)
+        #     if is_login == "True":
+        #         print("Sign up success")
+        #         break
+        #     else:
+        #         print("Sign up failed")
+        #         continue
+        break
+    while is_login == "True":
+        print("1. Searching")
+        print("2. Booking")
+        print("3. Cancel booking")
+        print("4. Logout and exit")
+        print("\n")
+        choice = input("Please choose: ")
+        if choice == "1":
+            request.append(SEARCHING)
+            # Write your function to search hotel here
+        elif choice == "2":
+            request.append(BOOKING)
+            # Write your function to booking hotel here
+        elif choice == "3":
+            request.append(CANCEL_BOOKING)
+            # Write your function to cancel booking here
+        elif choice == "4":
+            request.append(EXIT)
+            # Write your function to logout here
+        else:
+            print("Please choose again")
+            continue
+    # print("client address:", client.getsockname())
+    # print("client:", HOST, SERVER_PORT)
+    # print("Connected to server")
+    # reply = client.recv(1024).decode(FORMAT)
+    # print("reply:", reply)
+    # msg = None
+    # while (msg != "x"):
+    #     user_info = ["benn", "122345", "end"]
+    #     sendList(client, user_info)
+    #     print("user_info:", user_info)
+    #     print("Received:", client.recv(1024).decode(FORMAT))
         # msg = input("talk: ")
         # client.sendall(msg.encode(FORMAT))
         # if (msg == "list"):
@@ -62,6 +150,12 @@ try:
         #     img.show()
         # else:
         #     print("Image is not shown")
+        # msg = input("talk: ")
+        # client.sendall(msg.encode(FORMAT))
+        # if (msg == LOGIN):
+        #     # wait response
+        #     client.recv(1024)
+        #     Login(client)
 
 
 except:
