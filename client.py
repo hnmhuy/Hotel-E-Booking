@@ -1,11 +1,15 @@
 import socket
 import user
 
+import client_functions
+
 HOST = "127.0.0.1"
 SERVER_PORT = 65432
 FORMAT = "utf8"
 
 LOGIN = "login"
+SEARCH = "search"
+
 def sendList(client, list):
 
     for item in list:
