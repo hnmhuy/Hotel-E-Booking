@@ -1,14 +1,27 @@
 import socket
 import threading
 import time
+import json
 # Below are the libraries used to manage data
 import link_data
 import hotel
 import user
 import bill
 LOGIN = "login"
-def CheckLogin(conn):
-    account_list = recvList(conn)
+def CheckLogin(conn, data, list):
+    i=0
+    while(i < len(data['users'])):
+        if(list[0] == (data['users'][i]['username']) and list[1] == (data['users'][i]['password'])):
+            check = True
+            break
+        else:
+            check = False
+            i+=1
+    if(check == True):
+       print("Login Successfully")
+    else:
+       print("Failed to login")
+            
      
 def recvList(conn):
     list = []
@@ -24,7 +37,7 @@ def recvList(conn):
     
     return list
 
-def handleClient(conn: socket, addr):
+def handleClient(conn: socket, addr, data):
     
     print("conn:",conn.getsockname())
     msg = None
@@ -36,7 +49,9 @@ def handleClient(conn: socket, addr):
             conn.sendall(msg.encode(FORMAT))
             list = recvList(conn)
             print("received: ")
-            print(list)
+            print(list[0])
+            print(list[1])
+            CheckLogin(conn,data,list)
 
     print("client" , addr, "has left the sever")
     print(conn.getsockname(), "closed")
@@ -52,6 +67,9 @@ FORMAT = "utf8"
 def main():
 
     # You can write the functions for socket here
+    with open("Data\\User.json","r") as fin:
+        data = json.load(fin)
+    print (data['users'][0]['username'])
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
     s.bind((HOST, SERVER_PORT))
     s.listen()
@@ -62,7 +80,7 @@ def main():
     while (nClient < 3):
         try:
             conn, addr = s.accept()
-            thr = threading.Thread(target=handleClient, args=(conn,addr))
+            thr = threading.Thread(target=handleClient, args=(conn,addr,data))
             thr.daemon = False
             thr.start()
 
