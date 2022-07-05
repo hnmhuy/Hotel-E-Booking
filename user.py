@@ -3,9 +3,10 @@ import time
 
 import link_data
 
+
 class User:
     def __init__(self, fullname, birthday, username,
-                    password, credit_card, cvv, expiration_date):
+                 password, credit_card, cvv, expiration_date):
 
         self.fullname = fullname    # string
         self.birthday = birthday    # string
@@ -18,11 +19,9 @@ class User:
         self.cvv = cvv  # 3 or 4 digits
         self.expiration_date = expiration_date
 
-
     # def check_format_date(date):
 
     #     return True
-
 
     def check_username_availability(username):
         data = open("Data/User.json")
@@ -35,7 +34,6 @@ class User:
 
         data.close()
         return True
-
 
     def check_password(password):
         SPECIAL_CHARACTERS = "!@#$%^&*()-+=_"
@@ -74,20 +72,17 @@ class User:
 
         return False
 
-
     def check_credit_card(credit_card):
         if len(credit_card) != 16:
             return False
-        
-        return True
 
+        return True
 
     def check_cvv(cvv):
         if (len(cvv) != 3 and len(cvv) != 4):
             return False
 
         return True
-
 
     def check_expiration_date(expiry_date):
         format_date = expiry_date.split("/")
@@ -96,12 +91,11 @@ class User:
 
         if int(format_date[1]) < current.tm_year:
             return False
-        
+
         if (int(format_date[1]) == current.tm_year and int(format_date[0]) < current.tm_mon):
             return False
 
         return True
-
 
     def create_new_user():
         username = input("Enter username: ")
@@ -111,7 +105,8 @@ class User:
 
         password = input("Enter password: ")
         while not User.check_password(password):
-            password = input("Password must include upper case, lower case, numbers and special characters: ")
+            password = input(
+                "Password must include upper case, lower case, numbers and special characters: ")
 
         confirm_password = input("Re-enter password: ")
 
@@ -120,8 +115,9 @@ class User:
 
             password = input("Enter password: ")
             while not User.check_password(password):
-                password = input("Password must include upper case, lower case, numbers and special characters: ")
-            
+                password = input(
+                    "Password must include upper case, lower case, numbers and special characters: ")
+
             confirm_password = input("Re-enter password: ")
 
         full_name = input("Enter full name: ")
@@ -140,6 +136,6 @@ class User:
             expiry_date = input("Card had expired, re-enter date: ")
 
         new_user = User(full_name, birthday, username,
-                                password, card_id, cvv, expiry_date)
+                        password, card_id, cvv, expiry_date)
 
         return new_user
