@@ -1,9 +1,13 @@
 import json
+from subprocess import check_output
+from tabnanny import check
 import user
 import hotel
 from bill import Bill
 import time
 import bill
+
+root_path = "Data/"
 
 # Load data function
 
@@ -18,7 +22,6 @@ def load_full_data():
     data[4] = number of bill
     '''
     data = []
-    root_path = "Data/"
     # Load hotel data
     hotel_data = []
     hotel_data = convert_json_to_class_hotel(
@@ -28,6 +31,7 @@ def load_full_data():
     # Load user data
     user_data = []
     user_data = load_data_user()
+    data.append(user_data)
     # Load bill data
     bill_data = []
     bill_data = convert_json_to_class_bill(
@@ -76,22 +80,45 @@ def get_hotel_info(list_hotel):
 
 
 def convert_class_hotel_to_json(list_of_hotel, number_of_hotel):
-    json_hotel = "{\"number_of_hotel\": " + \
-        str(number_of_hotel) + ","+"\"hotel\": ["
-    for i in range(len(list_of_hotel)):
-        json_hotel += "{\"hotel_id\":" + "\"" + list_of_hotel[i].hotel_id + "\"," + "\"hotel_name\":" + "\"" + list_of_hotel[i].hotel_name + "\"," + "\"hotel_address\":" + \
-            "\"" + list_of_hotel[i].hotel_address + "\"," + "\"number_available_room\":" + \
-            "\"" + \
-            str(list_of_hotel[i].number_available_room) + "\"," + "\"room\": ["
-        for j in range(len(list_of_hotel[i].list_room)):
-            json_hotel += json.dumps(list_of_hotel[i].list_room[j].__dict__)
-            if j != len(list_of_hotel[i].list_room)-1:
-                json_hotel += ","
-        json_hotel += "]}"
-        if i != len(list_of_hotel)-1:
-            json_hotel += ","
-    json_hotel += "]}"
-    json_object = json.loads(json_hotel)
+    json_object = {}
+    json_object["number_of_hotel"] = number_of_hotel
+    json_object["hotel"] = []
+    for i in range(number_of_hotel):
+        temp_hotel = list_of_hotel[i]
+        temp_hotel_json = {}
+        temp_hotel_json["hotel_id"] = temp_hotel.hotel_id
+        temp_hotel_json["hotel_name"] = temp_hotel.hotel_name
+        temp_hotel_json["hotel_address"] = temp_hotel.hotel_address
+        temp_hotel_json["number_available_room"] = temp_hotel.number_available_room
+        temp_hotel_json["room"] = []
+        for j in range(len(temp_hotel.list_room)):
+            temp_room = temp_hotel.list_room[j]
+            temp_room_json = {}
+            temp_room_json["room_id"] = temp_room.room_id
+            temp_room_json["room_type"] = temp_room.room_type
+            temp_room_json["room_price"] = temp_room.room_price
+            temp_room_json["room_availability"] = temp_room.room_availability
+            temp_room_json["user_book"] = temp_room.user_book
+            if(temp_room.date_check_in != None):
+                day = temp_room.date_check_in.tm_mday
+                month = temp_room.date_check_in.tm_mon
+                year = temp_room.date_check_in.tm_year
+                temp_room_json["date_check_in"] = str(
+                    day) + "/" + str(month) + "/" + str(year)
+            else:
+                temp_room_json["date_check_in"] = None
+            if(temp_room.date_check_out != None):
+                day = temp_room.date_check_out.tm_mday
+                month = temp_room.date_check_out.tm_mon
+                year = temp_room.date_check_out.tm_year
+                temp_room_json["date_check_out"] = str(
+                    day) + "/" + str(month) + "/" + str(year)
+            else:
+                temp_room_json["date_check_out"] = None
+            temp_room_json["description"] = temp_room.description
+            temp_room_json["image_path"] = temp_room.image_path
+            temp_hotel_json["room"].append(temp_room_json)
+        json_object["hotel"].append(temp_hotel_json)
     return json.dumps(json_object, indent=4)
 
 
@@ -133,25 +160,7 @@ def decode_room_id(room_id):
     room_id = room_id.split("_")
     return room_id[0], room_id[1]
 
-
-def find_hotel_by_id(hotel_data, hotel_id):
-    for hotel in hotel_data:
-        if hotel.hotel_id == hotel_id:
-            return hotel
-    return None
-
-
-def find_room_by_id(hotel, room_id):
-    for room in hotel.list_room:
-        if room.room_id == room_id:
-            return room
-    return None
-
-# USER FUNCTIONS
-
-
-# def create_new_user(fullname, birthdate, username, password, credit_card, cvv, expiration_data):
-#     return None
+# USER FUNCTIOS
 
 
 def load_data_user():
@@ -260,11 +269,17 @@ def user_unit_test():
 
 def load_data_bill_json(file_path):
     data = open(file_path)
-    json_object = json.load(data)
+    try:
+        json_object = json.load(data)
+    except:
+        json_object = {}
+    data.close()
     return json_object
 
 
 def convert_json_to_class_bill(json_object):
+    if json_object == {}:
+        return []
     number_of_bill = int(json_object["number_of_bill"])
     if number_of_bill == 0:
         return None
@@ -276,7 +291,7 @@ def convert_json_to_class_bill(json_object):
     return list_of_bill
 
 
-def covert_class_bill_to_json(list_of_bill, number_of_bill):
+def convert_class_bill_to_json(list_of_bill, number_of_bill):
     json_object = {
         "number_of_bill": number_of_bill,
         "bill_list": []
@@ -289,14 +304,20 @@ def covert_class_bill_to_json(list_of_bill, number_of_bill):
             "time_book": list_of_bill[i].time_book,
             "total_price": list_of_bill[i].total_price
         })
-    return json_object
+    return json.dumps(json_object, indent=4)
 
 
-def main():
+def save_bill_data(file_path, list_of_bill, number_of_bill):
+    json_object = convert_class_bill_to_json(list_of_bill, number_of_bill)
+    with open(file_path, "w") as json_file:
+        json_file.write(json_object)
+    json_file.close()
 
-    # Unit test for user
-    user_unit_test()
+# def main():
+
+#     # Unit test for user
+#     user_unit_test()
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

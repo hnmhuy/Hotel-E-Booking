@@ -11,6 +11,8 @@ import bill
 import os
 from PIL import Image
 
+import feature
+
 HOST = "127.0.0.1"
 SERVER_PORT = 65500
 FORMAT = "utf8"

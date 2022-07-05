@@ -1,21 +1,24 @@
 import link_data
 import time
 
+date_format_for_room = "%d/%m/%Y"
+
 
 class Room:
     def __init__(self, room_id, room_type, room_price, room_availability, user_book, date_check_in, date_check_out, description, image_path):
         self.room_id = room_id
         self.room_type = room_type
-        self.room_price = room_price
-        self.room_availability = room_availability
+        self.room_price = float(room_price)
+        self.room_availability = bool(room_availability)
         self.user_book = user_book
         if date_check_in != None:
-            self.date_check_in = time.strptime(self.date_check_in, "%d/%m/%Y")
+            self.date_check_in = time.strptime(
+                date_check_in, date_format_for_room)
         else:
             self.date_check_in = None
         if date_check_out != None:
             self.date_check_out = time.strptime(
-                self.date_check_out, "%d/%m/%Y")
+                date_check_out, date_format_for_room)
         else:
             self.date_check_out = None
         self.description = description
@@ -45,7 +48,7 @@ class Hotel:
         self.hotel_id = hotel_id
         self.hotel_name = hotel_name
         self.hotel_address = hotel_address
-        self.number_available_room = number_available_room
+        self.number_available_room = int(number_available_room)
         self.list_room = []
 
     def create_hotel_id(number_of_hotel):
@@ -85,3 +88,11 @@ def find_room_by_id(hotel_data, room_id):
     for room in hotel_data.list_room:
         if room.room_id == room_id:
             return room
+
+
+def is_hotel_id(string):
+    if string[0] == 'H':
+        if string[1] in '1234567890':
+            if string.find('_') == -1:
+                return True
+    return False

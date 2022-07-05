@@ -4,6 +4,14 @@ import datetime
 import hotel
 
 
+def calculate_date(date_check_in, date_check_out):
+    date_start = datetime.date(
+        date_check_in.tm_year, date_check_in.tm_mon, date_check_in.tm_mday)
+    date_end = datetime.date(date_check_out.tm_year,
+                             date_check_out.tm_mon, date_check_out.tm_mday)
+    return (date_end - date_start).days
+
+
 class Bill:
     def __init__(self, bill_id, list_room_id, user_book, time_book, total_price):
         self.bill_id = bill_id
@@ -22,37 +30,43 @@ class Bill:
 
     def calculate_room_price(room_data):
         if(room_data.date_check_in != None and room_data.date_check_out != None):
-            delta = room_data.date_check_out - room_data.date_check_in
-            return delta.days * room_data.room_price
+            day_diff = calculate_date(
+                room_data.date_check_in, room_data.date_check_out)
+            return day_diff * room_data.room_price
         else:
             return -1
 
-    def calculate_total_price(self):
+    def calculate_total_price(hotel_data, list_room_id):
         total_price = 0
         flag = False
-        for room in self.list_room:
-            temp = Bill.calculate_room_price(room)
-            if temp != -1:
-                total_price += temp
-            else:
+        for room_id in list_room_id:
+            room_data = hotel.find_room_by_id(hotel_data, room_id)
+            room_price = Bill.calculate_room_price(room_data)
+            if room_price == -1:
                 flag = True
                 break
-        if flag:
+            else:
+                total_price += room_price
+
+        if flag == True:
             return -1
         else:
             return total_price
 
-    def create_bill(hotel_data, list_room_id, user_book, time_book, list_of_bill):
+    def create_bill(hotel_data, list_room_id, user_book, list_of_bill):
         total_price = Bill.calculate_total_price(hotel_data, list_room_id)
         if total_price == -1:
-            return ["Something went wrong, one or more room don't available", False]
+            return False
         else:
             bill_id = Bill.create_bill_id(
-                hotel_data.hotel_id, list_of_bill.len()+1)
-            time_book = time.strftime(time.time(), "%H:%M:%S %d/%m/%Y")
+                hotel_data.hotel_id, len(list_of_bill)+1)
+            now = time.time()
+            time_book = time.strftime("%H:%M:%S %d/%m/%Y")
             bill = Bill(bill_id, list_room_id, user_book,
                         time_book, total_price)
+            bill.load_room_data_from_data_base(hotel_data)
             list_of_bill.append(bill)
+
             return ["Bill created successfully", True]
 
     def available_to_cancle(self):
@@ -83,21 +97,30 @@ def find_bill_by_id(list_of_bill, id):
 
 
 def print_bill(bill):
-    print('_'*20)
+    print('_'*30)
     print("YOUR BILL WAS CREATED SUCCESSFULLY")
-    print('_'*20)
+    print('_'*30)
     print("Bill ID: ", bill.bill_id)
     print("User book: ", bill.user_book)
     print("Time book: ", bill.time_book)
-    print("_"*20)
+    print("_"*30)
     print("List room: ")
+    print("_"*30)
+    count = 0
     for room in bill.list_room:
-        print(f"Room ID:        {room.room_id}")
-        print(f"Room type:      {room.room_type}")
-        print(f"Room check in:  {room.date_check_in}")
-        print(f"Room check out: {room.date_check_out}")
-        print(
-            f"Room price:     {room.room_price} x {room.date_check_out - room.date_check_in})")
-        print("-"*10)
-        print(f"Total price:    {Bill.calculate_room_price(room)}")
-        print("_"*20)
+        if(room is not None):
+            count += 1
+            print(' '*10 + "Room "+str(count)+" "*11)
+            print(f"Room ID:        {room.room_id}")
+            print(f"Room type:      {room.room_type}")
+            print(
+                f"Room check in:  {room.date_check_in.tm_mday}/{room.date_check_in.tm_mon}/{room.date_check_in.tm_year}")
+            print(
+                f"Room check out: {room.date_check_out.tm_mday}/{room.date_check_out.tm_mon}/{room.date_check_out.tm_year}")
+            print(
+                f"Room price:     {room.room_price} x {calculate_date(room.date_check_in, room.date_check_out)}")
+            print("-"*20)
+            print(f"{Bill.calculate_room_price(room)}")
+            print("_"*30)
+
+    print("Total price: ", bill.total_price)
