@@ -28,6 +28,7 @@ def load_full_data():
     # Load user data
     user_data = []
     user_data = load_data_user()
+    data.append(user_data)
     # Load bill data
     bill_data = []
     bill_data = convert_json_to_class_bill(
