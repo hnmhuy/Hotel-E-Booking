@@ -107,6 +107,7 @@ try:
         elif choice == "2":
             request.append(BOOKING)
             # Write your function to booking hotel here
+
         elif choice == "3":
             request.append(CANCEL_BOOKING)
             # Write your function to cancel booking here
