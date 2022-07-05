@@ -6,6 +6,7 @@ SERVER_PORT = 65432
 FORMAT = "utf8"
 
 LOGIN = "login"
+SIGNUP = "signup"
 def sendList(client, list):
 
     for item in list:
@@ -25,6 +26,13 @@ def Login(client):
     account.append(password)
     sendList(client, account)   
 
+def Signup(client):
+    list = []
+    print("Please input these information")
+    new_account = user.User.create_new_user()
+    list.append(new_account)
+    sendList(client,list)
+
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print("CLIENT SIDE")
 
@@ -41,6 +49,9 @@ try:
             # wait response
             client.recv(1024)
             Login(client)
+        if(msg == SIGNUP):
+            client.recv(1024)
+            Signup(client)
 
 
 except:

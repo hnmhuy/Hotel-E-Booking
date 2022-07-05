@@ -8,10 +8,13 @@ import hotel
 import user
 import bill
 LOGIN = "login"
+SIGNUP = "signup"
 def CheckLogin(conn, data, list):
     i=0
     while(i < len(data['users'])):
-        if(list[0] == (data['users'][i]['username']) and list[1] == (data['users'][i]['password'])):
+        account_username = data['users'][i]['username']
+        account_password = data['users'][i]['password']
+        if(list[0] == account_username and list[1] == account_password ):
             check = True
             break
         else:
@@ -49,9 +52,14 @@ def handleClient(conn: socket, addr, data):
             conn.sendall(msg.encode(FORMAT))
             list = recvList(conn)
             print("received: ")
-            print(list[0])
-            print(list[1])
-            CheckLogin(conn,data,list)
+            print(list)
+            #CheckLogin(conn,data,list)
+        if(msg ==SIGNUP):
+            conn.sendall(msg.encode(FORMAT))
+            User = recvList(conn)
+            print("received: ")
+            print(User)
+            
 
     print("client" , addr, "has left the sever")
     print(conn.getsockname(), "closed")
@@ -69,7 +77,6 @@ def main():
     # You can write the functions for socket here
     with open("Data\\User.json","r") as fin:
         data = json.load(fin)
-    print (data['users'][0]['username'])
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
     s.bind((HOST, SERVER_PORT))
     s.listen()
