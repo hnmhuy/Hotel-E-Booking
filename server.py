@@ -8,9 +8,10 @@ import hotel
 import user
 import bill
 
-import server_functions
+import server_functions as sf 
 
 LOGIN = "login"
+SEARCH = "search"
 
 def CheckLogin(conn):
     account_list = recvList(conn)
@@ -42,6 +43,24 @@ def handleClient(conn: socket, addr):
             list = recvList(conn)
             print("received: ")
             print(list)
+            
+        if(msg == SEARCH):
+            conn.sendall(msg.encode(FORMAT))
+            search_info = recvList(conn)
+            print("received: ")
+            print(search_info)
+
+            target = {
+                "name": search_info[0],
+                "check_in": search_info[1],
+                "check_out": search_info[2]
+            }
+
+            hotel_data = link_data.read_hotel_data("Data/Hotel/Hotel_Data.json")
+            hotel_list = hotel_data["hotel"]
+            results = sf.search_hotel(target, hotel_list)
+
+            print(results)
 
     print("client" , addr, "has left the sever")
     print(conn.getsockname(), "closed")
@@ -60,6 +79,7 @@ def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
     s.bind((HOST, SERVER_PORT))
     s.listen()
+        
     print("SERVER SIDE")
     print("server:", HOST, SERVER_PORT)
     print("Waiting for Client")

@@ -11,7 +11,7 @@ def find_available_rooms(hotel):
     if hotel["number_available_room"] == 0:
         return room_list 
 
-    for room in hotel["rooms"]:
+    for room in hotel["room"]:
         if room["room_availability"] == True:
             room_list.append(room)
 

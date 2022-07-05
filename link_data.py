@@ -193,54 +193,10 @@ def save_data_user(user_list):
 
 
 def user_unit_test():
-    # new_user = user.User.create_new_user()
-    # profile = load_data_user("deeznuts")
-
-    # print(new_user.username)
-    # print(profile.password)
-    
-    # DATA USE FOR TESTING ONLY
-    # user_list = [
-    #     {
-    #         "fullname": "John Doe",
-    #         "birthday": "01/01/1970",
-    #         "username": "jdoe",
-    #         "password": "jdoe",
-    #         "credit_card": "123456789",
-    #         "cvv": "666",
-    #         "expiration_date": "01/2020",
-    #         "bill": []
-    #     },
-    #     {
-    #         "fullname": "Coin Card",
-    #         "birthday": "19/12/2003",
-    #         "username": "yeee",
-    #         "password": "deeznuts",
-    #         "credit_card": "123456789",
-    #         "cvv": "666",
-    #         "expiration_date": "01/2024",
-    #         "bill": []
-    #     },
-    #     {
-    #         "fullname": "Leroy Jenkins",
-    #         "birthday": "6/9/1969",
-    #         "username": "deeznuts",
-    #         "password": "bruhbruhlmao",
-    #         "credit_card": "1234123412",
-    #         "cvv": "123",
-    #         "expiration_date": "06/2025"
-    #     }
-    # ]
-    
-    # save_data_user(user_list)
-
-    # user_list = load_data_user()
-    # print(user_list)
-    
-    if change_user_data("deeznuts", "cvv", "420"):
-        print("Success")
+    if (user.User.check_cvv("12")):
+        print("A")
     else:
-        print("Failed")
+        print("B")
 
 # BILL FUNCTIONS
 

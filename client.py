@@ -1,7 +1,7 @@
 import socket
 import user
 
-import client_functions
+import client_functions as cf
 
 HOST = "127.0.0.1"
 SERVER_PORT = 65432
@@ -37,6 +37,21 @@ def Login(client):
     account.append(password)
     sendList(client, account)   
 
+
+def search_interface(client):
+    search_info = []
+
+    hotel_name = input("Type in hotel name: ")
+    check_in_date = input("Check in date (DD/MM/YYYY): ")
+    check_out_date = input("Check out date (DD/MM/YYYY): ")
+
+    search_info.append(hotel_name)
+    search_info.append(check_in_date)
+    search_info.append(check_out_date)
+
+    sendList(client, search_info)
+
+
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print("CLIENT SIDE")
 
@@ -53,6 +68,10 @@ try:
             # wait response
             client.recv(1024)
             Login(client)
+
+        if (msg == SEARCH):
+            client.recv(1024)
+            search_interface(client)
 
 
 except:
