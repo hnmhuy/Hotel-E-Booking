@@ -11,6 +11,8 @@ def CheckLogin_Sever(data, list):
     while(i < len(data)):
         account_username = data[i]['username']
         account_password = data[i]['password']
+        print(account_username)
+        print(account_password)
         if(list[1] == account_username and list[2] == account_password ):
             return True
         else:
