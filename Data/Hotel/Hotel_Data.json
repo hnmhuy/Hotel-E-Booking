@@ -5,16 +5,25 @@
             "hotel_id": "H0",
             "hotel_name": "Vinpearl Luxury Landmark 81",
             "hotel_address": "720A, Dien Bien Phu Street Ward 22, Binh Thanh District, Ho Chi Minh",
-            "number_available_room": 4,
+            "number_available_room": 1,
             "room": [
                 {
                     "room_id": "H0_0D",
                     "room_type": "Double",
                     "room_price": 5750000.0,
                     "room_availability": true,
-                    "user_book": null,
-                    "date_check_in": null,
-                    "date_check_out": null,
+                    "user_book": [
+                        "jdoe",
+                        "jdoe"
+                    ],
+                    "date_check_in": [
+                        "7/7/2022",
+                        "1/8/2022"
+                    ],
+                    "date_check_out": [
+                        "8/7/2022",
+                        "4/8/2022"
+                    ],
                     "description": "City View",
                     "image_path": [
                         "H0_0D0",
@@ -26,9 +35,15 @@
                     "room_type": "Double",
                     "room_price": 5750000.0,
                     "room_availability": true,
-                    "user_book": null,
-                    "date_check_in": null,
-                    "date_check_out": null,
+                    "user_book": [
+                        "jdoe"
+                    ],
+                    "date_check_in": [
+                        "2/8/2022"
+                    ],
+                    "date_check_out": [
+                        "3/8/2022"
+                    ],
                     "description": "City View",
                     "image_path": [
                         "H0_1D0",
@@ -71,7 +86,7 @@
             "hotel_id": "H1",
             "hotel_name": "Caravelle Saigon",
             "hotel_address": "19-23, Lam Son, District 1, Ho Chi Minh",
-            "number_available_room": 6,
+            "number_available_room": 5,
             "room": [
                 {
                     "room_id": "H1_0S",
@@ -119,10 +134,16 @@
                     "room_id": "H1_3D",
                     "room_type": "Double",
                     "room_price": 3200000.0,
-                    "room_availability": true,
-                    "user_book": null,
-                    "date_check_in": null,
-                    "date_check_out": null,
+                    "room_availability": false,
+                    "user_book": [
+                        "jdoe"
+                    ],
+                    "date_check_in": [
+                        "7/7/2022"
+                    ],
+                    "date_check_out": [
+                        "7/8/2022"
+                    ],
                     "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
                     "image_path": [
                         "H1_4D0",

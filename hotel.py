@@ -12,13 +12,17 @@ class Room:
         self.room_availability = bool(room_availability)
         self.user_book = user_book
         if date_check_in != None:
-            self.date_check_in = time.strptime(
-                date_check_in, date_format_for_room)
+            self.date_check_in = []
+            for date in date_check_in:
+                temp_date = time.strptime(date, date_format_for_room)
+                self.date_check_in.append(temp_date)
         else:
             self.date_check_in = None
         if date_check_out != None:
-            self.date_check_out = time.strptime(
-                date_check_out, date_format_for_room)
+            self.date_check_out = []
+            for date in date_check_out:
+                temp_date = time.strptime(date, date_format_for_room)
+                self.date_check_out.append(temp_date)
         else:
             self.date_check_out = None
         self.description = description

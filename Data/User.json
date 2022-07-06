@@ -28,7 +28,6 @@
             "credit_card": "1234123412",
             "cvv": "420",
             "expiration_date": "06/2025"
-        },
-        null
+        }
     ]
 }

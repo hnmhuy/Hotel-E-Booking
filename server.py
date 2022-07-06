@@ -10,7 +10,7 @@ import hotel
 import user
 import bill
 
-import server_functions as sf 
+import server_functions as sf
 # import feature
 
 HOST = "127.0.0.1"
@@ -25,6 +25,8 @@ BOOKING = "booking"
 CANCEL_BOOKING = "cancel booking"
 EXIT = "exit"
 
+BUFFER = 6144
+
 
 def recvList(conn):
     list = []
@@ -32,13 +34,14 @@ def recvList(conn):
     item = conn.recv(1024).decode(FORMAT)
 
     while (item != "end"):
-        
+
         list.append(item)
-        #response
+        # response
         conn.sendall(item.encode(FORMAT))
         item = conn.recv(1024).decode(FORMAT)
-    
+
     return list
+
 
 def handleClient(conn: socket, addr, data):
 
@@ -60,7 +63,7 @@ def handleClient(conn: socket, addr, data):
     while True:
         # msg = recvList(conn)
 
-        msg = conn.recv(1024)
+        msg = conn.recv(BUFFER)
         msg = pickle.loads(msg)
 
         print("msg:", msg)
@@ -68,7 +71,6 @@ def handleClient(conn: socket, addr, data):
             # Write your function to log in here
             check = feature.CheckLogin_Sever(data_user, msg)
             conn.sendall(str(check).encode(FORMAT))
-            break
         elif (msg[0] == SIGNUP):
             # Write your function to sign up here
             new_list = msg.remove(msg[0])
@@ -77,7 +79,6 @@ def handleClient(conn: socket, addr, data):
                 conn.sendall("Success".encode(FORMAT))
             else:
                 conn.sendall("Failed".encode(FORMAT))
-            break
         elif (msg[0] == SEARCH):
             # Write your function to search hotel here
 
@@ -96,12 +97,12 @@ def handleClient(conn: socket, addr, data):
             number_of_results, results = sf.search_hotel(target, data_hotel)
 
             conn.send(str(number_of_results).encode())
-            conn.recv(1024)
+            conn.recv(BUFFER)
 
             for found_result in results:
                 stream = pickle.dumps(found_result)
                 conn.send(stream)
-                conn.recv(1024)
+                conn.recv(BUFFER)
 
             print("Finished sending")
 
@@ -119,24 +120,25 @@ def handleClient(conn: socket, addr, data):
         elif (msg[0] == CANCEL_BOOKING):
             # Write your function to cancel booking hotel here
             break
-        elif (msg[0] == "exit"):
+        elif (msg[0] == EXIT):
+            # Write your function to exit server here
             break
         else:
             print("Error")
             break
-    
+
     # print("conn:",conn.getsockname())
     # msg = None
     # while (msg != "x"):
     #     msg = conn.recv(1024).decode(FORMAT)
     #     print("client ",addr, "says", msg)
-        
+
     #     if(msg == LOGIN):
     #         conn.sendall(msg.encode(FORMAT))
     #         list = recvList(conn)
     #         print("received: ")
     #         print(list)
-        
+
     #     # Search function
     #     if(msg == SEARCH):
     #         conn.sendall(msg.encode(FORMAT))
@@ -154,14 +156,14 @@ def handleClient(conn: socket, addr, data):
 
     #         # print(type(results))
 
-    print("client" , addr, "has left the sever")
+    print("client", addr, "has left the sever")
     print(conn.getsockname(), "closed")
     conn.close()
-              
+
 
 clients = {}
-addresses= {}
-HOST= "127.0.0.1"
+addresses = {}
+HOST = "127.0.0.1"
 SERVER_PORT = 65432
 BUFSIZE = 1024
 FORMAT = "utf8"
@@ -170,11 +172,14 @@ FORMAT = "utf8"
 clients = {}
 addresses = {}
 
+
 def main():
     data = link_data.load_full_data()
     link_data.auto_update_room_status(data[0])
+    link_data.save_hotel_data(
+        "Data/Hotel/Hotel_Data.json", data[0], len(data[0]))
     # You can write the functions for socket here
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((HOST, SERVER_PORT))
     s.listen()
 
@@ -183,7 +188,7 @@ def main():
     file_path = root_path + "/Hotel/Hotel_Data.json"
     hotel_data = link_data.convert_json_to_class_hotel(
         link_data.read_hotel_data(file_path))
-        
+
     print("SERVER SIDE")
     print("server:", HOST, SERVER_PORT)
     print("Waiting for Client")
@@ -191,13 +196,14 @@ def main():
     while (nClient < 3):
         try:
             conn, addr = s.accept()
-            thr = threading.Thread(target=handleClient, args=(conn,addr,data))
+            thr = threading.Thread(target=handleClient,
+                                   args=(conn, addr, data))
             thr.daemon = False
             thr.start()
 
         except:
             print("Error")
-        
+
         nClient += 1
     print("End")
     s.close()
@@ -207,7 +213,7 @@ def main():
     file_path = root_path + "/Hotel/Hotel_Data.json"
     hotel_data = link_data.convert_json_to_class_hotel(
         link_data.read_hotel_data(file_path))
-    
+
     # test push main
 
 
