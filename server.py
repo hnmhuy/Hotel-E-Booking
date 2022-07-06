@@ -61,11 +61,15 @@ def handleClient(conn: socket, addr, data):
     print("conn:", conn.getsockname())
 
     # Send welcome message
-    conn.sendall("Welcome to the server".encode(FORMAT))
+    # conn.sendall("Welcome to the server".encode(FORMAT))
     msg = None
 
     while True:
-        msg = recvList(conn)
+        msg = conn.recv(1024)
+        msg = pickle.loads(msg)
+
+        # msg = recvList(conn)
+
         print("msg:", msg)
         if (msg[0] == LOGIN):
             # Write your function to log in here
@@ -99,6 +103,8 @@ def handleClient(conn: socket, addr, data):
                 conn.recv(1024)
 
             print("Finished sending")
+
+            print(conn.recv(1024).decode(FORMAT))
 
         elif (msg[0] == BOOKING):
             # Write your function to booking hotel here
