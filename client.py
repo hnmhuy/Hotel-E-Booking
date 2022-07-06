@@ -1,36 +1,69 @@
 import socket
-from PIL import Image
-import pickle
-import sys
+from urllib import response
 
-from server import BUFFER_IMG
+from numpy import number
 import user
+import pickle
+
+import feature as cf
+
+HOST = "127.0.0.1"
+SERVER_PORT = 65432
 import feature
 import bill
 
-HOST = "127.0.0.1"
-SERVER_PORT = 55544
 FORMAT = "utf8"
-BUFFER_IMG = 4096
 
-# Constant for all server functions
 LOGIN = "login"
-SIGNUP = "signup"
-SEARCHING = "searching"
+SEARCH = "search"
 BOOKING = "booking"
+SIGNUP = "signup"
 CANCEL_BOOKING = "cancel booking"
 EXIT = "exit"
-
 
 def sendList(client, list):
 
     for item in list:
         client.sendall(item.encode(FORMAT))
-        # wait response
+        #wait response
         client.recv(1024)
 
     msg = "end"
-    client.send(msg.encode(FORMAT))
+    client.send(msg.encode(FORMAT))   
+
+def Login(client):
+    account = []
+    print("Please input username and password")
+    username = input('Username:')
+    password = input('Password:')
+    bool = user.User.check_username_availability(username) and user.User.check_password(password)
+    while (bool == False):
+       print('Please try again')
+       print('The maximum length of username is 32 letters ')
+       print('The min of pass is 4 and must have lowercase, uppercase, number, special character')
+       username = input('Username:')
+       password = input('Password:')
+       bool = user.User.check_username_availability(username) and user.User.check_password(password)
+    account.append(username)
+    account.append(password)
+    sendList(client, account)   
+
+
+def search_interface():
+    search_info = []
+
+    hotel_name = input("Type in hotel name: ")
+    search_info.append(hotel_name)
+
+    check_in_date = input("Check in date (DD/MM/YYYY): ")
+    search_info.append(check_in_date)
+
+    check_out_date = input("Check out date (DD/MM/YYYY): ")
+    search_info.append(check_out_date)
+
+
+    return search_info
+
 
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -42,7 +75,7 @@ try:
     print("client address:", client.getsockname())
     msg = None
     print("Connected to server")
-    is_login = False
+    is_login = True
     request = []
     while True:
         print("1. Login")
@@ -56,7 +89,12 @@ try:
             request.append(user_name)
             request.append(user_password)
             request.append("end")
-            sendList(client, request)
+
+            # sendList(client, request)
+
+            send_data = pickle.dumps(request)
+            client.send(send_data)
+
             is_login = client.recv(1024).decode(FORMAT)
             print(is_login)
             if is_login == "True":
@@ -82,7 +120,12 @@ try:
             request.append(credit_card)
             request.append(cvv)
             request.append(expiration_date)
-            sendList(client, request)
+
+            # sendList(client, request)
+            
+            send_data = pickle.dumps(request)
+            client.send(send_data)
+
             is_regis = client.recv(1024).decode(FORMAT)
             if(is_regis == "Success"):
                 print("Register success")
@@ -91,18 +134,47 @@ try:
                 print("Register failed")
                 continue
         break
-    user_name = "mhuy3323"
-    is_login = "True"
-    while is_login == "True":
+
+    while is_login == True:
         print("1. Searching")
         print("2. Booking")
         print("3. Cancel booking")
         print("4. Logout and exit")
         print("\n")
+        
         choice = input("Please choose: ")
+
+        request = []
+
         if choice == "1":
-            request.append(SEARCHING)
             # Write your function to search hotel here
+            request.append(SEARCH)
+            # client.recv(1024)
+
+            info = search_interface()
+
+            for data in info:
+                request.append(data)
+
+            # sendList(client, request)
+            send_data = pickle.dumps(request)
+            client.send(send_data)
+
+            data = client.recv(1024)
+            ack = "a"
+            client.send(ack.encode())
+
+            number_of_results = int(data.decode())
+            search_result = []
+
+            for i in range(number_of_results):
+                data = client.recv(1024)
+                client.send(ack.encode())
+                hotel_room = pickle.loads(data)
+                search_result.append(hotel_room)
+            
+            feature.display_search_results(info, search_result)
+
         elif choice == "2":
             # Write your function to booking hotel here
             msg = feature.get_info_booking(user_name)
@@ -127,6 +199,7 @@ try:
         else:
             print("Please choose again")
             continue
+        
     # print("client address:", client.getsockname())
     # print("client:", HOST, SERVER_PORT)
     # print("Connected to server")
@@ -169,7 +242,9 @@ try:
         #     Login(client)
 
 
-except:
+except Exception as e:
     print("Error")
+    print(e)
+
 
 client.close()

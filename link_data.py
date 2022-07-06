@@ -11,14 +11,6 @@ root_path = "Data/"
 
 
 def load_full_data():
-    '''
-    Return a list of data
-    data[0] = list of hotel
-    data[1] = number of hotel
-    data[2] = list of user
-    data[3] = list of bill
-    data[4] = number of bill
-    '''
     data = []
     # Load hotel data
     hotel_data = []
@@ -36,6 +28,7 @@ def load_full_data():
         load_data_bill_json(root_path + "/Bill.json"))
     data.append(bill_data)
     data.append(len(bill_data))
+
     return data
 
 
@@ -146,7 +139,6 @@ def convert_json_to_class_hotel(json_object):
         list_of_hotel.append(temp_hotel)
     return list_of_hotel
 
-
 def save_hotel_data(file_path, list_hotel, number_of_hotel):
     json_object = convert_class_hotel_to_json(list_hotel, number_of_hotel)
     with open(file_path, "w") as json_file:
@@ -195,6 +187,11 @@ def load_data_user():
 
 
 def change_user_data(username, target_key, change_value):
+    '''
+    This function does not work for bills.
+    I need to update that in the future lmao ;v 
+    '''
+    
     file = open("Data/User.json")
     json_object = json.load(file)
 
@@ -208,21 +205,24 @@ def change_user_data(username, target_key, change_value):
 
     file.close()
 
-    if not found:
-        return False
+    if not found: return False
 
-    new_data = json.dumps(json_object, indent=4)
+    new_data = json.dumps(json_object, indent = 4)
 
     file = open("Data/User.json", "w")
     file.write(new_data)
 
     return True
-
+    
 
 def save_data_user(user_list):
-    user_data = {"users": user_list}
+    '''
+    user_list is a list of dictionaries
+    '''
 
-    json_data = json.dumps(user_data, indent=4)
+    user_data = {"users" : user_list}
+
+    json_data = json.dumps(user_data, indent = 4)
 
     file = open("Data/User.json", "w")
     file.write(json_data)
@@ -233,54 +233,10 @@ def save_data_user(user_list):
 
 
 def user_unit_test():
-    # new_user = user.User.create_new_user()
-    # profile = load_data_user("deeznuts")
-
-    # print(new_user.username)
-    # print(profile.password)
-
-    # DATA USE FOR TESTING ONLY
-    # user_list = [
-    #     {
-    #         "fullname": "John Doe",
-    #         "birthday": "01/01/1970",
-    #         "username": "jdoe",
-    #         "password": "jdoe",
-    #         "credit_card": "123456789",
-    #         "cvv": "666",
-    #         "expiration_date": "01/2020",
-    #         "bill": []
-    #     },
-    #     {
-    #         "fullname": "Coin Card",
-    #         "birthday": "19/12/2003",
-    #         "username": "yeee",
-    #         "password": "deeznuts",
-    #         "credit_card": "123456789",
-    #         "cvv": "666",
-    #         "expiration_date": "01/2024",
-    #         "bill": []
-    #     },
-    #     {
-    #         "fullname": "Leroy Jenkins",
-    #         "birthday": "6/9/1969",
-    #         "username": "deeznuts",
-    #         "password": "bruhbruhlmao",
-    #         "credit_card": "1234123412",
-    #         "cvv": "123",
-    #         "expiration_date": "06/2025"
-    #     }
-    # ]
-
-    # save_data_user(user_list)
-
-    # user_list = load_data_user()
-    # print(user_list)
-
-    if change_user_data("deeznuts", "cvv", "420"):
-        print("Success")
+    if (user.User.check_cvv("12")):
+        print("A")
     else:
-        print("Failed")
+        print("B")
 
 # BILL FUNCTIONS
 
@@ -299,8 +255,6 @@ def convert_json_to_class_bill(json_object):
     if json_object == {}:
         return []
     number_of_bill = int(json_object["number_of_bill"])
-    if number_of_bill == 0:
-        return None
     list_of_bill = []
     for i in range(number_of_bill):
         temp_bill = Bill(json_object["bill_list"][i]["bill_id"], json_object["bill_list"][i]["list_room_id"], json_object["bill_list"][i]["user_book"],
