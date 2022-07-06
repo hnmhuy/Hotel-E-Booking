@@ -22,11 +22,6 @@ def find_available_rooms(hotel, user_check_in, user_check_out):
         return room_count, room_list 
 
     for room in hotel.list_room:
-        # room_check_in = room.date_check_in + "13:00:00"
-        # room_check_out = room.date_check_out + "12:00:00"
-
-        # room_start = time.strptime(room_check_in, "%d/%m/%Y %H:%M:%S")
-        # room_end = time.strptime(room_check_out, "%d/%m/%Y %H:%M:%S")
 
         if (room.room_availability == True or (room.room_availability == False and
             ((time.mktime(user_start) < time.mktime(room.date_check_in) and time.mktime(user_end) < time.mktime(room.date_check_in)) or
