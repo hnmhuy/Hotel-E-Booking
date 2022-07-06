@@ -79,7 +79,7 @@ class User:
         return True
 
     def check_cvv(cvv):
-        if (len(cvv) != 3 or len(cvv) != 4):
+        if (len(cvv) != 3 and len(cvv) != 4):
             return False
 
         return True
