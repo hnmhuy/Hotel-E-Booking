@@ -16,6 +16,16 @@ def CheckLogin_Sever(data, list):
     return False
 import time
 
+
+# Constant for all server functions
+LOGIN = "login"
+SIGNUP = "signup"
+SEARCHING = "searching"
+BOOKING = "booking"
+CANCEL_BOOKING = "cancel booking"
+EXIT = "exit"
+
+
 room_type_single = 'Single'
 room_type_double = 'Double'
 room_type_family = 'Family'
@@ -94,7 +104,7 @@ def booking(info_booking, data_hotel, data_bill):
         if(room.room_type == room_type and room.room_availability == True):
             count_available_room += 1
 
-    if(count_available_room < number_of_room):
+    if(count_available_room < number_of_room - 1):
         return "Error: Not enough room"
     else:
         # Create a bill
@@ -108,7 +118,7 @@ def booking(info_booking, data_hotel, data_bill):
                 room.date_check_out = date_check_out
                 list_of_room_id.append(room.room_id)
                 list_room.append(room)
-            if(count_available_room == number_of_room):
+            if(count_available_room == number_of_room - 1):
                 break
 
         # Create a bill
@@ -118,4 +128,55 @@ def booking(info_booking, data_hotel, data_bill):
     # Update json file
     link_data.save_hotel_data(hotel_path, data_hotel, len(data_hotel))
     link_data.save_bill_data(bill_path, data_bill, len(data_bill))
-    return ["Success", data_bill[len(data_bill)-1]]
+    return "Success: Booking room successfully"
+
+
+def get_info_booking(user_name):
+    msg = []
+    msg.append(BOOKING)
+    msg.append(user_name)
+    hotel = input("Enter the name or id of hotel: ")
+    msg.append(hotel)
+    while True:
+        try:
+            number_of_room = None
+            number_of_room = int(input("Enter the number of room: "))
+            msg.append(str(number_of_room))
+            break
+        except ValueError:
+            print("Error: Invalid number of room")
+    while True:
+        room_type = str(input("Enter the type of room: "))
+        room_type = room_type.upper()
+        if(room_type != "SINGLE" and room_type != "DOUBLE" and room_type != "FAMILY"):
+            print("Error: Invalid room type")
+        else:
+            break
+    msg.append(room_type)
+    while True:
+        try:
+            date_check_in = None
+            date_check_in = input("Enter the date check in: ")
+            time.strptime(date_check_in, date_format)
+            # Check the date check in is greater than today
+            if(time.strptime(date_check_in, date_format) < time.strptime(time.strftime(date_format, time.localtime()), date_format)):
+                print("Error: You must to choose a date greater than today")
+            break
+        except ValueError:
+            print("Error: Invalid date check in")
+    msg.append(date_check_in)
+    while True:
+        try:
+            date_check_out = None
+            date_check_out = input("Enter the date check out: ")
+            time.strptime(date_check_out, date_format)
+            # Check the date check out is greater than check in
+            if(time.strptime(date_check_out, date_format) < time.strptime(date_check_in, date_format)):
+                print("Error: You must to choose a date greater than check in")
+            break
+        except ValueError:
+            print("Error: Invalid date check out")
+    msg.append(date_check_out)
+    note = input("Enter the note: ")
+    msg.append(note)
+    return msg

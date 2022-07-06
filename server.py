@@ -16,7 +16,7 @@ from PIL import Image
 import feature
 
 HOST = "127.0.0.1"
-SERVER_PORT = 65500
+SERVER_PORT = 55544
 FORMAT = "utf8"
 BUFFER_IMG = 4096
 
@@ -78,7 +78,15 @@ def handleClient(conn: socket, addr, data):
             break
         elif (msg[0] == BOOKING):
             # Write your function to booking hotel here
-            break
+            msg.remove(msg[0])
+            msg[2] = int(msg[2])
+            reply = feature.booking(msg, data_hotel, data_bill)
+            if(reply == "Success: Booking room successfully"):
+                conn.sendall(reply.encode(FORMAT))
+                send_bill = pickle.dumps(data_bill[len(data_bill)-1])
+                conn.sendall(send_bill)
+            else:
+                conn.sendall(reply.encode(FORMAT))
         elif (msg[0] == CANCEL_BOOKING):
             # Write your function to cancel booking hotel here
             break
@@ -120,6 +128,11 @@ def handleClient(conn: socket, addr, data):
     conn.close()
 
 
+<<<<<<< HEAD
+clients = {}
+addresses = {}
+=======
+>>>>>>> 02710447f966d48c2485bd34a1bb094aa9eb3d2e
 
 
 def main():
