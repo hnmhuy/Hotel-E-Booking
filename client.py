@@ -49,14 +49,12 @@ def search_interface():
     search_info = []
 
     hotel_name = input("Type in hotel name: ")
-    search_info.append(hotel_name)
-
     check_in_date = input("Check in date (DD/MM/YYYY): ")
-    search_info.append(check_in_date)
-    
     check_out_date = input("Check out date (DD/MM/YYYY): ")
-    search_info.append(check_out_date)
 
+    search_info.append(hotel_name)
+    search_info.append(check_in_date)
+    search_info.append(check_out_date)
 
     return search_info
 
@@ -126,10 +124,7 @@ try:
             for data in info:
                 request.append(data)
 
-            send_data = pickle.dumps(request)
-            client.send(send_data)
-
-            # sendList(client, request)
+            sendList(client, request)
 
             data = client.recv(1024)
             ack = "a"
@@ -145,19 +140,6 @@ try:
                 search_result.append(hotel_room)
             
             cf.display_search_results(info, search_result)
-            
-            print("Do you want to download the room images?")
-            print("1: Yes")
-            print("2: No")
-
-            send_images = input("Your answer: ")
-
-            while (send_images != "1" and send_images != "2"):
-                send_images = input("No such selection. Please re-enter: ")
-
-            client.send(send_images.encode(FORMAT))
-
-            
 
         elif choice == "2":
             request.append(BOOKING)
