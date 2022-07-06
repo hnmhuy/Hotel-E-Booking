@@ -162,7 +162,6 @@ def handleClient(conn: socket, addr, data):
     conn.close()
 
 
-
 clients = {}
 addresses = {}
 
