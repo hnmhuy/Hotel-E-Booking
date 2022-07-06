@@ -1,5 +1,7 @@
 import socket
 from urllib import response
+
+from numpy import number
 import user
 import pickle
 
@@ -110,10 +112,12 @@ try:
         
         choice = input("Please choose: ")
 
+        request = []
+
         if choice == "1":
             # Write your function to search hotel here
             request.append(SEARCH)
-            client.recv(1024)
+            # client.recv(1024)
 
             info = search_interface()
 
@@ -129,16 +133,13 @@ try:
             number_of_results = int(data.decode())
             search_result = []
 
-            print(number_of_results)
-
             for i in range(number_of_results):
                 data = client.recv(1024)
                 client.send(ack.encode())
                 hotel_room = pickle.loads(data)
                 search_result.append(hotel_room)
             
-            for room in search_result:
-                print(room.room_id)
+            cf.display_search_results(info, search_result)
 
         elif choice == "2":
             request.append(BOOKING)

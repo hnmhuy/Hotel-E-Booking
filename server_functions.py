@@ -32,9 +32,17 @@ def search_hotel(target_hotel, hotel_list):
     }
     '''
 
+    number_of_rooms = 0
     found_rooms = []
+    
     for hotel in hotel_list:
-        if hotel.hotel_name == target_hotel["name"]:
+        current_name = hotel.hotel_name.lower()
+        target = target_hotel["name"].lower()
+
+        if (current_name == target or
+                current_name.replace(" ", "") in target.replace(" ", "") or
+                target.replace(" ", "") in current_name.replace(" ", "")):
+
             number_of_rooms, found_rooms = find_available_rooms(hotel)
             break
 

@@ -110,3 +110,17 @@ def booking(info_booking, data_hotel, data_bill):
     link_data.save_hotel_data(hotel_path, data_hotel, len(data_hotel))
     link_data.save_bill_data(bill_path, data_bill, len(data_bill))
     return ["Success", data_bill[len(data_bill)-1]]
+
+
+def display_search_results(keywords, result_list):
+    print("Hotel name: " + keywords[0])
+    print("Check in date: " + keywords[1])
+    print("Check out date: " + keywords[2])
+
+    print("\nAvailable room list:")
+    for room in result_list:
+        print(room.room_id)
+        print(room.room_type)
+        print(room.room_price)
+        print(room.description)
+        print("=========================")

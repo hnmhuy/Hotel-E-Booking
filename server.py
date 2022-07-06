@@ -98,7 +98,8 @@ def handleClient(conn: socket, addr, data):
                 conn.send(stream)
                 conn.recv(1024)
 
-            break
+            print("Finished sending")
+
         elif (msg[0] == BOOKING):
             # Write your function to booking hotel here
             break
