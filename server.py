@@ -28,6 +28,7 @@ BOOKING = "booking"
 CANCEL_BOOKING = "cancel booking"
 EXIT = "exit"
 
+
 def recvList(conn):
     list = []
 
@@ -61,7 +62,7 @@ def handleClient(conn: socket, addr, data):
         print("msg:", msg)
         if (msg[0] == LOGIN):
             # Write your function to log in here
-            check = feature.CheckLogin_Sever(data_user,msg)
+            check = feature.CheckLogin_Sever(data_user, msg)
             conn.sendall(str(check).encode(FORMAT))
             break
         elif (msg[0] == SIGNUP):
@@ -128,15 +129,13 @@ def handleClient(conn: socket, addr, data):
     conn.close()
 
 
-<<<<<<< HEAD
 clients = {}
 addresses = {}
-=======
->>>>>>> 02710447f966d48c2485bd34a1bb094aa9eb3d2e
 
 
 def main():
     data = link_data.load_full_data()
+    link_data.auto_update_room_status(data[0])
     # You can write the functions for socket here
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((HOST, SERVER_PORT))

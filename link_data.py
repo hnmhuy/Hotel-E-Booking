@@ -1,6 +1,4 @@
 import json
-from subprocess import check_output
-from tabnanny import check
 import user
 import hotel
 from bill import Bill
@@ -159,6 +157,26 @@ def save_hotel_data(file_path, list_hotel, number_of_hotel):
 def decode_room_id(room_id):
     room_id = room_id.split("_")
     return room_id[0], room_id[1]
+
+
+def auto_update_room_status(data_hotel):
+    today = time.time()
+    for hotel in data_hotel:
+        for room in hotel.list_room:
+            if(room.date_check_in == None and room.date_check_out == None):
+                continue
+            else:
+                # Check today is in range of date_check_in and date_check_out
+                if(today >= time.mktime(room.date_check_in) and today <= time.mktime(room.date_check_out)):
+                    room.room_availability = False
+                else:
+                    room.room_availability = True
+                    room.date_check_in = None
+                    room.date_check_out = None
+                    room.user_book = None
+
+    save_hotel_data(root_path + "/Hotel/Hotel_Data.json",
+                    data_hotel, len(data_hotel))
 
 # USER FUNCTIOS
 

@@ -32,12 +32,14 @@ def sendList(client, list):
     msg = "end"
     client.send(msg.encode(FORMAT))
 
+
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print("CLIENT SIDE")
 
 try:
+    feature.clear_screen()
     client.connect((HOST, SERVER_PORT))
-    print("client address:",client.getsockname())
+    print("client address:", client.getsockname())
     msg = None
     print("Connected to server")
     is_login = False
