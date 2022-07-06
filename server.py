@@ -55,7 +55,8 @@ def handleClient(conn: socket, addr):
             list = recvList(conn)
             print("received: ")
             print(list)
-            
+        
+        # Search function
         if(msg == SEARCH):
             conn.sendall(msg.encode(FORMAT))
             search_info = recvList(conn)

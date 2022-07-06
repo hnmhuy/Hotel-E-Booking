@@ -9,6 +9,9 @@ FORMAT = "utf8"
 
 LOGIN = "login"
 SEARCH = "search"
+BOOKING = "booking"
+CANCEL_BOOKING = "cancel booking"
+EXIT = "exit"
 
 def sendList(client, list):
 
