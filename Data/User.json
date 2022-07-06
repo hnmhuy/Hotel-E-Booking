@@ -59,6 +59,16 @@
             "cvv": "123",
             "expiration_date": "12/2034",
             "bill": []
+        },
+        {
+            "fullname": "Anh Kiet ",
+            "birthday": "05/09/2003",
+            "username": "kiet",
+            "password": "Anhyeuem@123",
+            "credit_card": "5555666677778888",
+            "cvv": "1234",
+            "expiration_date": "02/2077",
+            "bill": []
         }
     ]
 }
