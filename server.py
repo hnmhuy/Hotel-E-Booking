@@ -64,20 +64,21 @@ def handleClient(conn: socket, addr, data):
         msg = pickle.loads(msg)
 
         print("msg:", msg)
+
         if (msg[0] == LOGIN):
             # Write your function to log in here
             check = feature.CheckLogin_Sever(data_user, msg)
             conn.sendall(str(check).encode(FORMAT))
-            break
+
         elif (msg[0] == SIGNUP):
             # Write your function to sign up here
-            new_list = msg.remove(msg[0])
-            data_user.append(new_list)
+            new_user = msg[1]
+            data_user.append(new_user.__dict__)
             if(link_data.save_data_user(data_user) == True):
                 conn.sendall("Success".encode(FORMAT))
             else:
                 conn.sendall("Failed".encode(FORMAT))
-            break
+                
         elif (msg[0] == SEARCH):
             # Write your function to search hotel here
 

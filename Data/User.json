@@ -27,8 +27,38 @@
             "password": "bruhbruhlmao",
             "credit_card": "1234123412",
             "cvv": "420",
-            "expiration_date": "06/2025"
+            "expiration_date": "06/2025",
+            "bill": []
         },
-        null
+        {
+            "fullname": "Bruh ",
+            "birthday": "1/1/2088",
+            "username": "Huybu",
+            "password": "Hu@123",
+            "credit_card": "1234123412341234",
+            "cvv": "666",
+            "expiration_date": "09/2022",
+            "bill": []
+        },
+        {
+            "fullname": "Minh Huy",
+            "birthday": "3/3/2003",
+            "username": "mh2003",
+            "password": "MinhHuy@2022",
+            "credit_card": "1234432112344321",
+            "cvv": "555",
+            "expiration_date": "02/2025",
+            "bill": []
+        },
+        {
+            "fullname": "send help pls ",
+            "birthday": "12/12/2012",
+            "username": "help",
+            "password": "hElp@123",
+            "credit_card": "4444444444444444",
+            "cvv": "123",
+            "expiration_date": "12/2034",
+            "bill": []
+        }
     ]
 }

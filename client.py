@@ -78,6 +78,7 @@ try:
     is_login = True
     request = []
     while True:
+        request = []    
         print("1. Login")
         print("2. Sign up")
         print("\n")
@@ -106,20 +107,22 @@ try:
         elif choice == "2":
             request.append(SIGNUP)
             new_user = user.User.create_new_user()
-            fullname = new_user.fullname
-            birthday = new_user.birthday
-            username = new_user.username
-            password = new_user.password
-            credit_card = new_user.credit_card
-            cvv = new_user.cvv
-            expiration_date = new_user.expiration_date
-            request.append(fullname)
-            request.append(birthday)
-            request.append(username)
-            request.append(password)
-            request.append(credit_card)
-            request.append(cvv)
-            request.append(expiration_date)
+            request.append(new_user)
+
+            # fullname = new_user.fullname
+            # birthday = new_user.birthday
+            # username = new_user.username
+            # password = new_user.password
+            # credit_card = new_user.credit_card
+            # cvv = new_user.cvv
+            # expiration_date = new_user.expiration_date
+            # request.append(fullname)
+            # request.append(birthday)
+            # request.append(username)
+            # request.append(password)
+            # request.append(credit_card)
+            # request.append(cvv)
+            # request.append(expiration_date)
 
             # sendList(client, request)
             
@@ -135,7 +138,7 @@ try:
                 continue
         break
 
-    while is_login == True:
+    while is_login == "True":
         print("1. Searching")
         print("2. Booking")
         print("3. Cancel booking")
