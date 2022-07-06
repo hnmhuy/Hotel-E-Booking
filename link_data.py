@@ -169,6 +169,11 @@ def load_data_user():
 
 
 def change_user_data(username, target_key, change_value):
+    '''
+    This function does not work for bills.
+    I need to update that in the future lmao ;v 
+    '''
+    
     file = open("Data/User.json")
     json_object = json.load(file)
 
@@ -193,6 +198,10 @@ def change_user_data(username, target_key, change_value):
     
 
 def save_data_user(user_list):
+    '''
+    user_list is a list of dictionaries
+    '''
+
     user_data = {"users" : user_list}
 
     json_data = json.dumps(user_data, indent = 4)

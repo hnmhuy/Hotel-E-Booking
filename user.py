@@ -17,6 +17,7 @@ class User:
         self.credit_card = credit_card
         self.cvv = cvv  # 3 or 4 digits
         self.expiration_date = expiration_date
+        self.bill = []
 
 
     # def check_format_date(date):
