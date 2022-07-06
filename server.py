@@ -66,8 +66,8 @@ def handleClient(conn: socket, addr, data):
             break
         elif (msg[0] == SIGNUP):
             # Write your function to sign up here
-            new_list = msg.remove(msg[0])
-            data_user.append(new_list)
+            new_user = pickle.loads(s)
+            data_user.append(new_user)
             if(link_data.save_data_user(data_user) == True):
                 conn.sendall("Success".encode(FORMAT))
             else:
@@ -132,7 +132,7 @@ def main():
     print("server:", HOST, SERVER_PORT)
     print("Waiting for Client")
     nClient = 0
-    while (nClient < 3):
+    while True:
         try:
             conn, addr = s.accept()
 
@@ -143,8 +143,8 @@ def main():
 
         except:
             print("Error")
+            break
 
-        nClient += 1
     print("End")
     s.close()
     # Here is used to test functions in link_data.py

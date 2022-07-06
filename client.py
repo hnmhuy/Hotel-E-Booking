@@ -64,21 +64,8 @@ try:
         elif choice == "2":
             request.append(SIGNUP)
             new_user = user.User.create_new_user()
-            fullname = new_user.fullname
-            birthday = new_user.birthday
-            username = new_user.username
-            password = new_user.password
-            credit_card = new_user.credit_card
-            cvv = new_user.cvv
-            expiration_date = new_user.expiration_date
-            request.append(fullname)
-            request.append(birthday)
-            request.append(username)
-            request.append(password)
-            request.append(credit_card)
-            request.append(cvv)
-            request.append(expiration_date)
             sendList(client, request)
+            send = pickle.dumps(new_user)
             is_regis = client.recv(1024).decode(FORMAT)
             if(is_regis == "Success"):
                 print("Register success")
