@@ -5,9 +5,11 @@ import sys
 
 from server import BUFFER_IMG
 import user
+import feature
+import bill
 
 HOST = "127.0.0.1"
-SERVER_PORT = 65500
+SERVER_PORT = 55544
 FORMAT = "utf8"
 BUFFER_IMG = 4096
 
@@ -94,6 +96,8 @@ try:
         #         print("Sign up failed")
         #         continue
         break
+    user_name = "mhuy3323"
+    is_login = "True"
     while is_login == "True":
         print("1. Searching")
         print("2. Booking")
@@ -105,9 +109,20 @@ try:
             request.append(SEARCHING)
             # Write your function to search hotel here
         elif choice == "2":
-            request.append(BOOKING)
             # Write your function to booking hotel here
-
+            msg = feature.get_info_booking(user_name)
+            sendList(client, msg)
+            print("Sent booking info to server")
+            print("Waiting for server response . . .")
+            response = client.recv(1024).decode(FORMAT)
+            if response == "Success: Booking room successfully":
+                print(response)
+                revc_data = client.recv(4096)
+                your_bill = pickle.loads(revc_data)
+                print("Here is your bill:")
+                bill.print_bill(your_bill)
+            else:
+                print(response)
         elif choice == "3":
             request.append(CANCEL_BOOKING)
             # Write your function to cancel booking here
