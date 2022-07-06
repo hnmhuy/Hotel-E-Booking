@@ -2,9 +2,8 @@ import socket
 import threading
 import pickle
 import time
-
 import json
-# import feature
+import feature
 # Below are the libraries used to manage data
 import link_data
 import hotel
@@ -154,6 +153,7 @@ def handleClient(conn: socket, addr, data):
     print(conn.getsockname(), "closed")
     conn.close()
               
+
 clients = {}
 addresses= {}
 HOST= "127.0.0.1"
@@ -166,7 +166,6 @@ clients = {}
 addresses = {}
 
 def main():
-
     data = link_data.load_full_data()
     # You can write the functions for socket here
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
