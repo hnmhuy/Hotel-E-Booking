@@ -1,5 +1,7 @@
 import socket
+from urllib import response
 import user
+import pickle
 
 import client_functions as cf
 
@@ -41,7 +43,7 @@ def Login(client):
     sendList(client, account)   
 
 
-def search_interface(client):
+def search_interface():
     search_info = []
 
     hotel_name = input("Type in hotel name: ")
@@ -52,7 +54,7 @@ def search_interface(client):
     search_info.append(check_in_date)
     search_info.append(check_out_date)
 
-    sendList(client, search_info)
+    return search_info
 
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -62,7 +64,7 @@ print("CLIENT SIDE")
 try:
     client.connect((HOST, SERVER_PORT))
     print("Connected to server")
-    is_login = False
+    is_login = True
     request = []
     while True:
         # print("1. Login")
@@ -98,18 +100,46 @@ try:
         #         print("Sign up failed")
         #         continue
         break
-    while is_login == "True":
+
+    while is_login == True:
         print("1. Searching")
         print("2. Booking")
         print("3. Cancel booking")
         print("4. Logout and exit")
         print("\n")
+        
         choice = input("Please choose: ")
+
         if choice == "1":
+            # Write your function to search hotel here
             request.append(SEARCH)
             client.recv(1024)
-            search_interface(client)
-            # Write your function to search hotel here
+
+            info = search_interface()
+
+            for data in info:
+                request.append(data)
+
+            sendList(client, request)
+
+            data = client.recv(1024)
+            ack = "a"
+            client.send(ack.encode())
+
+            number_of_results = int(data.decode())
+            search_result = []
+
+            print(number_of_results)
+
+            for i in range(number_of_results):
+                data = client.recv(1024)
+                client.send(ack.encode())
+                hotel_room = pickle.loads(data)
+                search_result.append(hotel_room)
+            
+            for room in search_result:
+                print(room.room_id)
+
         elif choice == "2":
             request.append(BOOKING)
             # Write your function to booking hotel here
@@ -123,6 +153,7 @@ try:
         else:
             print("Please choose again")
             continue
+        
     # print("client address:", client.getsockname())
     # print("client:", HOST, SERVER_PORT)
     # print("Connected to server")
@@ -165,8 +196,9 @@ try:
         #     Login(client)
 
 
-except:
+except Exception as e:
     print("Error")
+    print(e)
 
 
 client.close()

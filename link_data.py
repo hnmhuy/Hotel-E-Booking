@@ -29,7 +29,7 @@ def load_full_data():
     bill_data = convert_json_to_class_bill(
         load_data_bill_json(root_path + "/Bill.json"))
     data.append(bill_data)
-    data.append(bill_data.len())
+    data.append(len(bill_data))
 
     return data
 
