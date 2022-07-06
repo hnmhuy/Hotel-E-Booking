@@ -18,6 +18,19 @@ def clear_screen():
         _ = system('clear')
 
 
+def ask_to_continue():
+    while True:
+        print("Do you want to continue? (Y/N)")
+        choice = input().upper()
+        if(choice == "Y"):
+            return True
+        elif(choice == "N"):
+            return False
+        else:
+            print("Error: Invalid input")
+            continue
+
+
 def CheckLogin_Sever(data, list):
     i = 0
     while(i < len(data)):
@@ -113,35 +126,57 @@ def booking(info_booking, data_hotel, data_bill):
     count_available_room = 0
     list_of_room_id = []
     list_room = []
-    for room in chosen_hotel.list_room:
-        if(room.room_type == room_type and room.room_availability == True):
-            count_available_room += 1
 
-    if(count_available_room < number_of_room - 1):
-        return "Error: Not enough room"
-    else:
-        # Create a bill
-        for room in chosen_hotel.list_room:
-            if(room.room_type == room_type and room.room_availability == True):
+    for room in chosen_hotel.list_room:
+        if(room.room_type == room_type):
+            available_to_book = True
+            check_in = time.mktime(date_check_in)
+            check_out = time.mktime(date_check_out)
+            if(room.user_book == None):
+                available_to_book = True
+            else:
+                for i in range(len(room.user_book)):
+                    # Check date check in and date check out is available
+                    curr_check_in = time.mktime(room.date_check_in[i])
+                    curr_check_out = time.mktime(room.date_check_out[i])
+                    if(check_in >= curr_check_in and check_in <= curr_check_out):
+                        available_to_book = False
+                        break
+                    elif (check_out >= curr_check_in and check_out <= curr_check_out):
+                        available_to_book = False
+                        break
+                    elif check_in <= curr_check_in and check_out >= curr_check_out:
+                        available_to_book = False
+                        break
+            if(available_to_book):
                 count_available_room += 1
-                # Update the room status
-                room.room_availability = False
-                room.user_book = info_booking[0]
-                room.date_check_in = date_check_in
-                room.date_check_out = date_check_out
                 list_of_room_id.append(room.room_id)
                 list_room.append(room)
-            if(count_available_room == number_of_room - 1):
-                break
+        if(count_available_room == number_of_room):
+            break
 
-        # Create a bill
-        print(bill.Bill.create_bill(chosen_hotel,
-              list_of_room_id, info_booking[0], data_bill)[0])
+    if(count_available_room < number_of_room):
+        return "Error: Not enough room"
+    else:
+        for each_room in list_room:
+            if each_room.user_book == None:
+                each_room.user_book = []
+                each_room.date_check_in = []
+                each_room.date_check_out = []
+            each_room.user_book.append(info_booking[0])
+            each_room.date_check_in.append(date_check_in)
+            each_room.date_check_out.append(date_check_out)
+
+        chosen_hotel.number_available_room -= number_of_room
+
+    # Create a bill
+    print(bill.Bill.create_bill(chosen_hotel,
+                                list_of_room_id, info_booking[0], data_bill)[0])
 
     # Update json file
     link_data.save_hotel_data(hotel_path, data_hotel, len(data_hotel))
     link_data.save_bill_data(bill_path, data_bill, len(data_bill))
-    return ["Success", data_bill[len(data_bill)-1]]
+    return "Success: Booking room successfully"
 
 
 def display_search_results(keywords, result_list):

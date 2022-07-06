@@ -1,36 +1,6 @@
 {
     "users": [
         {
-            "fullname": "John Doe",
-            "birthday": "01/01/1970",
-            "username": "jdoe",
-            "password": "jdoe",
-            "credit_card": "123456789",
-            "cvv": "666",
-            "expiration_date": "01/2020",
-            "bill": []
-        },
-        {
-            "fullname": "Coin Card",
-            "birthday": "19/12/2003",
-            "username": "yeee",
-            "password": "deeznuts",
-            "credit_card": "123456789",
-            "cvv": "666",
-            "expiration_date": "01/2024",
-            "bill": []
-        },
-        {
-            "fullname": "Leroy Jenkins",
-            "birthday": "6/9/1969",
-            "username": "deeznuts",
-            "password": "bruhbruhlmao",
-            "credit_card": "1234123412",
-            "cvv": "420",
-            "expiration_date": "06/2025",
-            "bill": []
-        },
-        {
             "fullname": "Bruh ",
             "birthday": "1/1/2088",
             "username": "Huybu",
