@@ -53,12 +53,14 @@ def search_interface():
     search_info = []
 
     hotel_name = input("Type in hotel name: ")
-    check_in_date = input("Check in date (DD/MM/YYYY): ")
-    check_out_date = input("Check out date (DD/MM/YYYY): ")
-
     search_info.append(hotel_name)
+
+    check_in_date = input("Check in date (DD/MM/YYYY): ")
     search_info.append(check_in_date)
+
+    check_out_date = input("Check out date (DD/MM/YYYY): ")
     search_info.append(check_out_date)
+
 
     return search_info
 
@@ -85,7 +87,12 @@ try:
             request.append(user_name)
             request.append(user_password)
             request.append("end")
-            sendList(client, request)
+
+            # sendList(client, request)
+
+            send_data = pickle.dumps(request)
+            client.send(send_data)
+
             is_login = client.recv(1024).decode(FORMAT)
             print(is_login)
             if is_login == "True":
@@ -111,7 +118,12 @@ try:
             request.append(credit_card)
             request.append(cvv)
             request.append(expiration_date)
-            sendList(client, request)
+
+            # sendList(client, request)
+            
+            send_data = pickle.dumps(request)
+            client.send(send_data)
+
             is_regis = client.recv(1024).decode(FORMAT)
             if(is_regis == "Success"):
                 print("Register success")
@@ -142,7 +154,9 @@ try:
             for data in info:
                 request.append(data)
 
-            sendList(client, request)
+            # sendList(client, request)
+            send_data = pickle.dumps(request)
+            client.send(send_data)
 
             data = client.recv(1024)
             ack = "a"
@@ -157,7 +171,7 @@ try:
                 hotel_room = pickle.loads(data)
                 search_result.append(hotel_room)
             
-            cf.display_search_results(info, search_result)
+            feature.display_search_results(info, search_result)
 
         elif choice == "2":
             # Write your function to booking hotel here
