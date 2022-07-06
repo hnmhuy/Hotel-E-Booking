@@ -3,6 +3,8 @@ import threading
 import pickle
 import time
 
+import json
+# import feature
 # Below are the libraries used to manage data
 import link_data
 import hotel
@@ -13,7 +15,7 @@ import server_functions as sf
 # import feature
 
 HOST = "127.0.0.1"
-SERVER_PORT = 65500
+SERVER_PORT = 55544
 FORMAT = "utf8"
 BUFFER_IMG = 4096
 
@@ -24,15 +26,6 @@ BOOKING = "booking"
 CANCEL_BOOKING = "cancel booking"
 EXIT = "exit"
 
-# # Load hotel data from file
-# root_path = "Data/"
-# file_path = root_path + "/Hotel/Hotel_Data.json"
-# hotel_data = link_data.convert_json_to_class_hotel(
-#                     link_data.read_hotel_data(file_path))
-        
-def CheckLogin(conn):
-    account_list = recvList(conn)
-     
 def recvList(conn):
     list = []
 
@@ -73,9 +66,17 @@ def handleClient(conn: socket, addr, data):
         print("msg:", msg)
         if (msg[0] == LOGIN):
             # Write your function to log in here
+            check = feature.CheckLogin_Sever(data_user,msg)
+            conn.sendall(str(check).encode(FORMAT))
             break
         elif (msg[0] == SIGNUP):
             # Write your function to sign up here
+            new_list = msg.remove(msg[0])
+            data_user.append(new_list)
+            if(link_data.save_data_user(data_user) == True):
+                conn.sendall("Success".encode(FORMAT))
+            else:
+                conn.sendall("Failed".encode(FORMAT))
             break
         elif (msg[0] == SEARCH):
             # Write your function to search hotel here
@@ -108,7 +109,15 @@ def handleClient(conn: socket, addr, data):
 
         elif (msg[0] == BOOKING):
             # Write your function to booking hotel here
-            break
+            msg.remove(msg[0])
+            msg[2] = int(msg[2])
+            reply = feature.booking(msg, data_hotel, data_bill)
+            if(reply == "Success: Booking room successfully"):
+                conn.sendall(reply.encode(FORMAT))
+                send_bill = pickle.dumps(data_bill[len(data_bill)-1])
+                conn.sendall(send_bill)
+            else:
+                conn.sendall(reply.encode(FORMAT))
         elif (msg[0] == CANCEL_BOOKING):
             # Write your function to cancel booking hotel here
             break
@@ -158,10 +167,13 @@ SERVER_PORT = 65432
 BUFSIZE = 1024
 FORMAT = "utf8"
 
+
+clients = {}
+addresses = {}
+
 def main():
 
     data = link_data.load_full_data()
-
     # You can write the functions for socket here
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
     s.bind((HOST, SERVER_PORT))
@@ -189,8 +201,7 @@ def main():
         
         nClient += 1
     print("End")
-    input()
-    s.close();
+    s.close()
     # Here is used to test functions in link_data.py
     # Load hotel data from file
     root_path = "Data/"
