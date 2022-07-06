@@ -13,6 +13,12 @@ import server_functions as sf
 LOGIN = "login"
 SEARCH = "search"
 
+# Load hotel data from file
+root_path = "Data/"
+file_path = root_path + "/Hotel/Hotel_Data.json"
+hotel_data = link_data.convert_json_to_class_hotel(
+                    link_data.read_hotel_data(file_path))
+        
 def CheckLogin(conn):
     account_list = recvList(conn)
      
@@ -56,11 +62,9 @@ def handleClient(conn: socket, addr):
                 "check_out": search_info[2]
             }
 
-            hotel_data = link_data.read_hotel_data("Data/Hotel/Hotel_Data.json")
-            hotel_list = hotel_data["hotel"]
-            results = sf.search_hotel(target, hotel_list)
+            results = sf.search_hotel(target, hotel_data)
 
-            print(results)
+            # print(type(results))
 
     print("client" , addr, "has left the sever")
     print(conn.getsockname(), "closed")
@@ -79,6 +83,12 @@ def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
     s.bind((HOST, SERVER_PORT))
     s.listen()
+
+    # Load hotel data from file
+    root_path = "Data/"
+    file_path = root_path + "/Hotel/Hotel_Data.json"
+    hotel_data = link_data.convert_json_to_class_hotel(
+        link_data.read_hotel_data(file_path))
         
     print("SERVER SIDE")
     print("server:", HOST, SERVER_PORT)
