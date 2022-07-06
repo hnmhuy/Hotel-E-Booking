@@ -13,6 +13,8 @@ import bill
 import os
 from PIL import Image
 
+import feature
+
 HOST = "127.0.0.1"
 SERVER_PORT = 65500
 FORMAT = "utf8"
@@ -63,10 +65,13 @@ def handleClient(conn: socket, addr, data):
             conn.sendall(str(check).encode(FORMAT))
             break
         elif (msg[0] == SIGNUP):
-            print(msg[1])
-            link_data.save_data_user(msg[1])
-            conn.sendall("Success".encode(FORMAT))
             # Write your function to sign up here
+            new_list = msg.remove(msg[0])
+            data_user.append(new_list)
+            if(link_data.save_data_user(data_user) == True):
+                conn.sendall("Success".encode(FORMAT))
+            else:
+                conn.sendall("Failed".encode(FORMAT))
             break
         elif (msg[0] == SEARCHING):
             # Write your function to search hotel here

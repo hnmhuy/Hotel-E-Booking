@@ -63,8 +63,21 @@ try:
                 continue
         elif choice == "2":
             request.append(SIGNUP)
-            user = user.User.create_new_user
-            request.append(user)
+            new_user = user.User.create_new_user()
+            fullname = new_user.fullname
+            birthday = new_user.birthday
+            username = new_user.username
+            password = new_user.password
+            credit_card = new_user.credit_card
+            cvv = new_user.cvv
+            expiration_date = new_user.expiration_date
+            request.append(fullname)
+            request.append(birthday)
+            request.append(username)
+            request.append(password)
+            request.append(credit_card)
+            request.append(cvv)
+            request.append(expiration_date)
             sendList(client, request)
             is_regis = client.recv(1024).decode(FORMAT)
             if(is_regis == "Success"):
@@ -87,6 +100,7 @@ try:
         elif choice == "2":
             request.append(BOOKING)
             # Write your function to booking hotel here
+
         elif choice == "3":
             request.append(CANCEL_BOOKING)
             # Write your function to cancel booking here
