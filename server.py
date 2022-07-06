@@ -9,6 +9,12 @@ import user
 import bill
 
 import server_functions as sf 
+# import feature
+
+HOST = "127.0.0.1"
+SERVER_PORT = 65500
+FORMAT = "utf8"
+BUFFER_IMG = 4096
 
 LOGIN = "login"
 SEARCH = "search"

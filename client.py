@@ -57,21 +57,109 @@ print("CLIENT SIDE")
 
 
 try:
-    client.connect( (HOST, SERVER_PORT) )
-    print("client address:",client.getsockname())
-
-    msg = None
-    while (msg != "x"):
-        msg = input("talk: ")
-        client.sendall(msg.encode(FORMAT))
-        if (msg == LOGIN):
-            # wait response
-            client.recv(1024)
-            Login(client)
-
-        if (msg == SEARCH):
+    client.connect((HOST, SERVER_PORT))
+    print("Connected to server")
+    is_login = False
+    request = []
+    while True:
+        # print("1. Login")
+        # print("2. Sign up")
+        # print("\n")
+        # choice = input("Please choose: ")
+        # if choice == "1":
+        #     request.append(LOGIN)
+        #     user_name = input("Username: ")
+        #     user_password = input("Password: ")
+        #     request.append(user_name)
+        #     request.append(user_password)
+        #     sendList(client, request)
+        #     is_login = client.recv(1024).decode(FORMAT)
+        #     if is_login == "True":
+        #         print("Login success")
+        #         break
+        #     else:
+        #         print("Login failed")
+        #         continue
+        # elif choice == "2":
+        #     request.append(SIGNUP)
+        #     user_name = input("Username: ")
+        #     user_password = input("Password: ")
+        #     request.append(user_name)
+        #     request.append(user_password)
+        #     sendList(client, request)
+        #     is_login = client.recv(1024).decode(FORMAT)
+        #     if is_login == "True":
+        #         print("Sign up success")
+        #         break
+        #     else:
+        #         print("Sign up failed")
+        #         continue
+        break
+    while is_login == "True":
+        print("1. Searching")
+        print("2. Booking")
+        print("3. Cancel booking")
+        print("4. Logout and exit")
+        print("\n")
+        choice = input("Please choose: ")
+        if choice == "1":
+            request.append(SEARCH)
             client.recv(1024)
             search_interface(client)
+            # Write your function to search hotel here
+        elif choice == "2":
+            request.append(BOOKING)
+            # Write your function to booking hotel here
+
+        elif choice == "3":
+            request.append(CANCEL_BOOKING)
+            # Write your function to cancel booking here
+        elif choice == "4":
+            request.append(EXIT)
+            # Write your function to logout here
+        else:
+            print("Please choose again")
+            continue
+    # print("client address:", client.getsockname())
+    # print("client:", HOST, SERVER_PORT)
+    # print("Connected to server")
+    # reply = client.recv(1024).decode(FORMAT)
+    # print("reply:", reply)
+    # msg = None
+    # while (msg != "x"):
+    #     user_info = ["benn", "122345", "end"]
+    #     sendList(client, user_info)
+    #     print("user_info:", user_info)
+    #     print("Received:", client.recv(1024).decode(FORMAT))
+        # msg = input("talk: ")
+        # client.sendall(msg.encode(FORMAT))
+        # if (msg == "list"):
+        #     # wait response
+        #     client.recv(1024)
+        #     sendList(client, list)
+        # elif (msg == "img"):
+        #     # Receive the number of packet
+        #     num_packet = int(client.recv(1024).decode(FORMAT))
+        #     print("num_packet:", num_packet)
+        #     with open("test.jpg", "wb") as f:
+        #         for i in range(num_packet):
+        #             data = client.recv(BUFFER_IMG)
+        #             f.write(data)
+        #     f.close()
+        # Ask to see the image
+        # print("Do you want to see the image? (y/n)")
+        # answer = input()
+        # if (answer == "y"):
+        #     img = Image.open("test.jpg")
+        #     img.show()
+        # else:
+        #     print("Image is not shown")
+        # msg = input("talk: ")
+        # client.sendall(msg.encode(FORMAT))
+        # if (msg == LOGIN):
+        #     # wait response
+        #     client.recv(1024)
+        #     Login(client)
 
 
 except:
