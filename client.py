@@ -32,69 +32,62 @@ def sendList(client, list):
     msg = "end"
     client.send(msg.encode(FORMAT))
 
-
-def Login(client):
-    account = []
-    print("Please input username and password")
-    username = input('Username:')
-    password = input('Password:')
-    bool = user.User.check_username_availability(
-        username) and user.User.check_password(password)
-    while (bool == False):
-        print('Please try again')
-        print('The maximum length of username is 32 letters ')
-        print('The min of pass is 4 and must have lowercase, uppercase, number, special character')
-        username = input('Username:')
-        password = input('Password:')
-        bool = user.User.check_username_availability(
-            username) and user.User.check_password(password)
-    account.append(username)
-    account.append(password)
-    sendList(client, account)
-
-
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print("CLIENT SIDE")
 
-
 try:
     client.connect((HOST, SERVER_PORT))
+    print("client address:",client.getsockname())
+    msg = None
     print("Connected to server")
     is_login = False
     request = []
     while True:
-        # print("1. Login")
-        # print("2. Sign up")
-        # print("\n")
-        # choice = input("Please choose: ")
-        # if choice == "1":
-        #     request.append(LOGIN)
-        #     user_name = input("Username: ")
-        #     user_password = input("Password: ")
-        #     request.append(user_name)
-        #     request.append(user_password)
-        #     sendList(client, request)
-        #     is_login = client.recv(1024).decode(FORMAT)
-        #     if is_login == "True":
-        #         print("Login success")
-        #         break
-        #     else:
-        #         print("Login failed")
-        #         continue
-        # elif choice == "2":
-        #     request.append(SIGNUP)
-        #     user_name = input("Username: ")
-        #     user_password = input("Password: ")
-        #     request.append(user_name)
-        #     request.append(user_password)
-        #     sendList(client, request)
-        #     is_login = client.recv(1024).decode(FORMAT)
-        #     if is_login == "True":
-        #         print("Sign up success")
-        #         break
-        #     else:
-        #         print("Sign up failed")
-        #         continue
+        print("1. Login")
+        print("2. Sign up")
+        print("\n")
+        choice = input("Please choose: ")
+        if choice == "1":
+            request.append(LOGIN)
+            user_name = input("Username: ")
+            user_password = input("Password: ")
+            request.append(user_name)
+            request.append(user_password)
+            request.append("end")
+            sendList(client, request)
+            is_login = client.recv(1024).decode(FORMAT)
+            print(is_login)
+            if is_login == "True":
+                print("Login success")
+                break
+            else:
+                print("Login failed")
+                continue
+        elif choice == "2":
+            request.append(SIGNUP)
+            new_user = user.User.create_new_user()
+            fullname = new_user.fullname
+            birthday = new_user.birthday
+            username = new_user.username
+            password = new_user.password
+            credit_card = new_user.credit_card
+            cvv = new_user.cvv
+            expiration_date = new_user.expiration_date
+            request.append(fullname)
+            request.append(birthday)
+            request.append(username)
+            request.append(password)
+            request.append(credit_card)
+            request.append(cvv)
+            request.append(expiration_date)
+            sendList(client, request)
+            is_regis = client.recv(1024).decode(FORMAT)
+            if(is_regis == "Success"):
+                print("Register success")
+                continue
+            else:
+                print("Register failed")
+                continue
         break
     user_name = "mhuy3323"
     is_login = "True"
@@ -176,6 +169,5 @@ try:
 
 except:
     print("Error")
-
 
 client.close()

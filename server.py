@@ -3,6 +3,8 @@ import socket
 from this import s
 import threading
 import time
+import json
+import feature
 # Below are the libraries used to manage data
 import link_data
 import hotel
@@ -25,11 +27,6 @@ SEARCHING = "searching"
 BOOKING = "booking"
 CANCEL_BOOKING = "cancel booking"
 EXIT = "exit"
-
-
-def CheckLogin(conn):
-    account_list = recvList(conn)
-
 
 def recvList(conn):
     list = []
@@ -64,9 +61,17 @@ def handleClient(conn: socket, addr, data):
         print("msg:", msg)
         if (msg[0] == LOGIN):
             # Write your function to log in here
+            check = feature.CheckLogin_Sever(data_user,msg)
+            conn.sendall(str(check).encode(FORMAT))
             break
         elif (msg[0] == SIGNUP):
             # Write your function to sign up here
+            new_list = msg.remove(msg[0])
+            data_user.append(new_list)
+            if(link_data.save_data_user(data_user) == True):
+                conn.sendall("Success".encode(FORMAT))
+            else:
+                conn.sendall("Failed".encode(FORMAT))
             break
         elif (msg[0] == SEARCHING):
             # Write your function to search hotel here
@@ -123,15 +128,15 @@ def handleClient(conn: socket, addr, data):
     conn.close()
 
 
+<<<<<<< HEAD
 clients = {}
 addresses = {}
+=======
+>>>>>>> 02710447f966d48c2485bd34a1bb094aa9eb3d2e
 
 
 def main():
     data = link_data.load_full_data()
-    # You can wirte the functions for socket here
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
     # You can write the functions for socket here
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((HOST, SERVER_PORT))
@@ -140,7 +145,7 @@ def main():
     print("server:", HOST, SERVER_PORT)
     print("Waiting for Client")
     nClient = 0
-    while (nClient < 10):
+    while (nClient < 3):
         try:
             conn, addr = s.accept()
 
@@ -154,7 +159,6 @@ def main():
 
         nClient += 1
     print("End")
-    input()
     s.close()
     # Here is used to test functions in link_data.py
     # Load hotel data from file
