@@ -1,4 +1,3 @@
-import link_data
 import time
 import datetime
 import hotel
@@ -31,7 +30,8 @@ class Bill:
     def calculate_room_price(room_data):
         if(room_data.date_check_in != None and room_data.date_check_out != None):
             day_diff = calculate_date(
-                room_data.date_check_in, room_data.date_check_out)
+                room_data.date_check_in[len(room_data.date_check_in)-1],
+                room_data.date_check_out[len(room_data.date_check_out)-1])
             return day_diff * room_data.room_price
         else:
             return -1
@@ -107,6 +107,11 @@ def print_bill(bill):
     print("List room: ")
     print("_"*30)
     count = 0
+    index_user_in_bill = 0
+    for i in range(len(bill.list_room[0].user_book)):
+        if bill.user_book == bill.list_room[0].user_book[i]:
+            index_user_in_bill = i
+            break
     for room in bill.list_room:
         if(room is not None):
             count += 1
@@ -114,11 +119,11 @@ def print_bill(bill):
             print(f"Room ID:        {room.room_id}")
             print(f"Room type:      {room.room_type}")
             print(
-                f"Room check in:  {room.date_check_in.tm_mday}/{room.date_check_in.tm_mon}/{room.date_check_in.tm_year}")
+                f"Room check in:  {room.date_check_in[index_user_in_bill].tm_mday}/{room.date_check_in[index_user_in_bill].tm_mon}/{room.date_check_in[index_user_in_bill].tm_year}")
             print(
-                f"Room check out: {room.date_check_out.tm_mday}/{room.date_check_out.tm_mon}/{room.date_check_out.tm_year}")
+                f"Room check out: {room.date_check_out[index_user_in_bill].tm_mday}/{room.date_check_out[index_user_in_bill].tm_mon}/{room.date_check_out[index_user_in_bill].tm_year}")
             print(
-                f"Room price:     {room.room_price} x {calculate_date(room.date_check_in, room.date_check_out)}")
+                f"Room price:     {room.room_price} x {calculate_date(room.date_check_in[index_user_in_bill], room.date_check_out[index_user_in_bill])}")
             print("-"*20)
             print(f"{Bill.calculate_room_price(room)}")
             print("_"*30)

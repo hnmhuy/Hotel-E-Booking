@@ -1,23 +1,23 @@
+import bill
 import socket
-from PIL import Image
-import pickle
-import sys
-
-from server import BUFFER_IMG
 import user
+import pickle
+import time
+import feature
 
-HOST = "127.0.0.1"
-SERVER_PORT = 65500
+HOST = "26.165.5.75"
+SERVER_PORT = 55544
+
 FORMAT = "utf8"
-BUFFER_IMG = 4096
 
-# Constant for all server functions
 LOGIN = "login"
-SIGNUP = "signup"
-SEARCHING = "searching"
+SEARCH = "search"
 BOOKING = "booking"
+SIGNUP = "signup"
 CANCEL_BOOKING = "cancel booking"
 EXIT = "exit"
+
+BUFFER = 6144
 
 
 def sendList(client, list):
@@ -30,17 +30,55 @@ def sendList(client, list):
     msg = "end"
     client.send(msg.encode(FORMAT))
 
+
+def Login(client):
+    account = []
+    print("Please input username and password")
+    username = input('Username:')
+    password = input('Password:')
+    bool = user.User.check_username_availability(
+        username) and user.User.check_password(password)
+    while (bool == False):
+        print('Please try again')
+        print('The maximum length of username is 32 letters ')
+        print('The min of pass is 4 and must have lowercase, uppercase, number, special character')
+        username = input('Username:')
+        password = input('Password:')
+        bool = user.User.check_username_availability(
+            username) and user.User.check_password(password)
+    account.append(username)
+    account.append(password)
+    sendList(client, account)
+
+
+def search_interface():
+    search_info = []
+
+    hotel_name = input("Type in hotel name: ")
+    search_info.append(hotel_name)
+
+    check_in_date = input("Check in date (DD/MM/YYYY): ")
+    search_info.append(check_in_date)
+
+    check_out_date = input("Check out date (DD/MM/YYYY): ")
+    search_info.append(check_out_date)
+
+    return search_info
+
+
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print("CLIENT SIDE")
 
 try:
+    feature.clear_screen()
     client.connect((HOST, SERVER_PORT))
-    print("client address:",client.getsockname())
+    print("client address:", client.getsockname())
     msg = None
     print("Connected to server")
-    is_login = False
+    is_login = True
     request = []
     while True:
+        request = []    
         print("1. Login")
         print("2. Sign up")
         print("\n")
@@ -52,7 +90,12 @@ try:
             request.append(user_name)
             request.append(user_password)
             request.append("end")
-            sendList(client, request)
+
+            # sendList(client, request)
+
+            send_data = pickle.dumps(request)
+            client.send(send_data)
+
             is_login = client.recv(1024).decode(FORMAT)
             print(is_login)
             if is_login == "True":
@@ -64,8 +107,28 @@ try:
         elif choice == "2":
             request.append(SIGNUP)
             new_user = user.User.create_new_user()
-            sendList(client, request)
-            send = pickle.dumps(new_user)
+            request.append(new_user)
+
+            # fullname = new_user.fullname
+            # birthday = new_user.birthday
+            # username = new_user.username
+            # password = new_user.password
+            # credit_card = new_user.credit_card
+            # cvv = new_user.cvv
+            # expiration_date = new_user.expiration_date
+            # request.append(fullname)
+            # request.append(birthday)
+            # request.append(username)
+            # request.append(password)
+            # request.append(credit_card)
+            # request.append(cvv)
+            # request.append(expiration_date)
+
+            # sendList(client, request)
+
+            send_data = pickle.dumps(request)
+            client.send(send_data)
+
             is_regis = client.recv(1024).decode(FORMAT)
             if(is_regis == "Success"):
                 print("Register success")
@@ -73,30 +136,85 @@ try:
             else:
                 print("Register failed")
                 continue
+        else:
+            continue
         break
-    while is_login == "True":
+        
+    flag = True
+    time.sleep(1)
+    while is_login == "True" and flag:
+    
+        feature.clear_screen()
+
         print("1. Searching")
         print("2. Booking")
         print("3. Cancel booking")
         print("4. Logout and exit")
         print("\n")
-        choice = input("Please choose: ")
-        if choice == "1":
-            request.append(SEARCHING)
-            # Write your function to search hotel here
-        elif choice == "2":
-            request.append(BOOKING)
-            # Write your function to booking hotel here
 
+        choice = input("Please choose: ")
+
+        request = []
+
+        if choice == "1":
+            # Write your function to search hotel here
+            request.append(SEARCH)
+            # client.recv(1024)
+
+            info = search_interface()
+
+            for data in info:
+                request.append(data)
+
+            # sendList(client, request)
+            send_data = pickle.dumps(request)
+            client.send(send_data)
+
+            data = client.recv(BUFFER)
+            ack = "a"
+            client.send(ack.encode())
+
+            number_of_results = int(data.decode())
+            search_result = []
+
+            for i in range(number_of_results):
+                data = client.recv(BUFFER)
+                client.send(ack.encode())
+                hotel_room = pickle.loads(data)
+                search_result.append(hotel_room)
+
+            feature.display_search_results(info, search_result)
+            flag = feature.ask_to_continue()
+        elif choice == "2":
+            # Write your function to booking hotel here
+            msg = feature.get_info_booking(user_name)
+            client.sendall(pickle.dumps(msg))
+            print("Sent booking info to server")
+            print("Waiting for server response . . .")
+            response = client.recv(4096).decode(FORMAT)
+            if response == "Success: Booking room successfully":
+                print(response)
+                revc_data = client.recv(4096)
+                your_bill = pickle.loads(revc_data)
+                print("Here is your bill:")
+                bill.print_bill(your_bill)
+            else:
+                print(response)
+            flag = feature.ask_to_continue()
         elif choice == "3":
             request.append(CANCEL_BOOKING)
             # Write your function to cancel booking here
+
+            flag = feature.ask_to_continue()
         elif choice == "4":
             request.append(EXIT)
+            client.sendall(request.encode(FORMAT))
+            break
             # Write your function to logout here
         else:
             print("Please choose again")
             continue
+
     # print("client address:", client.getsockname())
     # print("client:", HOST, SERVER_PORT)
     # print("Connected to server")
@@ -139,7 +257,9 @@ try:
         #     Login(client)
 
 
-except:
+except Exception as e:
     print("Error")
+    print(e)
+
 
 client.close()

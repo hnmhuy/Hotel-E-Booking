@@ -1,9 +1,6 @@
 import json
-from subprocess import check_output
-from tabnanny import check
 import user
 import hotel
-from bill import Bill
 import time
 import bill
 
@@ -13,14 +10,6 @@ root_path = "Data/"
 
 
 def load_full_data():
-    '''
-    Return a list of data
-    data[0] = list of hotel
-    data[1] = number of hotel
-    data[2] = list of user
-    data[3] = list of bill
-    data[4] = number of bill
-    '''
     data = []
     # Load hotel data
     hotel_data = []
@@ -38,6 +27,7 @@ def load_full_data():
         load_data_bill_json(root_path + "/Bill.json"))
     data.append(bill_data)
     data.append(len(bill_data))
+
     return data
 
 
@@ -100,19 +90,25 @@ def convert_class_hotel_to_json(list_of_hotel, number_of_hotel):
             temp_room_json["room_availability"] = temp_room.room_availability
             temp_room_json["user_book"] = temp_room.user_book
             if(temp_room.date_check_in != None):
-                day = temp_room.date_check_in.tm_mday
-                month = temp_room.date_check_in.tm_mon
-                year = temp_room.date_check_in.tm_year
-                temp_room_json["date_check_in"] = str(
-                    day) + "/" + str(month) + "/" + str(year)
+                temp_room_json["date_check_in"] = []
+                for item in temp_room.date_check_in:
+                    day = item.tm_mday
+                    month = item.tm_mon
+                    year = item.tm_year
+                    temp_date_str = str(day) + "/" + \
+                        str(month) + "/" + str(year)
+                    temp_room_json["date_check_in"].append(temp_date_str)
             else:
                 temp_room_json["date_check_in"] = None
             if(temp_room.date_check_out != None):
-                day = temp_room.date_check_out.tm_mday
-                month = temp_room.date_check_out.tm_mon
-                year = temp_room.date_check_out.tm_year
-                temp_room_json["date_check_out"] = str(
-                    day) + "/" + str(month) + "/" + str(year)
+                temp_room_json["date_check_out"] = []
+                for item in temp_room.date_check_out:
+                    day = item.tm_mday
+                    month = item.tm_mon
+                    year = item.tm_year
+                    temp_date_str = str(day) + "/" + \
+                        str(month) + "/" + str(year)
+                    temp_room_json["date_check_out"].append(temp_date_str)
             else:
                 temp_room_json["date_check_out"] = None
             temp_room_json["description"] = temp_room.description
@@ -160,6 +156,21 @@ def decode_room_id(room_id):
     room_id = room_id.split("_")
     return room_id[0], room_id[1]
 
+
+def auto_update_room_status(data_hotel):
+    now = time.localtime()
+    today = time.mktime(now)
+    for hotel in data_hotel:
+        for room in hotel.list_room:
+            if(room.user_book != None):
+                for i in range(len(room.user_book)):
+                    if(time.mktime(room.date_check_out[i]) < today):
+                        room.user_book.remove(room.user_book[i])
+                        room.date_check_in.remove(room.date_check_in[i])
+                        room.date_check_out.remove(room.date_check_out[i])
+    save_hotel_data(root_path + "/Hotel/Hotel_Data.json",
+                    data_hotel, len(data_hotel))
+
 # USER FUNCTIOS
 
 
@@ -177,6 +188,11 @@ def load_data_user():
 
 
 def change_user_data(username, target_key, change_value):
+    '''
+    This function does not work for bills.
+    I need to update that in the future lmao ;v 
+    '''
+
     file = open("Data/User.json")
     json_object = json.load(file)
 
@@ -202,6 +218,10 @@ def change_user_data(username, target_key, change_value):
 
 
 def save_data_user(user_list):
+    '''
+    user_list is a list of dictionaries
+    '''
+
     user_data = {"users": user_list}
 
     json_data = json.dumps(user_data, indent=4)
@@ -215,54 +235,10 @@ def save_data_user(user_list):
 
 
 def user_unit_test():
-    # new_user = user.User.create_new_user()
-    # profile = load_data_user("deeznuts")
-
-    # print(new_user.username)
-    # print(profile.password)
-
-    # DATA USE FOR TESTING ONLY
-    # user_list = [
-    #     {
-    #         "fullname": "John Doe",
-    #         "birthday": "01/01/1970",
-    #         "username": "jdoe",
-    #         "password": "jdoe",
-    #         "credit_card": "123456789",
-    #         "cvv": "666",
-    #         "expiration_date": "01/2020",
-    #         "bill": []
-    #     },
-    #     {
-    #         "fullname": "Coin Card",
-    #         "birthday": "19/12/2003",
-    #         "username": "yeee",
-    #         "password": "deeznuts",
-    #         "credit_card": "123456789",
-    #         "cvv": "666",
-    #         "expiration_date": "01/2024",
-    #         "bill": []
-    #     },
-    #     {
-    #         "fullname": "Leroy Jenkins",
-    #         "birthday": "6/9/1969",
-    #         "username": "deeznuts",
-    #         "password": "bruhbruhlmao",
-    #         "credit_card": "1234123412",
-    #         "cvv": "123",
-    #         "expiration_date": "06/2025"
-    #     }
-    # ]
-
-    # save_data_user(user_list)
-
-    # user_list = load_data_user()
-    # print(user_list)
-
-    if change_user_data("deeznuts", "cvv", "420"):
-        print("Success")
+    if (user.User.check_cvv("12")):
+        print("A")
     else:
-        print("Failed")
+        print("B")
 
 # BILL FUNCTIONS
 
@@ -281,12 +257,10 @@ def convert_json_to_class_bill(json_object):
     if json_object == {}:
         return []
     number_of_bill = int(json_object["number_of_bill"])
-    if number_of_bill == 0:
-        return None
     list_of_bill = []
     for i in range(number_of_bill):
-        temp_bill = Bill(json_object["bill_list"][i]["bill_id"], json_object["bill_list"][i]["list_room_id"], json_object["bill_list"][i]["user_book"],
-                         json_object["bill_list"][i]["time_book"], json_object["bill_list"][i]["total_price"])
+        temp_bill = bill.Bill(json_object["bill_list"][i]["bill_id"], json_object["bill_list"][i]["list_room_id"], json_object["bill_list"][i]["user_book"],
+                              json_object["bill_list"][i]["time_book"], json_object["bill_list"][i]["total_price"])
         list_of_bill.append(temp_bill)
     return list_of_bill
 
