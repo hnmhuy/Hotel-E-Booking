@@ -1,3 +1,4 @@
+import time
 from numpy import number
 import user
 import hotel
@@ -5,18 +6,28 @@ import user
 import bill
 
 import link_data
+from os import system, name
+
+
+def clear_screen():
+    # for windows
+    if name == 'nt':
+        _ = system('cls')
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        _ = system('clear')
+
 
 def CheckLogin_Sever(data, list):
-    i=0
+    i = 0
     while(i < len(data)):
         account_username = data[i]['username']
         account_password = data[i]['password']
-        if(list[1] == account_username and list[2] == account_password ):
+        if(list[1] == account_username and list[2] == account_password):
             return True
         else:
-            i+=1
+            i += 1
     return False
-import time
 
 
 # Constant for all server functions

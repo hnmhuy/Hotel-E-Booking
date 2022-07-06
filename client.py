@@ -65,12 +65,14 @@ def search_interface():
     return search_info
 
 
+
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print("CLIENT SIDE")
 
 try:
+    feature.clear_screen()
     client.connect((HOST, SERVER_PORT))
-    print("client address:",client.getsockname())
+    print("client address:", client.getsockname())
     msg = None
     print("Connected to server")
     is_login = True
