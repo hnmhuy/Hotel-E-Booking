@@ -13,7 +13,7 @@ import bill
 import server_functions as sf
 # import feature
 
-HOST = "127.0.0.1"
+HOST = "26.165.5.75"
 SERVER_PORT = 55544
 FORMAT = "utf8"
 BUFFER_IMG = 4096
@@ -160,14 +160,6 @@ def handleClient(conn: socket, addr, data):
     print("client", addr, "has left the sever")
     print(conn.getsockname(), "closed")
     conn.close()
-
-
-clients = {}
-addresses = {}
-HOST = "127.0.0.1"
-SERVER_PORT = 65432
-BUFSIZE = 1024
-FORMAT = "utf8"
 
 
 clients = {}

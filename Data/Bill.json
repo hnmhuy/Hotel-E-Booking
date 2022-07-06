@@ -1,5 +1,5 @@
 {
-    "number_of_bill": 4,
+    "number_of_bill": 5,
     "bill_list": [
         {
             "bill_id": "BH0_1",
@@ -36,6 +36,15 @@
             ],
             "user_book": "jdoe",
             "time_book": "23:40:04 06/07/2022",
+            "total_price": 5750000.0
+        },
+        {
+            "bill_id": "BH0_5",
+            "list_room_id": [
+                "H0_0D"
+            ],
+            "user_book": "Huybu",
+            "time_book": "00:04:15 07/07/2022",
             "total_price": 5750000.0
         }
     ]
