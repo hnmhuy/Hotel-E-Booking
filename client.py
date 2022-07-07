@@ -103,7 +103,7 @@ try:
     request = []
 
     # Image sending test
-    if receive_image(client, "Downloads/waifu.jpg"):
+    if receive_image(client, "Client_Downloads/waifu.jpg"):
         print("WAIFU IS HERE! PRAISE THE LORD")
 
     while True:
