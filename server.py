@@ -1,3 +1,4 @@
+from logging import exception
 import socket
 import threading
 import pickle
@@ -13,7 +14,7 @@ import bill
 import server_functions as sf
 # import feature
 
-HOST = "26.165.5.75"
+HOST = "127.0.0.1"
 SERVER_PORT = 55544
 FORMAT = "utf8"
 BUFFER_IMG = 4096
@@ -55,11 +56,11 @@ def handleClient(conn: socket, addr, data):
     path_file = "Data/Hotel/Image/H0_1D0.jpg"
 
     print("conn:", conn.getsockname())
-
+    print("addr:", addr)
     # Send welcome message
     # conn.sendall("Welcome to the server".encode(FORMAT))
     msg = None
-
+    
     while True:
         # msg = recvList(conn)
 
@@ -121,7 +122,7 @@ def handleClient(conn: socket, addr, data):
         elif (msg[0] == CANCEL_BOOKING):
             # Write your function to cancel booking hotel here
             break
-        elif (msg[0] == EXIT):
+        elif (msg == EXIT):
             # Write your function to exit server here
             break
         else:
@@ -162,15 +163,12 @@ def handleClient(conn: socket, addr, data):
     conn.close()
 
 
-clients = {}
-addresses = {}
-
-
 def main():
     data = link_data.load_full_data()
     link_data.auto_update_room_status(data[0])
     link_data.save_hotel_data(
         "Data/Hotel/Hotel_Data.json", data[0], len(data[0]))
+
     # You can write the functions for socket here
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((HOST, SERVER_PORT))
@@ -185,20 +183,26 @@ def main():
     print("SERVER SIDE")
     print("server:", HOST, SERVER_PORT)
     print("Waiting for Client")
+    
     nClient = 0
-    while True:
+
+    while (nClient < 10):
         try:
             conn, addr = s.accept()
             thr = threading.Thread(target=handleClient,
-                                   args=(conn, addr, data))
+                                    args=(conn, addr, data))
             thr.daemon = False
             thr.start()
-
-        except:
+            print(nClient)
+            
+        except exception:
             print("Error")
-            break
+            print(exception)
 
+        nClient += 1
+        
     print("End")
+
     s.close()
     # Here is used to test functions in link_data.py
     # Load hotel data from file
