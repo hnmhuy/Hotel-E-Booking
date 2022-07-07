@@ -5,8 +5,8 @@ import pickle
 import time
 import feature
 
-# HOST = "127.0.0.1"
-HOST = "26.165.5.75"
+HOST = "127.0.0.1"
+# HOST = "26.165.5.75"
 SERVER_PORT = 55544
 import feature
 import bill

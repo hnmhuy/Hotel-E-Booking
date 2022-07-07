@@ -14,7 +14,7 @@ import bill
 import server_functions as sf
 # import feature
 
-HOST = "26.165.5.75"
+HOST = "127.0.0.1"
 SERVER_PORT = 55544
 FORMAT = "utf8"
 BUFFER_IMG = 4096
@@ -60,7 +60,7 @@ def handleClient(conn: socket, addr, data):
     # Send welcome message
     # conn.sendall("Welcome to the server".encode(FORMAT))
     msg = None
-
+    
     while True:
         # msg = recvList(conn)
 
@@ -168,6 +168,7 @@ def main():
     link_data.auto_update_room_status(data[0])
     link_data.save_hotel_data(
         "Data/Hotel/Hotel_Data.json", data[0], len(data[0]))
+
     # You can write the functions for socket here
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((HOST, SERVER_PORT))
@@ -182,21 +183,26 @@ def main():
     print("SERVER SIDE")
     print("server:", HOST, SERVER_PORT)
     print("Waiting for Client")
+    
     nClient = 0
+
     while (nClient < 10):
         try:
             conn, addr = s.accept()
             thr = threading.Thread(target=handleClient,
-                                   args=(conn, addr, data))
+                                    args=(conn, addr, data))
             thr.daemon = False
             thr.start()
             print(nClient)
+            
         except exception:
             print("Error")
             print(exception)
 
         nClient += 1
+        
     print("End")
+
     s.close()
     # Here is used to test functions in link_data.py
     # Load hotel data from file
