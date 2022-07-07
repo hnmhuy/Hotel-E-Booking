@@ -224,7 +224,8 @@ def get_info_booking(user_name):
             # Check the date check in is greater than today
             if(time.strptime(date_check_in, date_format) < time.strptime(time.strftime(date_format, time.localtime()), date_format)):
                 print("Error: You must to choose a date greater than today")
-            break
+            else:
+                break
         except ValueError:
             print("Error: Invalid date check in")
     msg.append(date_check_in)
