@@ -4,6 +4,9 @@ import threading
 import pickle
 import time
 import json
+import os
+
+from numpy import number
 import feature
 # Below are the libraries used to manage data
 import link_data
@@ -44,6 +47,27 @@ def recvList(conn):
     return list
 
 
+def send_image(conn, file_path):
+    image = open(file_path, "rb")
+    image_packet = image.read(BUFFER)
+    image_size = os.path.getsize(file_path)
+
+    number_of_packets = image_size / BUFFER
+
+    print(number_of_packets)
+
+    conn.send(str(number_of_packets).encode(FORMAT))
+    conn.recv(BUFFER)
+
+    while image_packet:
+        conn.send(image_packet)
+        image_packet = image.read(BUFFER)
+
+    image.close()
+
+    return True
+
+
 def handleClient(conn: socket, addr, data):
 
     # Login
@@ -57,17 +81,23 @@ def handleClient(conn: socket, addr, data):
 
     print("conn:", conn.getsockname())
     print("addr:", addr)
+
     # Send welcome message
     # conn.sendall("Welcome to the server".encode(FORMAT))
+
     msg = None
     
     while True:
         # msg = recvList(conn)
 
+        if send_image(conn, "cute_blush.jpg"):
+            print("Sent!")
+
         msg = conn.recv(BUFFER)
         msg = pickle.loads(msg)
 
         print("msg:", msg)
+
 
         if (msg[0] == LOGIN):
             # Write your function to log in here

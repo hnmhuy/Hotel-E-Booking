@@ -1,3 +1,4 @@
+from numpy import number
 import bill
 import socket
 import user
@@ -21,6 +22,7 @@ CANCEL_BOOKING = "cancel booking"
 EXIT = "exit"
 
 BUFFER = 6144
+BUFFER_IMG = 4096
 
 
 def sendList(client, list):
@@ -69,8 +71,27 @@ def search_interface():
     return search_info
 
 
+def receive_image(client, file_path):
+    data = client.recv(BUFFER)
+    number_of_packets = int(float(data.decode(FORMAT)))
+
+    client.send("Size received!".encode(FORMAT))
+
+    image = open(file_path, "wb")
+    # image_packet = client.recv(BUFFER)
+
+    for packet in range(number_of_packets):
+        image_packet = client.recv(BUFFER)
+        image.write(image_packet)
+
+    image.close()
+
+    return True
+
+
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print("CLIENT SIDE")
+
 
 try:
     feature.clear_screen()
@@ -80,6 +101,11 @@ try:
     print("Connected to server")
     is_login = True
     request = []
+
+    # Image sending test
+    if receive_image(client, "Downloads/waifu.jpg"):
+        print("WAIFU IS HERE! PRAISE THE LORD")
+
     while True:
         request = []
         print("1. Login")
