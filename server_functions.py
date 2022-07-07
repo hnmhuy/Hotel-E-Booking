@@ -1,3 +1,4 @@
+from numpy import number
 import hotel
 import user
 import bill
@@ -18,17 +19,31 @@ def find_available_rooms(hotel, user_check_in, user_check_out):
     user_start = time.strptime(user_check_in, "%d/%m/%Y %H:%M:%S")
     user_end = time.strptime(user_check_out, "%d/%m/%Y %H:%M:%S")
 
-    if hotel.number_available_room == 0:
-        return room_count, room_list 
+    # if hotel.number_available_room == 0:
+    #     return room_count, room_list 
 
     for room in hotel.list_room:
+        
+        if room.user_book is not None:
+            room_booked = False
 
-        if (room.room_availability == True or (room.room_availability == False and
-            ((time.mktime(user_start) < time.mktime(room.date_check_in) and time.mktime(user_end) < time.mktime(room.date_check_in)) or
-            (time.mktime(user_start) > time.mktime(room.date_check_out) and time.mktime(user_end) > time.mktime(room.date_check_out))))):
+            for i in range(len(room.date_check_in)):
 
+                if not (((time.mktime(user_start) < time.mktime(room.date_check_in[i]) and time.mktime(user_end) < time.mktime(room.date_check_in[i])) or
+                        (time.mktime(user_start) > time.mktime(room.date_check_out[i]) and time.mktime(user_end) > time.mktime(room.date_check_out[i])))):
+                    
+                    room_booked = True
+                    break
+
+            if not room_booked:
+                room_count += 1
+                room_list.append(room)
+
+        else:
             room_count += 1
             room_list.append(room)
+
+    print(room_list)
 
     return room_count, room_list
 
@@ -55,8 +70,13 @@ def search_hotel(target_hotel, hotel_list):
                 current_name.replace(" ", "") in target.replace(" ", "") or
                 target.replace(" ", "") in current_name.replace(" ", "")):
 
+            print("Found")
+
             number_of_rooms, found_rooms = find_available_rooms(hotel, target_hotel["check_in"],
                                                                     target_hotel["check_out"])
+
+            print(number_of_rooms)
+
             break
 
     return number_of_rooms, found_rooms
