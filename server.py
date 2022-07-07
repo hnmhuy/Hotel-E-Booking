@@ -121,6 +121,17 @@ def handleClient(conn: socket, addr, data):
                 conn.sendall(reply.encode(FORMAT))
         elif (msg[0] == CANCEL_BOOKING):
             # Write your function to cancel booking hotel here
+            list_bill=[]
+            while(data_bill!=None):
+                bill_user = bill.find_bill_by_user(data_bill,msg[1])
+                if(bill_user != None and bill.Bill.available_to_cancel(bill_user)== True):
+                    list_bill.append(bill_user)
+                data_bill+=1
+            send_list_bill=pickle.dumps(list_bill)
+            conn.sendall(send_list_bill)   
+            bill_ID_cancel = conn.recv(4096).decode(FORMAT)
+            check_cancel=bill.Bill.cancel_bill(bill_ID_cancel,data_bill)
+            conn.sendall(check_cancel.encode(FORMAT))
             break
         elif (msg == EXIT):
             # Write your function to exit server here

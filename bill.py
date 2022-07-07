@@ -69,7 +69,7 @@ class Bill:
 
             return ["Bill created successfully", True]
 
-    def available_to_cancle(self):
+    def available_to_cancel(self):
         # This bill is available to cancle if time_book < 24 hours
         time_book = time.strptime(self.time_book, "%H:%M:%S %d/%m/%Y")
         time_book = datetime.datetime(time_book.tm_year, time_book.tm_mon,
@@ -81,12 +81,12 @@ class Bill:
                 return True
         return False
 
-    def cancle_bill(hotel_data, bill_id, list_of_bill):
+    def cancel_bill(bill_id, list_of_bill):
         for bill in list_of_bill:
             if bill.bill_id == bill_id:
                 list_of_bill.remove(bill)
-                return ["Bill cancled successfully", True]
-        return ["Bill not found", False]
+                return True
+        return False
 
 
 def find_bill_by_id(list_of_bill, id):
@@ -95,6 +95,11 @@ def find_bill_by_id(list_of_bill, id):
             return bill
     return None
 
+def find_bill_by_user(list_of_bill, user):
+    for bill in list_of_bill:
+        if bill.user_book == user:
+            return bill
+    return None
 
 def print_bill(bill):
     print('_'*30)

@@ -210,8 +210,26 @@ try:
         elif choice == "3":
             request.append(CANCEL_BOOKING)
             # Write your function to cancel booking here
-
+            user_check_bill = input("Please input your username to check bill: ")
+            request.append(user_check_bill)
+            send_data = pickle.dumps(request)
+            client.send(send_data)
+            print("Sent username info to server")
+            print("Waiting for server response . . .")
+            data = client.recv(4096)
+            list_bill = pickle.loads(data)
+            i=0
+            while(i<len(list_bill)):
+                bill.print_bill(list_bill[i])
+                i+=1
             # Press any key to continue
+            bill_id_cancel = input("Please input your ID Bill to cancel: ")
+            client.sendall(bill_id_cancel.encode(FORMAT))
+            print("Waiting for server response . . .")
+            is_cancel = client.recv(4096).decode(FORMAT)
+            if(is_cancel == True): print("your cancel is successful")
+            else:
+                print("your cancel is failed")
             input("Press any key to continue")
         elif choice == "4":
             request.append(EXIT)
