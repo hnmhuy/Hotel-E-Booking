@@ -5,7 +5,7 @@
             "hotel_id": "H0",
             "hotel_name": "Vinpearl Luxury Landmark 81",
             "hotel_address": "720A, Dien Bien Phu Street Ward 22, Binh Thanh District, Ho Chi Minh",
-            "number_available_room": 1,
+            "number_available_room": 0,
             "room": [
                 {
                     "room_id": "H0_0D",
@@ -14,15 +14,18 @@
                     "room_availability": true,
                     "user_book": [
                         "jdoe",
-                        "jdoe"
+                        "jdoe",
+                        "Huybu"
                     ],
                     "date_check_in": [
                         "7/7/2022",
-                        "1/8/2022"
+                        "1/8/2022",
+                        "9/7/2023"
                     ],
                     "date_check_out": [
                         "8/7/2022",
-                        "4/8/2022"
+                        "4/8/2022",
+                        "10/7/2023"
                     ],
                     "description": "City View",
                     "image_path": [
@@ -86,16 +89,22 @@
             "hotel_id": "H1",
             "hotel_name": "Caravelle Saigon",
             "hotel_address": "19-23, Lam Son, District 1, Ho Chi Minh",
-            "number_available_room": 5,
+            "number_available_room": 2,
             "room": [
                 {
                     "room_id": "H1_0S",
                     "room_type": "Single",
                     "room_price": 2800000.0,
                     "room_availability": true,
-                    "user_book": null,
-                    "date_check_in": null,
-                    "date_check_out": null,
+                    "user_book": [
+                        "Huybu"
+                    ],
+                    "date_check_in": [
+                        "15/7/2022"
+                    ],
+                    "date_check_out": [
+                        "19/7/2022"
+                    ],
                     "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
                     "image_path": [
                         "H1_0S0",
@@ -107,9 +116,15 @@
                     "room_type": "Single",
                     "room_price": 2800000.0,
                     "room_availability": true,
-                    "user_book": null,
-                    "date_check_in": null,
-                    "date_check_out": null,
+                    "user_book": [
+                        "nkak0509"
+                    ],
+                    "date_check_in": [
+                        "15/7/2022"
+                    ],
+                    "date_check_out": [
+                        "16/7/2022"
+                    ],
                     "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
                     "image_path": [
                         "H1_1S0",
@@ -155,9 +170,15 @@
                     "room_type": "Double",
                     "room_price": 3200000.0,
                     "room_availability": true,
-                    "user_book": null,
-                    "date_check_in": null,
-                    "date_check_out": null,
+                    "user_book": [
+                        "nkak0509"
+                    ],
+                    "date_check_in": [
+                        "15/7/2022"
+                    ],
+                    "date_check_out": [
+                        "16/7/2022"
+                    ],
                     "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
                     "image_path": [
                         "H1_4D0",

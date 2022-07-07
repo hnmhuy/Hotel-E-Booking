@@ -5,8 +5,8 @@ import pickle
 import time
 import feature
 
-HOST = "127.0.0.1"
-SERVER_PORT = 65432
+HOST = "26.165.5.75"
+SERVER_PORT = 55544
 
 FORMAT = "utf8"
 
@@ -78,7 +78,7 @@ try:
     is_login = True
     request = []
     while True:
-        request = []    
+        request = []
         print("1. Login")
         print("2. Sign up")
         print("\n")
@@ -139,11 +139,11 @@ try:
         else:
             continue
         break
-        
+
     flag = True
     time.sleep(1)
-    while is_login == "True" and flag:
-    
+    while is_login == "True":
+
         feature.clear_screen()
 
         print("1. Searching")
@@ -184,7 +184,9 @@ try:
                 search_result.append(hotel_room)
 
             feature.display_search_results(info, search_result)
-            flag = feature.ask_to_continue()
+
+            # Press any key to continue
+            input("Press any key to continue")
         elif choice == "2":
             # Write your function to booking hotel here
             msg = feature.get_info_booking(user_name)
@@ -200,15 +202,17 @@ try:
                 bill.print_bill(your_bill)
             else:
                 print(response)
-            flag = feature.ask_to_continue()
+            # Press any key to continue
+            input("Press any key to continue")
         elif choice == "3":
             request.append(CANCEL_BOOKING)
             # Write your function to cancel booking here
 
-            flag = feature.ask_to_continue()
+            # Press any key to continue
+            input("Press any key to continue")
         elif choice == "4":
             request.append(EXIT)
-            client.sendall(request.encode(FORMAT))
+            client.sendall(pickle.dumps(request))
             break
             # Write your function to logout here
         else:
@@ -226,35 +230,35 @@ try:
     #     sendList(client, user_info)
     #     print("user_info:", user_info)
     #     print("Received:", client.recv(1024).decode(FORMAT))
-        # msg = input("talk: ")
-        # client.sendall(msg.encode(FORMAT))
-        # if (msg == "list"):
-        #     # wait response
-        #     client.recv(1024)
-        #     sendList(client, list)
-        # elif (msg == "img"):
-        #     # Receive the number of packet
-        #     num_packet = int(client.recv(1024).decode(FORMAT))
-        #     print("num_packet:", num_packet)
-        #     with open("test.jpg", "wb") as f:
-        #         for i in range(num_packet):
-        #             data = client.recv(BUFFER_IMG)
-        #             f.write(data)
-        #     f.close()
-        # Ask to see the image
-        # print("Do you want to see the image? (y/n)")
-        # answer = input()
-        # if (answer == "y"):
-        #     img = Image.open("test.jpg")
-        #     img.show()
-        # else:
-        #     print("Image is not shown")
-        # msg = input("talk: ")
-        # client.sendall(msg.encode(FORMAT))
-        # if (msg == LOGIN):
-        #     # wait response
-        #     client.recv(1024)
-        #     Login(client)
+    # msg = input("talk: ")
+    # client.sendall(msg.encode(FORMAT))
+    # if (msg == "list"):
+    #     # wait response
+    #     client.recv(1024)
+    #     sendList(client, list)
+    # elif (msg == "img"):
+    #     # Receive the number of packet
+    #     num_packet = int(client.recv(1024).decode(FORMAT))
+    #     print("num_packet:", num_packet)
+    #     with open("test.jpg", "wb") as f:
+    #         for i in range(num_packet):
+    #             data = client.recv(BUFFER_IMG)
+    #             f.write(data)
+    #     f.close()
+    # Ask to see the image
+    # print("Do you want to see the image? (y/n)")
+    # answer = input()
+    # if (answer == "y"):
+    #     img = Image.open("test.jpg")
+    #     img.show()
+    # else:
+    #     print("Image is not shown")
+    # msg = input("talk: ")
+    # client.sendall(msg.encode(FORMAT))
+    # if (msg == LOGIN):
+    #     # wait response
+    #     client.recv(1024)
+    #     Login(client)
 
 
 except Exception as e:

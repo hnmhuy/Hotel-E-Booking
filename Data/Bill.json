@@ -1,5 +1,5 @@
 {
-    "number_of_bill": 4,
+    "number_of_bill": 8,
     "bill_list": [
         {
             "bill_id": "BH0_1",
@@ -37,6 +37,42 @@
             "user_book": "jdoe",
             "time_book": "23:40:04 06/07/2022",
             "total_price": 5750000.0
+        },
+        {
+            "bill_id": "BH0_5",
+            "list_room_id": [
+                "H0_0D"
+            ],
+            "user_book": "Huybu",
+            "time_book": "00:04:15 07/07/2022",
+            "total_price": 5750000.0
+        },
+        {
+            "bill_id": "BH1_6",
+            "list_room_id": [
+                "H1_0S"
+            ],
+            "user_book": "Huybu",
+            "time_book": "00:17:19 07/07/2022",
+            "total_price": 11200000.0
+        },
+        {
+            "bill_id": "BH1_7",
+            "list_room_id": [
+                "H1_4D"
+            ],
+            "user_book": "nkak0509",
+            "time_book": "00:18:21 07/07/2022",
+            "total_price": 3200000.0
+        },
+        {
+            "bill_id": "BH1_8",
+            "list_room_id": [
+                "H1_1S"
+            ],
+            "user_book": "nkak0509",
+            "time_book": "00:19:29 07/07/2022",
+            "total_price": 2800000.0
         }
     ]
 }
