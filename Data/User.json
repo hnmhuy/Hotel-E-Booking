@@ -31,13 +31,13 @@
             "bill": []
         },
         {
-            "fullname": "Anh Kiet ",
+            "fullname": "Nguyen Khanh Anh Kiet",
             "birthday": "05/09/2003",
-            "username": "kiet",
-            "password": "Anhyeuem@123",
-            "credit_card": "5555666677778888",
+            "username": "nkak0509",
+            "password": "Anhkiet05092003@",
+            "credit_card": "1111222233334444",
             "cvv": "1234",
-            "expiration_date": "02/2077",
+            "expiration_date": "05/2025",
             "bill": []
         }
     ]
