@@ -1,3 +1,4 @@
+from logging import exception
 import socket
 import threading
 import pickle
@@ -55,7 +56,7 @@ def handleClient(conn: socket, addr, data):
     path_file = "Data/Hotel/Image/H0_1D0.jpg"
 
     print("conn:", conn.getsockname())
-
+    print("addr:", addr)
     # Send welcome message
     # conn.sendall("Welcome to the server".encode(FORMAT))
     msg = None
@@ -121,7 +122,7 @@ def handleClient(conn: socket, addr, data):
         elif (msg[0] == CANCEL_BOOKING):
             # Write your function to cancel booking hotel here
             break
-        elif (msg[0] == EXIT):
+        elif (msg == EXIT):
             # Write your function to exit server here
             break
         else:
@@ -162,10 +163,6 @@ def handleClient(conn: socket, addr, data):
     conn.close()
 
 
-clients = {}
-addresses = {}
-
-
 def main():
     data = link_data.load_full_data()
     link_data.auto_update_room_status(data[0])
@@ -186,16 +183,17 @@ def main():
     print("server:", HOST, SERVER_PORT)
     print("Waiting for Client")
     nClient = 0
-    while (nClient < 3):
+    while (nClient < 10):
         try:
             conn, addr = s.accept()
             thr = threading.Thread(target=handleClient,
                                    args=(conn, addr, data))
             thr.daemon = False
             thr.start()
-
-        except:
+            print(nClient)
+        except exception:
             print("Error")
+            print(exception)
 
         nClient += 1
     print("End")

@@ -174,6 +174,8 @@ def booking(info_booking, data_hotel, data_bill):
                                 list_of_room_id, info_booking[0], data_bill)[0])
 
     # Update json file
+    link_data.update_user_bill(
+        info_booking[0], data_bill[len(data_bill) - 1].bill_id)
     link_data.save_hotel_data(hotel_path, data_hotel, len(data_hotel))
     link_data.save_bill_data(bill_path, data_bill, len(data_bill))
     return "Success: Booking room successfully"
@@ -224,7 +226,8 @@ def get_info_booking(user_name):
             # Check the date check in is greater than today
             if(time.strptime(date_check_in, date_format) < time.strptime(time.strftime(date_format, time.localtime()), date_format)):
                 print("Error: You must to choose a date greater than today")
-            break
+            else:
+                break
         except ValueError:
             print("Error: Invalid date check in")
     msg.append(date_check_in)
@@ -236,7 +239,8 @@ def get_info_booking(user_name):
             # Check the date check out is greater than check in
             if(time.strptime(date_check_out, date_format) < time.strptime(date_check_in, date_format)):
                 print("Error: You must to choose a date greater than check in")
-            break
+            else:
+                break
         except ValueError:
             print("Error: Invalid date check out")
     msg.append(date_check_out)

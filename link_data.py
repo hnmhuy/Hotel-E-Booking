@@ -174,6 +174,16 @@ def auto_update_room_status(data_hotel):
 # USER FUNCTIOS
 
 
+def update_user_bill(user_name, new_bill_id):
+    with open(root_path + "Bill.json", "w") as json_file:
+        json_object = json.load(json_file)
+        for i in range(len(json_object["users"])):
+            if(json_object["users"][i]["username"] == user_name):
+                json_object["users"][i]["bill"].append(new_bill_id)
+        json_file.write(json.dumps(json_object, indent=4))
+    json_file.close()
+
+
 def load_data_user():
     '''
     This function returns a list of users
