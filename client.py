@@ -103,8 +103,8 @@ try:
     request = []
 
     # Image sending test
-    if receive_image(client, "Client_Downloads/waifu.jpg"):
-        print("WAIFU IS HERE! PRAISE THE LORD")
+    # if receive_image(client, "Client_Downloads/waifu.jpg"):
+    #     print("WAIFU IS HERE! PRAISE THE LORD")
 
     while True:
         request = []
@@ -214,8 +214,27 @@ try:
 
             feature.display_search_results(info, search_result)
 
+            print("Do you want to download the room images?")
+            print("1. Yes")
+            print("2. No\n")
+
+            confirm_send = input("Your choice: ")
+
+            while (confirm_send != "1" and confirm_send != "2"):
+                confirm_send = input("Invalid input, please re-enter: ")
+
+            client.send(confirm_send.encode(FORMAT))
+
+            if confirm_send == "1":
+                for each_room in search_result:
+                    for each_image in each_room.image_path:
+                        if receive_image(client, "Client_Downloads/" + each_image):
+                            client.send("RECEIVED".encode(FORMAT))  # Confirms image arrival
+
+
             # Press any key to continue
             input("Press any key to continue")
+
         elif choice == "2":
             # Write your function to booking hotel here
             msg = feature.get_info_booking(user_name)
