@@ -43,7 +43,7 @@ def find_available_rooms(hotel, user_check_in, user_check_out):
             room_count += 1
             room_list.append(room)
 
-    print(room_list)
+    # print(room_list)
 
     return room_count, room_list
 
@@ -75,7 +75,7 @@ def search_hotel(target_hotel, hotel_list):
             number_of_rooms, found_rooms = find_available_rooms(hotel, target_hotel["check_in"],
                                                                     target_hotel["check_out"])
 
-            print(number_of_rooms)
+            # print(number_of_rooms)
 
             break
 

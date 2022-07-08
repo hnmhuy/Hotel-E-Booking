@@ -4,6 +4,7 @@ import socket
 import user
 import pickle
 import time
+import math
 import feature
 
 HOST = "127.0.0.1"
@@ -73,14 +74,15 @@ def search_interface():
 
 def receive_image(client, file_path):
     data = client.recv(BUFFER)
-    number_of_packets = int(float(data.decode(FORMAT)))
+    number_of_packets = float(data.decode(FORMAT))
 
+    # print(number_of_packets)
     client.send("Size received!".encode(FORMAT))
 
     image = open(file_path, "wb")
-    # image_packet = client.recv(BUFFER)
 
-    for packet in range(number_of_packets):
+    for packet in range(math.ceil(number_of_packets)):
+        # print(file_path)
         image_packet = client.recv(BUFFER)
         image.write(image_packet)
 
@@ -228,9 +230,10 @@ try:
             if confirm_send == "1":
                 for each_room in search_result:
                     for each_image in each_room.image_path:
-                        if receive_image(client, "Client_Downloads/" + each_image):
-                            client.send("RECEIVED".encode(FORMAT))  # Confirms image arrival
+                        if receive_image(client, "Client_Downloads/" + each_image + ".jpg"):
+                            client.send("RECEIVED".encode())
 
+                print("Photos are downloaded in Client_Downloads")
 
             # Press any key to continue
             input("Press any key to continue")

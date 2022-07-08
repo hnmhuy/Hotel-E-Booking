@@ -163,11 +163,17 @@ def auto_update_room_status(data_hotel):
     for hotel in data_hotel:
         for room in hotel.list_room:
             if(room.user_book != None):
-                for i in range(len(room.user_book)):
+                i = 0
+                while i < len(room.user_book):
                     if(time.mktime(room.date_check_out[i]) < today):
+                        print(i)
                         room.user_book.remove(room.user_book[i])
                         room.date_check_in.remove(room.date_check_in[i])
                         room.date_check_out.remove(room.date_check_out[i])
+                        continue
+
+                    i += 1
+
     save_hotel_data(root_path + "/Hotel/Hotel_Data.json",
                     data_hotel, len(data_hotel))
 

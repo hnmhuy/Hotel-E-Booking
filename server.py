@@ -54,7 +54,7 @@ def send_image(conn, file_path):
 
     number_of_packets = image_size / BUFFER
 
-    print(number_of_packets)
+    # print(number_of_packets)
 
     conn.send(str(number_of_packets).encode(FORMAT))
     conn.recv(BUFFER)
@@ -143,8 +143,10 @@ def handleClient(conn: socket, addr, data):
             if confirm_download == "1":
                 for each_room in results:
                     for each_image in each_room.image_path:
-                        if (send_image(conn, "Data/Hotel/Image/" + each_image)):
-                            conn.recv(BUFFER)   # Waits for respond after each image sent
+                        if send_image(conn, "Data/Hotel/Image/" + each_image + ".jpg"):
+                            conn.recv(BUFFER)
+
+                print("Images sent")
 
         elif (msg[0] == BOOKING):
             # Write your function to booking hotel here
