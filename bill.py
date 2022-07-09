@@ -81,10 +81,19 @@ class Bill:
                 return True
         return False
 
-    def cancel_bill(data_user,bill_id, list_of_bill):
+    def cancel_bill(data_user, bill_id, list_of_bill):
         for bill in list_of_bill:
             if bill.bill_id == bill_id:
                 data_user["bill"].remove(bill_id)
+                for room in bill.list_room:
+                    i = 0
+                    for i in range(len(room.user_book)):
+                        if room.user_book[i] == bill.user_book:
+                            break
+
+                    room.user_book.remove(room.user_book[i])
+                    room.date_check_in.remove(room.date_check_in[i])
+                    room.date_check_out.remove(room.date_check_out[i])
                 list_of_bill.remove(bill)
                 return True
         return False
@@ -96,15 +105,15 @@ def find_bill_by_id(list_of_bill, id):
             return bill
     return None
 
+
 def find_bill_by_user(list_of_bill, user):
     for bill in list_of_bill:
         if bill.user_book == user:
             return bill
     return None
 
+
 def print_bill(bill):
-    print('_'*30)
-    print("YOUR BILL WAS CREATED SUCCESSFULLY")
     print('_'*30)
     print("Bill ID: ", bill.bill_id)
     print("User book: ", bill.user_book)

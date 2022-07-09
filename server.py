@@ -141,7 +141,7 @@ def handleClient(conn: socket, addr, data):
             # Write your function to booking hotel here
             msg.remove(msg[0])
             msg[2] = int(msg[2])
-            reply = feature.booking(msg, data_hotel, data_bill)
+            reply = feature.booking(msg, data_hotel, data_bill, data_user)
             if(reply == "Success: Booking room successfully"):
                 conn.sendall(reply.encode(FORMAT))
                 send_bill = pickle.dumps(data_bill[len(data_bill)-1])
@@ -150,18 +150,22 @@ def handleClient(conn: socket, addr, data):
                 conn.sendall(reply.encode(FORMAT))
         elif (msg[0] == CANCEL_BOOKING):
             # Write your function to cancel booking hotel here
-            list_bill=feature.Find_Cancel_Bill(data_bill,data_user[index_user])
-            send_list_bill=pickle.dumps(list_bill)
-            conn.sendall(send_list_bill)   
+            list_bill = feature.Find_Cancel_Bill(
+                data_bill, data_user[index_user], data_hotel)
+            send_list_bill = pickle.dumps(list_bill)
+            conn.sendall(send_list_bill)
             bill_ID_cancel = conn.recv(4096).decode(FORMAT)
-            check_cancel=bill.Bill.cancel_bill(data_user[index_user],bill_ID_cancel,data_bill)
-            link_data.save_bill_data("Data\Bill.json",data_bill,len(data_bill))
+            check_cancel = bill.Bill.cancel_bill(
+                data_user[index_user], bill_ID_cancel, data_bill)
+            link_data.save_bill_data(
+                "Data\Bill.json", data_bill, len(data_bill))
             link_data.save_data_user(data_user)
-            conn.sendall(check_cancel.encode(FORMAT))
-            break
+            link_data.save_hotel_data(
+                "Data/Hotel/Hotel_Data.json", data_hotel, len(data_hotel))
+            conn.sendall(str(check_cancel).encode(FORMAT))
         elif (msg == EXIT):
             # Write your function to exit server here
-            break 
+            break
         else:
             print("Error")
             break
