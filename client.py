@@ -1,15 +1,15 @@
+from numpy import number
 import bill
 import socket
 import user
 import pickle
 import time
+import math
 import feature
 
 HOST = "127.0.0.1"
 # HOST = "26.165.5.75"
 SERVER_PORT = 55544
-import feature
-import bill
 
 FORMAT = "utf8"
 
@@ -21,6 +21,7 @@ CANCEL_BOOKING = "cancel booking"
 EXIT = "exit"
 
 BUFFER = 6144
+BUFFER_IMG = 4096
 
 
 def sendList(client, list):
@@ -69,8 +70,28 @@ def search_interface():
     return search_info
 
 
+def receive_image(client, file_path):
+    data = client.recv(BUFFER)
+    number_of_packets = float(data.decode(FORMAT))
+
+    # print(number_of_packets)
+    client.send("Size received!".encode(FORMAT))
+
+    image = open(file_path, "wb")
+
+    for packet in range(math.ceil(number_of_packets)):
+        # print(file_path)
+        image_packet = client.recv(BUFFER)
+        image.write(image_packet)
+
+    image.close()
+
+    return True
+
+
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print("CLIENT SIDE")
+
 
 try:
     feature.clear_screen()
@@ -80,7 +101,14 @@ try:
     print("Connected to server")
     is_login = True
     request = []
+
+    # Image sending test
+
     while True:
+        print("WELCOME TO HOTEL BOOKING SYSTEM")
+        print("=================================")
+        print()
+
         request = []
         print("1. Login")
         print("2. Sign up")
@@ -100,7 +128,6 @@ try:
             client.send(send_data)
 
             is_login = client.recv(1024).decode(FORMAT)
-            print(is_login)
             if is_login == "True":
                 print("Login success")
                 break
@@ -111,24 +138,6 @@ try:
             request.append(SIGNUP)
             new_user = user.User.create_new_user()
             request.append(new_user)
-
-            # fullname = new_user.fullname
-            # birthday = new_user.birthday
-            # username = new_user.username
-            # password = new_user.password
-            # credit_card = new_user.credit_card
-            # cvv = new_user.cvv
-            # expiration_date = new_user.expiration_date
-            # request.append(fullname)
-            # request.append(birthday)
-            # request.append(username)
-            # request.append(password)
-            # request.append(credit_card)
-            # request.append(cvv)
-            # request.append(expiration_date)
-
-            # sendList(client, request)
-
             send_data = pickle.dumps(request)
             client.send(send_data)
 
@@ -148,7 +157,9 @@ try:
     while is_login == "True":
 
         feature.clear_screen()
-
+        print("BOOKING HOTEL SYSTEM")
+        print("====================")
+        print()
         print("1. Searching")
         print("2. Booking")
         print("3. Cancel booking")
@@ -188,8 +199,28 @@ try:
 
             feature.display_search_results(info, search_result)
 
+            print("Do you want to download the room images?")
+            print("1. Yes")
+            print("2. No\n")
+
+            confirm_send = input("Your choice: ")
+
+            while (confirm_send != "1" and confirm_send != "2"):
+                confirm_send = input("Invalid input, please re-enter: ")
+
+            client.send(confirm_send.encode(FORMAT))
+
+            if confirm_send == "1":
+                for each_room in search_result:
+                    for each_image in each_room.image_path:
+                        if receive_image(client, "Client_Downloads/" + each_image + ".jpg"):
+                            client.send("RECEIVED".encode())
+
+                print("Photos are downloaded in Client_Downloads")
+
             # Press any key to continue
             input("Press any key to continue")
+
         elif choice == "2":
             # Write your function to booking hotel here
             msg = feature.get_info_booking(user_name)
@@ -235,52 +266,11 @@ try:
             request.append(EXIT)
             client.sendall(pickle.dumps(request))
             break
+
             # Write your function to logout here
         else:
             print("Please choose again")
             continue
-
-    # print("client address:", client.getsockname())
-    # print("client:", HOST, SERVER_PORT)
-    # print("Connected to server")
-    # reply = client.recv(1024).decode(FORMAT)
-    # print("reply:", reply)
-    # msg = None
-    # while (msg != "x"):
-    #     user_info = ["benn", "122345", "end"]
-    #     sendList(client, user_info)
-    #     print("user_info:", user_info)
-    #     print("Received:", client.recv(1024).decode(FORMAT))
-    # msg = input("talk: ")
-    # client.sendall(msg.encode(FORMAT))
-    # if (msg == "list"):
-    #     # wait response
-    #     client.recv(1024)
-    #     sendList(client, list)
-    # elif (msg == "img"):
-    #     # Receive the number of packet
-    #     num_packet = int(client.recv(1024).decode(FORMAT))
-    #     print("num_packet:", num_packet)
-    #     with open("test.jpg", "wb") as f:
-    #         for i in range(num_packet):
-    #             data = client.recv(BUFFER_IMG)
-    #             f.write(data)
-    #     f.close()
-    # Ask to see the image
-    # print("Do you want to see the image? (y/n)")
-    # answer = input()
-    # if (answer == "y"):
-    #     img = Image.open("test.jpg")
-    #     img.show()
-    # else:
-    #     print("Image is not shown")
-    # msg = input("talk: ")
-    # client.sendall(msg.encode(FORMAT))
-    # if (msg == LOGIN):
-    #     # wait response
-    #     client.recv(1024)
-    #     Login(client)
-
 
 except Exception as e:
     print("Error")

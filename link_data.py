@@ -163,11 +163,17 @@ def auto_update_room_status(data_hotel):
     for hotel in data_hotel:
         for room in hotel.list_room:
             if(room.user_book != None):
-                for i in range(len(room.user_book)):
+                i = 0
+                while i < len(room.user_book):
                     if(time.mktime(room.date_check_out[i]) < today):
+                        print(i)
                         room.user_book.remove(room.user_book[i])
                         room.date_check_in.remove(room.date_check_in[i])
                         room.date_check_out.remove(room.date_check_out[i])
+                        continue
+
+                    i += 1
+
     save_hotel_data(root_path + "/Hotel/Hotel_Data.json",
                     data_hotel, len(data_hotel))
 
@@ -296,12 +302,3 @@ def save_bill_data(file_path, list_of_bill, number_of_bill):
     with open(file_path, "w") as json_file:
         json_file.write(json_object)
     json_file.close()
-
-# def main():
-
-#     # Unit test for user
-#     user_unit_test()
-
-
-# if __name__ == "__main__":
-#     main()

@@ -14,16 +14,13 @@
                     "room_availability": true,
                     "user_book": [
                         "jdoe",
-                        "jdoe",
                         "Huybu"
                     ],
                     "date_check_in": [
-                        "7/7/2022",
                         "1/8/2022",
                         "9/7/2023"
                     ],
                     "date_check_out": [
-                        "8/7/2022",
                         "4/8/2022",
                         "10/7/2023"
                     ],
