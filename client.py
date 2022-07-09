@@ -7,6 +7,8 @@ import time
 import math
 import feature
 
+from PIL import Image
+
 HOST = "127.0.0.1"
 # HOST = "26.165.5.75"
 SERVER_PORT = 55544
@@ -233,7 +235,18 @@ try:
                         if receive_image(client, "Client_Downloads/" + each_image + ".jpg"):
                             client.send("RECEIVED".encode())
 
-                print("Photos are downloaded in Client_Downloads")
+                print("Photos are downloaded in Client_Downloads\n")
+                print("Do you want to see the room images?")
+                print("1. Yes")
+                print("2. No\n")
+
+                confirm_send = input("Your choice: ")
+                while (confirm_send != "1" and confirm_send != "2"):
+                    confirm_send = input("Invalid input, please re-enter: ")
+
+                if confirm_send == "1":
+                    # Let user choose the image
+                    print("A")
 
             # Press any key to continue
             input("Press any key to continue")
