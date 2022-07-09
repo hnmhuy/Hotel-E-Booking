@@ -81,9 +81,10 @@ class Bill:
                 return True
         return False
 
-    def cancel_bill(bill_id, list_of_bill):
+    def cancel_bill(data_user,bill_id, list_of_bill):
         for bill in list_of_bill:
             if bill.bill_id == bill_id:
+                data_user["bill"].remove(bill_id)
                 list_of_bill.remove(bill)
                 return True
         return False
