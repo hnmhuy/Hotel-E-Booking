@@ -222,7 +222,6 @@ try:
             while(i<len(list_bill)):
                 bill.print_bill(list_bill[i])
                 i+=1
-            # Press any key to continue
             bill_id_cancel = input("Please input your ID Bill to cancel: ")
             client.sendall(bill_id_cancel.encode(FORMAT))
             print("Waiting for server response . . .")
@@ -230,6 +229,7 @@ try:
             if(is_cancel == True): print("your cancel is successful")
             else:
                 print("your cancel is failed")
+            # Press any key to continue
             input("Press any key to continue")
         elif choice == "4":
             request.append(EXIT)

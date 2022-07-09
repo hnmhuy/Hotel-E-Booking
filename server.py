@@ -135,7 +135,7 @@ def handleClient(conn: socket, addr, data):
             break
         elif (msg == EXIT):
             # Write your function to exit server here
-            break
+            breakgit 
         else:
             print("Error")
             break
