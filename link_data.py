@@ -180,14 +180,12 @@ def auto_update_room_status(data_hotel):
 # USER FUNCTIOS
 
 
-def update_user_bill(user_name, new_bill_id):
-    with open(root_path + "Bill.json", "w") as json_file:
-        json_object = json.load(json_file)
-        for i in range(len(json_object["users"])):
-            if(json_object["users"][i]["username"] == user_name):
-                json_object["users"][i]["bill"].append(new_bill_id)
-        json_file.write(json.dumps(json_object, indent=4))
-    json_file.close()
+def update_bill_in_user(user_name, new_bill_id, data_user):
+    for user in data_user:
+        if(user["username"] == user_name):
+            user["bill"].append(new_bill_id)
+            break
+    save_data_user(data_user)
 
 
 def load_data_user():

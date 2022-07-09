@@ -12,9 +12,9 @@
                     "room_type": "Double",
                     "room_price": 5750000.0,
                     "room_availability": true,
-                    "user_book": [],
-                    "date_check_in": [],
-                    "date_check_out": [],
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
                     "description": "City View",
                     "image_path": [
                         "H0_0D0",
@@ -26,9 +26,15 @@
                     "room_type": "Double",
                     "room_price": 5750000.0,
                     "room_availability": true,
-                    "user_book": [],
-                    "date_check_in": [],
-                    "date_check_out": [],
+                    "user_book": [
+                        "mh2003"
+                    ],
+                    "date_check_in": [
+                        "10/7/2022"
+                    ],
+                    "date_check_out": [
+                        "12/7/2022"
+                    ],
                     "description": "City View",
                     "image_path": [
                         "H0_1D0",
@@ -78,9 +84,9 @@
                     "room_type": "Single",
                     "room_price": 2800000.0,
                     "room_availability": true,
-                    "user_book": [],
-                    "date_check_in": [],
-                    "date_check_out": [],
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
                     "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
                     "image_path": [
                         "H1_0S0",
@@ -92,9 +98,9 @@
                     "room_type": "Single",
                     "room_price": 2800000.0,
                     "room_availability": true,
-                    "user_book": [],
-                    "date_check_in": [],
-                    "date_check_out": [],
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
                     "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
                     "image_path": [
                         "H1_1S0",
@@ -120,9 +126,9 @@
                     "room_type": "Double",
                     "room_price": 3200000.0,
                     "room_availability": false,
-                    "user_book": [],
-                    "date_check_in": [],
-                    "date_check_out": [],
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
                     "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
                     "image_path": [
                         "H1_4D0",
@@ -134,9 +140,9 @@
                     "room_type": "Double",
                     "room_price": 3200000.0,
                     "room_availability": true,
-                    "user_book": [],
-                    "date_check_in": [],
-                    "date_check_out": [],
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
                     "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
                     "image_path": [
                         "H1_4D0",
