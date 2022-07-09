@@ -37,12 +37,23 @@ def CheckLogin_Sever(data, list):
         account_username = data[i]['username']
         account_password = data[i]['password']
         if(list[1] == account_username and list[2] == account_password):
-            return True
+            return [True,i] 
         else:
             i += 1
-    return False
+    return [False,-1]
 
-
+def Find_Cancel_Bill(data_bill,data_user):
+    list_available_to_cancel_bill=[]
+    list_bill_id=data_user["bill"]
+    if not (list_bill_id):
+        return list_available_to_cancel_bill
+    for bill_id in list_bill_id:
+        decode = bill_id.split("_")
+        index_bill=int(decode[1])
+        current_bill=data_bill[index_bill]
+        if(bill.Bill.available_to_cancel(current_bill)==True):
+            list_available_to_cancel_bill.append(current_bill)
+    return list_available_to_cancel_bill
 # Constant for all server functions
 LOGIN = "login"
 SIGNUP = "signup"

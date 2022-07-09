@@ -83,7 +83,7 @@ def handleClient(conn: socket, addr, data):
     print("addr:", addr)
 
     msg = None
-
+    index_user = 0
     while True:
         msg = conn.recv(BUFFER)
         msg = pickle.loads(msg)
@@ -92,8 +92,9 @@ def handleClient(conn: socket, addr, data):
 
         if (msg[0] == LOGIN):
             # Write your function to log in here
-            check = feature.CheckLogin_Sever(data_user, msg)
+            check = feature.CheckLogin_Sever(data_user, msg)[0]
             conn.sendall(str(check).encode(FORMAT))
+            index_user = feature.CheckLogin_Sever(data_user, msg)[1]
         elif (msg[0] == SIGNUP):
             # Write your function to sign up here
             new_user = msg[1]
@@ -149,10 +150,18 @@ def handleClient(conn: socket, addr, data):
                 conn.sendall(reply.encode(FORMAT))
         elif (msg[0] == CANCEL_BOOKING):
             # Write your function to cancel booking hotel here
+            list_bill=feature.Find_Cancel_Bill(data_bill,data_user[index_user])
+            send_list_bill=pickle.dumps(list_bill)
+            conn.sendall(send_list_bill)   
+            bill_ID_cancel = conn.recv(4096).decode(FORMAT)
+            check_cancel=bill.Bill.cancel_bill(data_user[index_user],bill_ID_cancel,data_bill)
+            link_data.save_bill_data("Data\Bill.json",data_bill,len(data_bill))
+            link_data.save_data_user(data_user)
+            conn.sendall(check_cancel.encode(FORMAT))
             break
         elif (msg == EXIT):
             # Write your function to exit server here
-            break
+            break 
         else:
             print("Error")
             break
