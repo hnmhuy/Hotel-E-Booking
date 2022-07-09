@@ -10,8 +10,6 @@ import feature
 HOST = "127.0.0.1"
 # HOST = "26.165.5.75"
 SERVER_PORT = 55544
-import feature
-import bill
 
 FORMAT = "utf8"
 
@@ -105,10 +103,12 @@ try:
     request = []
 
     # Image sending test
-    # if receive_image(client, "Client_Downloads/waifu.jpg"):
-    #     print("WAIFU IS HERE! PRAISE THE LORD")
 
     while True:
+        print("WELCOME TO HOTEL BOOKING SYSTEM")
+        print("=================================")
+        print()
+
         request = []
         print("1. Login")
         print("2. Sign up")
@@ -128,7 +128,6 @@ try:
             client.send(send_data)
 
             is_login = client.recv(1024).decode(FORMAT)
-            print(is_login)
             if is_login == "True":
                 print("Login success")
                 break
@@ -139,24 +138,6 @@ try:
             request.append(SIGNUP)
             new_user = user.User.create_new_user()
             request.append(new_user)
-
-            # fullname = new_user.fullname
-            # birthday = new_user.birthday
-            # username = new_user.username
-            # password = new_user.password
-            # credit_card = new_user.credit_card
-            # cvv = new_user.cvv
-            # expiration_date = new_user.expiration_date
-            # request.append(fullname)
-            # request.append(birthday)
-            # request.append(username)
-            # request.append(password)
-            # request.append(credit_card)
-            # request.append(cvv)
-            # request.append(expiration_date)
-
-            # sendList(client, request)
-
             send_data = pickle.dumps(request)
             client.send(send_data)
 
@@ -176,7 +157,9 @@ try:
     while is_login == "True":
 
         feature.clear_screen()
-
+        print("BOOKING HOTEL SYSTEM")
+        print("====================")
+        print()
         print("1. Searching")
         print("2. Booking")
         print("3. Cancel booking")
@@ -265,52 +248,11 @@ try:
             request.append(EXIT)
             client.sendall(pickle.dumps(request))
             break
+
             # Write your function to logout here
         else:
             print("Please choose again")
             continue
-
-    # print("client address:", client.getsockname())
-    # print("client:", HOST, SERVER_PORT)
-    # print("Connected to server")
-    # reply = client.recv(1024).decode(FORMAT)
-    # print("reply:", reply)
-    # msg = None
-    # while (msg != "x"):
-    #     user_info = ["benn", "122345", "end"]
-    #     sendList(client, user_info)
-    #     print("user_info:", user_info)
-    #     print("Received:", client.recv(1024).decode(FORMAT))
-    # msg = input("talk: ")
-    # client.sendall(msg.encode(FORMAT))
-    # if (msg == "list"):
-    #     # wait response
-    #     client.recv(1024)
-    #     sendList(client, list)
-    # elif (msg == "img"):
-    #     # Receive the number of packet
-    #     num_packet = int(client.recv(1024).decode(FORMAT))
-    #     print("num_packet:", num_packet)
-    #     with open("test.jpg", "wb") as f:
-    #         for i in range(num_packet):
-    #             data = client.recv(BUFFER_IMG)
-    #             f.write(data)
-    #     f.close()
-    # Ask to see the image
-    # print("Do you want to see the image? (y/n)")
-    # answer = input()
-    # if (answer == "y"):
-    #     img = Image.open("test.jpg")
-    #     img.show()
-    # else:
-    #     print("Image is not shown")
-    # msg = input("talk: ")
-    # client.sendall(msg.encode(FORMAT))
-    # if (msg == LOGIN):
-    #     # wait response
-    #     client.recv(1024)
-    #     Login(client)
-
 
 except Exception as e:
     print("Error")
