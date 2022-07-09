@@ -302,12 +302,3 @@ def save_bill_data(file_path, list_of_bill, number_of_bill):
     with open(file_path, "w") as json_file:
         json_file.write(json_object)
     json_file.close()
-
-# def main():
-
-#     # Unit test for user
-#     user_unit_test()
-
-
-# if __name__ == "__main__":
-#     main()
