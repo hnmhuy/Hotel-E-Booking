@@ -37,10 +37,28 @@ def CheckLogin_Sever(data, list):
         account_username = data[i]['username']
         account_password = data[i]['password']
         if(list[1] == account_username and list[2] == account_password):
-            return True
+            return [True, i]
         else:
             i += 1
-    return False
+    return [False, -1]
+
+
+def Find_Cancel_Bill(data_bill, data_user, data_hotel):
+    list_available_to_cancel_bill = []
+    list_bill_id = data_user["bill"]
+    if not (list_bill_id):
+        return list_available_to_cancel_bill
+    for bill_id in list_bill_id:
+        decode = bill_id.split("_")
+        index_bill = int(decode[1])
+        hotel_id = decode[0][1:len(decode[0])]
+        current_bill = data_bill[index_bill-1]
+        if(bill.Bill.available_to_cancel(current_bill) == True):
+            bill.Bill.load_room_data_from_data_base(
+                current_bill, hotel.find_hotel_by_id(data_hotel, hotel_id))
+            list_available_to_cancel_bill.append(current_bill)
+
+    return list_available_to_cancel_bill
 
 
 # Constant for all server functions
@@ -86,7 +104,7 @@ bill_path = "Data/Bill.json"
     - info_booking[6] = note'''
 
 
-def booking(info_booking, data_hotel, data_bill):
+def booking(info_booking, data_hotel, data_bill, data_user):
 
     # Get the hotel id
     if (hotel.is_hotel_id(info_booking[1])):
@@ -118,9 +136,6 @@ def booking(info_booking, data_hotel, data_bill):
     chosen_hotel = hotel.find_hotel_by_id(data_hotel, hotel_id)
     if (chosen_hotel is None):
         return "Error: Hotel not found"
-
-    if(number_of_room > chosen_hotel.number_available_room):
-        return "Error: Not enough room"
 
     # Check the availability of room
     count_available_room = 0
@@ -167,15 +182,13 @@ def booking(info_booking, data_hotel, data_bill):
             each_room.date_check_in.append(date_check_in)
             each_room.date_check_out.append(date_check_out)
 
-        chosen_hotel.number_available_room -= number_of_room
-
     # Create a bill
     print(bill.Bill.create_bill(chosen_hotel,
                                 list_of_room_id, info_booking[0], data_bill)[0])
 
     # Update json file
-    link_data.update_user_bill(
-        info_booking[0], data_bill[len(data_bill) - 1].bill_id)
+    link_data.update_bill_in_user(
+        info_booking[0], data_bill[len(data_bill) - 1].bill_id, data_user)
     link_data.save_hotel_data(hotel_path, data_hotel, len(data_hotel))
     link_data.save_bill_data(bill_path, data_bill, len(data_bill))
     return "Success: Booking room successfully"

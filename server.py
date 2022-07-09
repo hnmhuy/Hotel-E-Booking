@@ -82,27 +82,19 @@ def handleClient(conn: socket, addr, data):
     print("conn:", conn.getsockname())
     print("addr:", addr)
 
-    # Send welcome message
-    # conn.sendall("Welcome to the server".encode(FORMAT))
-
     msg = None
-    
+    index_user = 0
     while True:
-        # msg = recvList(conn)
-
-        # if send_image(conn, "cute_blush.jpg"):
-        #     print("Sent!")
-
         msg = conn.recv(BUFFER)
         msg = pickle.loads(msg)
 
         print("msg:", msg)
 
-
         if (msg[0] == LOGIN):
             # Write your function to log in here
-            check = feature.CheckLogin_Sever(data_user, msg)
+            check = feature.CheckLogin_Sever(data_user, msg)[0]
             conn.sendall(str(check).encode(FORMAT))
+            index_user = feature.CheckLogin_Sever(data_user, msg)[1]
         elif (msg[0] == SIGNUP):
             # Write your function to sign up here
             new_user = msg[1]
@@ -113,9 +105,6 @@ def handleClient(conn: socket, addr, data):
                 conn.sendall("Failed".encode(FORMAT))
         elif (msg[0] == SEARCH):
             # Write your function to search hotel here
-
-            # conn.sendall(msg.encode(FORMAT))
-            # search_info = recvList(conn)
 
             print("received: ")
             print(msg)
@@ -152,7 +141,7 @@ def handleClient(conn: socket, addr, data):
             # Write your function to booking hotel here
             msg.remove(msg[0])
             msg[2] = int(msg[2])
-            reply = feature.booking(msg, data_hotel, data_bill)
+            reply = feature.booking(msg, data_hotel, data_bill, data_user)
             if(reply == "Success: Booking room successfully"):
                 conn.sendall(reply.encode(FORMAT))
                 send_bill = pickle.dumps(data_bill[len(data_bill)-1])
@@ -161,42 +150,25 @@ def handleClient(conn: socket, addr, data):
                 conn.sendall(reply.encode(FORMAT))
         elif (msg[0] == CANCEL_BOOKING):
             # Write your function to cancel booking hotel here
-            break
+            list_bill = feature.Find_Cancel_Bill(
+                data_bill, data_user[index_user], data_hotel)
+            send_list_bill = pickle.dumps(list_bill)
+            conn.sendall(send_list_bill)
+            bill_ID_cancel = conn.recv(4096).decode(FORMAT)
+            check_cancel = bill.Bill.cancel_bill(
+                data_user[index_user], bill_ID_cancel, data_bill)
+            link_data.save_bill_data(
+                "Data\Bill.json", data_bill, len(data_bill))
+            link_data.save_data_user(data_user)
+            link_data.save_hotel_data(
+                "Data/Hotel/Hotel_Data.json", data_hotel, len(data_hotel))
+            conn.sendall(str(check_cancel).encode(FORMAT))
         elif (msg == EXIT):
             # Write your function to exit server here
             break
         else:
             print("Error")
             break
-
-    # print("conn:",conn.getsockname())
-    # msg = None
-    # while (msg != "x"):
-    #     msg = conn.recv(1024).decode(FORMAT)
-    #     print("client ",addr, "says", msg)
-
-    #     if(msg == LOGIN):
-    #         conn.sendall(msg.encode(FORMAT))
-    #         list = recvList(conn)
-    #         print("received: ")
-    #         print(list)
-
-    #     # Search function
-    #     if(msg == SEARCH):
-    #         conn.sendall(msg.encode(FORMAT))
-    #         search_info = recvList(conn)
-    #         print("received: ")
-    #         print(search_info)
-
-    #         target = {
-    #             "name": search_info[0],
-    #             "check_in": search_info[1],
-    #             "check_out": search_info[2]
-    #         }
-
-    #         results = sf.search_hotel(target, hotel_data)
-
-    #         # print(type(results))
 
     print("client", addr, "has left the sever")
     print(conn.getsockname(), "closed")
@@ -223,24 +195,24 @@ def main():
     print("SERVER SIDE")
     print("server:", HOST, SERVER_PORT)
     print("Waiting for Client")
-    
+
     nClient = 0
 
     while (nClient < 10):
         try:
             conn, addr = s.accept()
             thr = threading.Thread(target=handleClient,
-                                    args=(conn, addr, data))
+                                   args=(conn, addr, data))
             thr.daemon = False
             thr.start()
             print(nClient)
-            
+
         except exception:
             print("Error")
             print(exception)
 
         nClient += 1
-        
+
     print("End")
 
     s.close()
@@ -250,8 +222,6 @@ def main():
     file_path = root_path + "/Hotel/Hotel_Data.json"
     hotel_data = link_data.convert_json_to_class_hotel(
         link_data.read_hotel_data(file_path))
-
-    # test push main
 
 
 if __name__ == "__main__":
