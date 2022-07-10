@@ -1,5 +1,6 @@
 import time
 from numpy import number
+from PIL import Image
 import user
 import hotel
 import user
@@ -207,6 +208,31 @@ def display_search_results(keywords, result_list):
         print(room.description)
         print("=========================")
     return "Success: Booking room successfully"
+
+
+def display_image(file_list):
+    print("Downloaded images:")
+
+    for i in range(len(file_list)):
+        print(str(i + 1) + ". " + file_list[i])
+
+    choice = input("Select index for showing (type 0 to return): ")
+
+    while (not choice.isnumeric() or
+            (choice.isnumeric() and int(choice) > len(file_list))):
+        choice = input("Invalid input, please retry: ")
+
+    while int(choice) != 0:
+        while (not choice.isnumeric() or
+                (choice.isnumeric() and int(choice) > len(file_list))):
+            choice = input("Invalid input, please retry: ")
+
+        img = Image.open("Client_Downloads/" + file_list[int(choice) - 1] + ".jpg")
+        img.show()
+        
+        choice = input("Select index for showing (type 0 to return): ")
+        while not choice.isnumeric():
+            choice = input("Invalid input, please retry: ")
 
 
 def get_info_booking(user_name):

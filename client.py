@@ -7,8 +7,6 @@ import time
 import math
 import feature
 
-from PIL import Image
-
 HOST = "127.0.0.1"
 # HOST = "26.165.5.75"
 SERVER_PORT = 55544
@@ -213,23 +211,28 @@ try:
             client.send(confirm_send.encode(FORMAT))
 
             if confirm_send == "1":
+                downloaded_images = []
+
                 for each_room in search_result:
                     for each_image in each_room.image_path:
                         if receive_image(client, "Client_Downloads/" + each_image + ".jpg"):
                             client.send("RECEIVED".encode())
+
+                            if each_image not in downloaded_images:
+                                downloaded_images.append(each_image)
 
                 print("Photos are downloaded in Client_Downloads\n")
                 print("Do you want to see the room images?")
                 print("1. Yes")
                 print("2. No\n")
 
-                confirm_send = input("Your choice: ")
-                while (confirm_send != "1" and confirm_send != "2"):
-                    confirm_send = input("Invalid input, please re-enter: ")
+                confirm_open = input("Your choice: ")
+                while (confirm_open != "1" and confirm_open != "2"):
+                    confirm_open = input("Invalid input, please re-enter: ")
 
-                if confirm_send == "1":
+                if confirm_open == "1":
                     # Let user choose the image
-                    print("A")
+                    feature.display_image(downloaded_images)
 
             # Press any key to continue
             input("Press any key to continue")
