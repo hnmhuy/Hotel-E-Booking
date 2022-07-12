@@ -44,6 +44,32 @@ def CheckLogin_Sever(data, list):
     return [False, -1]
 
 
+def get_cancel_bill_id(list_available_cancel_bill):
+    print(
+        "You have " + str(len(list_available_cancel_bill)) + " available to cancel bill")
+    for i in range(len(list_available_cancel_bill)):
+        print(str(i + 1) + ". " + list_available_cancel_bill[i].bill_id)
+    while True:
+        choice = input(
+            "Select index for view more detail (type 0 to return): ")
+        if(choice == "0"):
+            break
+        elif(choice.isnumeric() and int(choice) <= len(list_available_cancel_bill)):
+            bill.print_bill(
+                list_available_cancel_bill[int(choice) - 1])
+        print("=========================")
+        print("Do you want to cancel this bill? (Y/N)")
+        is_cancel = input().upper()
+        if(is_cancel == "Y"):
+            return list_available_cancel_bill[int(choice) - 1].bill_id
+        elif(is_cancel == "N"):
+            continue
+        else:
+            print("Error: Invalid input")
+            continue
+    return None
+
+
 def Find_Cancel_Bill(data_bill, data_user, data_hotel):
     list_available_to_cancel_bill = []
     list_bill_id = data_user["bill"]
@@ -54,7 +80,7 @@ def Find_Cancel_Bill(data_bill, data_user, data_hotel):
         index_bill = int(decode[1])
         hotel_id = decode[0][1:len(decode[0])]
         current_bill = data_bill[index_bill-1]
-        if(bill.Bill.available_to_cancel(current_bill) == True):
+        if(bill.Bill.available_to_cancel(current_bill) == True and current_bill.cancel == False):
             bill.Bill.load_room_data_from_data_base(
                 current_bill, hotel.find_hotel_by_id(data_hotel, hotel_id))
             list_available_to_cancel_bill.append(current_bill)
@@ -202,10 +228,11 @@ def display_search_results(keywords, result_list):
 
     print("\nAvailable room list:")
     for room in result_list:
-        print(room.room_id)
-        print(room.room_type)
-        print(room.room_price)
-        print(room.description)
+        print("=========================")
+        print("Room id:   ", room.room_id)
+        print("Room type:  ", room.room_type)
+        print("Room price: ", room.room_price)
+        print("Descriton: \n", room.description)
         print("=========================")
     return "Success: Booking room successfully"
 
@@ -227,9 +254,10 @@ def display_image(file_list):
                 (choice.isnumeric() and int(choice) > len(file_list))):
             choice = input("Invalid input, please retry: ")
 
-        img = Image.open("Client_Downloads/" + file_list[int(choice) - 1] + ".jpg")
+        img = Image.open("Client_Downloads/" +
+                         file_list[int(choice) - 1] + ".jpg")
         img.show()
-        
+
         choice = input("Select index for showing (type 0 to return): ")
         while not choice.isnumeric():
             choice = input("Invalid input, please retry: ")

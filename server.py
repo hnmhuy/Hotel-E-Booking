@@ -29,7 +29,7 @@ BOOKING = "booking"
 CANCEL_BOOKING = "cancel booking"
 EXIT = "exit"
 
-BUFFER = 6144
+BUFFER = 10000
 
 
 def recvList(conn):
@@ -154,16 +154,17 @@ def handleClient(conn: socket, addr, data):
                 data_bill, data_user[index_user], data_hotel)
             send_list_bill = pickle.dumps(list_bill)
             conn.sendall(send_list_bill)
-            bill_ID_cancel = conn.recv(4096).decode(FORMAT)
-            check_cancel = bill.Bill.cancel_bill(
-                data_user[index_user], bill_ID_cancel, data_bill)
-            link_data.save_bill_data(
-                "Data\Bill.json", data_bill, len(data_bill))
-            link_data.save_data_user(data_user)
-            link_data.save_hotel_data(
-                "Data/Hotel/Hotel_Data.json", data_hotel, len(data_hotel))
-            conn.sendall(str(check_cancel).encode(FORMAT))
-        elif (msg == EXIT):
+            if(len(list_bill) != 0):
+                bill_ID_cancel = conn.recv(4096).decode(FORMAT)
+                check_cancel = bill.Bill.cancel_bill(
+                    data_user[index_user], bill_ID_cancel, data_bill)
+                link_data.save_bill_data(
+                    "Data\Bill.json", data_bill, len(data_bill))
+                link_data.save_data_user(data_user)
+                link_data.save_hotel_data(
+                    "Data/Hotel/Hotel_Data.json", data_hotel, len(data_hotel))
+                conn.sendall(str(check_cancel).encode(FORMAT))
+        elif (msg[0] == EXIT):
             # Write your function to exit server here
             break
         else:

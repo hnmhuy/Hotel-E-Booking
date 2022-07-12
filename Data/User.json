@@ -39,6 +39,18 @@
             "cvv": "1234",
             "expiration_date": "05/2025",
             "bill": []
+        },
+        {
+            "fullname": "Huynh Nguyen Minh Huy",
+            "birthday": "03/03/2003",
+            "username": "mh3323",
+            "password": "m03H032003@@",
+            "credit_card": "1234567890123456",
+            "cvv": "4423",
+            "expiration_date": "12/2027",
+            "bill": [
+                "BH2_2"
+            ]
         }
     ]
 }
