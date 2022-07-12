@@ -20,7 +20,7 @@ SIGNUP = "signup"
 CANCEL_BOOKING = "cancel booking"
 EXIT = "exit"
 
-BUFFER = 6144
+BUFFER = 10000
 BUFFER_IMG = 4096
 
 
@@ -105,6 +105,8 @@ try:
     # Image sending test
 
     while True:
+        time.sleep(1.5)
+        feature.clear_screen()
         print("WELCOME TO HOTEL BOOKING SYSTEM")
         print("=================================")
         print()
@@ -149,6 +151,7 @@ try:
                 print("Register failed")
                 continue
         else:
+            print("Invalid input")
             continue
         break
 
@@ -257,27 +260,28 @@ try:
         elif choice == "3":
             request.append(CANCEL_BOOKING)
             # Write your function to cancel booking here
-            user_check_bill = input(
-                "Please input your username to check bill: ")
-            request.append(user_check_bill)
+            request.append(user_name)
             send_data = pickle.dumps(request)
             client.send(send_data)
+            print("\n")
             print("Sent username info to server")
             print("Waiting for server response . . .")
+            print("\n")
             data = client.recv(BUFFER)
             list_bill = pickle.loads(data)
-            i = 0
-            while(i < len(list_bill)):
-                bill.print_bill(list_bill[i])
-                i += 1
-            bill_id_cancel = input("Please input your ID Bill to cancel: ")
-            client.sendall(bill_id_cancel.encode(FORMAT))
-            print("Waiting for server response . . .")
-            is_cancel = client.recv(4096).decode(FORMAT)
-            if(is_cancel == "True"):
-                print("your cancel is successful")
+            if(len(list_bill) == 0):
+                print("No available booking to cancel")
             else:
-                print("your cancel is failed")
+                bill_id_cancel = feature.get_cancel_bill_id(list_bill)
+                if(bill_id_cancel == None):
+                    bill_id_cancel = "-1"
+                client.sendall(bill_id_cancel.encode(FORMAT))
+                print("Waiting for server response . . .")
+                is_cancel = client.recv(4096).decode(FORMAT)
+                if(is_cancel == "True"):
+                    print("\nYOUR CANCEL BOOKING IS SUCCESSFUL\n")
+                else:
+                    print("\nYOUR CANCEL BOOKING IS UNSUCCESSFUL\n")
             # Press any key to continue
             input("Press any key to continue")
         elif choice == "4":
