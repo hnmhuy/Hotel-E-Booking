@@ -12,15 +12,9 @@
                     "room_type": "Double",
                     "room_price": 5750000.0,
                     "room_availability": true,
-                    "user_book": [
-                        "Huybu"
-                    ],
-                    "date_check_in": [
-                        "10/9/2022"
-                    ],
-                    "date_check_out": [
-                        "15/9/2022"
-                    ],
+                    "user_book": [],
+                    "date_check_in": [],
+                    "date_check_out": [],
                     "description": "City View",
                     "image_path": [
                         "H0_0D0",
@@ -220,9 +214,15 @@
                     "room_type": "Double",
                     "room_price": 4000000.0,
                     "room_availability": true,
-                    "user_book": null,
-                    "date_check_in": null,
-                    "date_check_out": null,
+                    "user_book": [
+                        "mh3323"
+                    ],
+                    "date_check_in": [
+                        "16/7/2022"
+                    ],
+                    "date_check_out": [
+                        "18/7/2022"
+                    ],
                     "description": "* Known for its High reputation in Staff Excellence. \n* Just 25 minutes by car from Tan Son Nhat International Airport.  \n* Peaceful location away from the hustle and bustle of the city. \n* Best Buffet Breakfast serving the widest selection of breakfast food items. \n* Most talked about La Brasserie Seafood Dinner Buffet offering unlimited huge lobsters, crabs and oysters. \n* Stunningly Nikko Garden for outdoor social events accommodating 1,200 guests. \n* Breathtaking Nikko Club Lounge at the 23rd floor providing spectacular view of the city. \n* Complimentary daily drop off shuttle service to city center main tourist's landmarks. \nEXQUISITE SERVICE: EPIC FOOD GOURMET * UNITERRUPTED RELAXATION",
                     "image_path": [
                         "H2_3D0",

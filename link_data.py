@@ -273,7 +273,7 @@ def convert_json_to_class_bill(json_object):
     number_of_bill = int(json_object["number_of_bill"])
     list_of_bill = []
     for i in range(number_of_bill):
-        temp_bill = bill.Bill(json_object["bill_list"][i]["bill_id"], json_object["bill_list"][i]["list_room_id"], json_object["bill_list"][i]["user_book"],
+        temp_bill = bill.Bill(json_object["bill_list"][i]["cancel"], json_object["bill_list"][i]["bill_id"], json_object["bill_list"][i]["list_room_id"], json_object["bill_list"][i]["user_book"],
                               json_object["bill_list"][i]["time_book"], json_object["bill_list"][i]["total_price"])
         list_of_bill.append(temp_bill)
     return list_of_bill
@@ -286,6 +286,7 @@ def convert_class_bill_to_json(list_of_bill, number_of_bill):
     }
     for i in range(number_of_bill):
         json_object["bill_list"].append({
+            "cancel": list_of_bill[i].cancel,
             "bill_id": list_of_bill[i].bill_id,
             "list_room_id": list_of_bill[i].list_room_id,
             "user_book": list_of_bill[i].user_book,
