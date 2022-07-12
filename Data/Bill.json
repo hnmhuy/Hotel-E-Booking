@@ -1,4 +1,14 @@
 {
-    "number_of_bill": 0,
-    "bill_list": []
+    "number_of_bill": 1,
+    "bill_list": [
+        {
+            "bill_id": "BH0_1",
+            "list_room_id": [
+                "H0_0D"
+            ],
+            "user_book": "Huybu",
+            "time_book": "14:08:41 12/07/2022",
+            "total_price": 28750000.0
+        }
+    ]
 }

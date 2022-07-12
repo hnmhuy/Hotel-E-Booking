@@ -12,9 +12,15 @@
                     "room_type": "Double",
                     "room_price": 5750000.0,
                     "room_availability": true,
-                    "user_book": null,
-                    "date_check_in": null,
-                    "date_check_out": null,
+                    "user_book": [
+                        "Huybu"
+                    ],
+                    "date_check_in": [
+                        "10/9/2022"
+                    ],
+                    "date_check_out": [
+                        "15/9/2022"
+                    ],
                     "description": "City View",
                     "image_path": [
                         "H0_0D0",
@@ -26,15 +32,9 @@
                     "room_type": "Double",
                     "room_price": 5750000.0,
                     "room_availability": true,
-                    "user_book": [
-                        "mh2003"
-                    ],
-                    "date_check_in": [
-                        "10/7/2022"
-                    ],
-                    "date_check_out": [
-                        "12/7/2022"
-                    ],
+                    "user_book": [],
+                    "date_check_in": [],
+                    "date_check_out": [],
                     "description": "City View",
                     "image_path": [
                         "H0_1D0",

@@ -8,7 +8,9 @@
             "credit_card": "1234123412341234",
             "cvv": "666",
             "expiration_date": "09/2022",
-            "bill": []
+            "bill": [
+                "BH0_1"
+            ]
         },
         {
             "fullname": "Minh Huy",
