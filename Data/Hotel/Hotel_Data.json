@@ -78,9 +78,9 @@
                     "room_type": "Single",
                     "room_price": 2800000.0,
                     "room_availability": true,
-                    "user_book": [],
-                    "date_check_in": [],
-                    "date_check_out": [],
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
                     "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
                     "image_path": [
                         "H1_0S0",
@@ -92,9 +92,9 @@
                     "room_type": "Single",
                     "room_price": 2800000.0,
                     "room_availability": true,
-                    "user_book": [],
-                    "date_check_in": [],
-                    "date_check_out": [],
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
                     "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
                     "image_path": [
                         "H1_1S0",
@@ -120,9 +120,9 @@
                     "room_type": "Double",
                     "room_price": 3200000.0,
                     "room_availability": false,
-                    "user_book": [],
-                    "date_check_in": [],
-                    "date_check_out": [],
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
                     "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
                     "image_path": [
                         "H1_4D0",
@@ -134,9 +134,9 @@
                     "room_type": "Double",
                     "room_price": 3200000.0,
                     "room_availability": true,
-                    "user_book": [],
-                    "date_check_in": [],
-                    "date_check_out": [],
+                    "user_book": null,
+                    "date_check_in": null,
+                    "date_check_out": null,
                     "description": "The hotel is a short walk to iconic landmarks and locations, such as the Opera House, Notre Dame Cathedral, historic Dong Khoi Street, Nguyen Hue walking street and the legendary Ben Thanh Market. Modern shopping is just around the corner at Vincom Center and at the nearby Saigon Center.",
                     "image_path": [
                         "H1_4D0",
@@ -214,9 +214,15 @@
                     "room_type": "Double",
                     "room_price": 4000000.0,
                     "room_availability": true,
-                    "user_book": null,
-                    "date_check_in": null,
-                    "date_check_out": null,
+                    "user_book": [
+                        "mh3323"
+                    ],
+                    "date_check_in": [
+                        "16/7/2022"
+                    ],
+                    "date_check_out": [
+                        "18/7/2022"
+                    ],
                     "description": "* Known for its High reputation in Staff Excellence. \n* Just 25 minutes by car from Tan Son Nhat International Airport.  \n* Peaceful location away from the hustle and bustle of the city. \n* Best Buffet Breakfast serving the widest selection of breakfast food items. \n* Most talked about La Brasserie Seafood Dinner Buffet offering unlimited huge lobsters, crabs and oysters. \n* Stunningly Nikko Garden for outdoor social events accommodating 1,200 guests. \n* Breathtaking Nikko Club Lounge at the 23rd floor providing spectacular view of the city. \n* Complimentary daily drop off shuttle service to city center main tourist's landmarks. \nEXQUISITE SERVICE: EPIC FOOD GOURMET * UNITERRUPTED RELAXATION",
                     "image_path": [
                         "H2_3D0",

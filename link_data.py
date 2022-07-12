@@ -180,14 +180,12 @@ def auto_update_room_status(data_hotel):
 # USER FUNCTIOS
 
 
-def update_user_bill(user_name, new_bill_id):
-    with open(root_path + "Bill.json", "w") as json_file:
-        json_object = json.load(json_file)
-        for i in range(len(json_object["users"])):
-            if(json_object["users"][i]["username"] == user_name):
-                json_object["users"][i]["bill"].append(new_bill_id)
-        json_file.write(json.dumps(json_object, indent=4))
-    json_file.close()
+def update_bill_in_user(user_name, new_bill_id, data_user):
+    for user in data_user:
+        if(user["username"] == user_name):
+            user["bill"].append(new_bill_id)
+            break
+    save_data_user(data_user)
 
 
 def load_data_user():
@@ -275,7 +273,7 @@ def convert_json_to_class_bill(json_object):
     number_of_bill = int(json_object["number_of_bill"])
     list_of_bill = []
     for i in range(number_of_bill):
-        temp_bill = bill.Bill(json_object["bill_list"][i]["bill_id"], json_object["bill_list"][i]["list_room_id"], json_object["bill_list"][i]["user_book"],
+        temp_bill = bill.Bill(json_object["bill_list"][i]["cancel"], json_object["bill_list"][i]["bill_id"], json_object["bill_list"][i]["list_room_id"], json_object["bill_list"][i]["user_book"],
                               json_object["bill_list"][i]["time_book"], json_object["bill_list"][i]["total_price"])
         list_of_bill.append(temp_bill)
     return list_of_bill
@@ -288,6 +286,7 @@ def convert_class_bill_to_json(list_of_bill, number_of_bill):
     }
     for i in range(number_of_bill):
         json_object["bill_list"].append({
+            "cancel": list_of_bill[i].cancel,
             "bill_id": list_of_bill[i].bill_id,
             "list_room_id": list_of_bill[i].list_room_id,
             "user_book": list_of_bill[i].user_book,

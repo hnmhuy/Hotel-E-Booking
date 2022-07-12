@@ -20,7 +20,7 @@ SIGNUP = "signup"
 CANCEL_BOOKING = "cancel booking"
 EXIT = "exit"
 
-BUFFER = 6144
+BUFFER = 10000
 BUFFER_IMG = 4096
 
 
@@ -105,6 +105,8 @@ try:
     # Image sending test
 
     while True:
+        time.sleep(1.5)
+        feature.clear_screen()
         print("WELCOME TO HOTEL BOOKING SYSTEM")
         print("=================================")
         print()
@@ -149,6 +151,7 @@ try:
                 print("Register failed")
                 continue
         else:
+            print("Invalid input")
             continue
         break
 
@@ -211,12 +214,28 @@ try:
             client.send(confirm_send.encode(FORMAT))
 
             if confirm_send == "1":
+                downloaded_images = []
+
                 for each_room in search_result:
                     for each_image in each_room.image_path:
                         if receive_image(client, "Client_Downloads/" + each_image + ".jpg"):
                             client.send("RECEIVED".encode())
 
-                print("Photos are downloaded in Client_Downloads")
+                            if each_image not in downloaded_images:
+                                downloaded_images.append(each_image)
+
+                print("Photos are downloaded in Client_Downloads\n")
+                print("Do you want to see the room images?")
+                print("1. Yes")
+                print("2. No\n")
+
+                confirm_open = input("Your choice: ")
+                while (confirm_open != "1" and confirm_open != "2"):
+                    confirm_open = input("Invalid input, please re-enter: ")
+
+                if confirm_open == "1":
+                    # Let user choose the image
+                    feature.display_image(downloaded_images)
 
             # Press any key to continue
             input("Press any key to continue")
@@ -241,25 +260,28 @@ try:
         elif choice == "3":
             request.append(CANCEL_BOOKING)
             # Write your function to cancel booking here
-            user_check_bill = input("Please input your username to check bill: ")
-            request.append(user_check_bill)
+            request.append(user_name)
             send_data = pickle.dumps(request)
             client.send(send_data)
+            print("\n")
             print("Sent username info to server")
             print("Waiting for server response . . .")
-            data = client.recv(4096)
+            print("\n")
+            data = client.recv(BUFFER)
             list_bill = pickle.loads(data)
-            i=0
-            while(i<len(list_bill)):
-                bill.print_bill(list_bill[i])
-                i+=1
-            bill_id_cancel = input("Please input your ID Bill to cancel: ")
-            client.sendall(bill_id_cancel.encode(FORMAT))
-            print("Waiting for server response . . .")
-            is_cancel = client.recv(4096).decode(FORMAT)
-            if(is_cancel == True): print("your cancel is successful")
+            if(len(list_bill) == 0):
+                print("No available booking to cancel")
             else:
-                print("your cancel is failed")
+                bill_id_cancel = feature.get_cancel_bill_id(list_bill)
+                if(bill_id_cancel == None):
+                    bill_id_cancel = "-1"
+                client.sendall(bill_id_cancel.encode(FORMAT))
+                print("Waiting for server response . . .")
+                is_cancel = client.recv(4096).decode(FORMAT)
+                if(is_cancel == "True"):
+                    print("\nYOUR CANCEL BOOKING IS SUCCESSFUL\n")
+                else:
+                    print("\nYOUR CANCEL BOOKING IS UNSUCCESSFUL\n")
             # Press any key to continue
             input("Press any key to continue")
         elif choice == "4":

@@ -12,7 +12,8 @@ def calculate_date(date_check_in, date_check_out):
 
 
 class Bill:
-    def __init__(self, bill_id, list_room_id, user_book, time_book, total_price):
+    def __init__(self, cancel, bill_id, list_room_id, user_book, time_book, total_price):
+        self.cancel = cancel
         self.bill_id = bill_id
         self.list_room_id = list_room_id
         self.user_book = user_book
@@ -22,7 +23,14 @@ class Bill:
 
     def load_room_data_from_data_base(self, hotel_data):
         for room_id in self.list_room_id:
-            self.list_room.append(hotel.find_room_by_id(hotel_data, room_id))
+            flag = False
+            for room in self.list_room:
+                if room.room_id == room_id:
+                    flag = True
+                    break
+            if(flag == False):
+                self.list_room.append(
+                    hotel.find_room_by_id(hotel_data, room_id))
 
     def create_bill_id(hotel_id, number_of_bill):
         return "B" + str(hotel_id) + "_" + str(number_of_bill)
@@ -62,7 +70,7 @@ class Bill:
                 hotel_data.hotel_id, len(list_of_bill)+1)
             now = time.time()
             time_book = time.strftime("%H:%M:%S %d/%m/%Y")
-            bill = Bill(bill_id, list_room_id, user_book,
+            bill = Bill(False, bill_id, list_room_id, user_book,
                         time_book, total_price)
             bill.load_room_data_from_data_base(hotel_data)
             list_of_bill.append(bill)
@@ -70,7 +78,7 @@ class Bill:
             return ["Bill created successfully", True]
 
     def available_to_cancel(self):
-        # This bill is available to cancle if time_book < 24 hours
+        # This bill is available to cancel if time_book < 24 hours
         time_book = time.strptime(self.time_book, "%H:%M:%S %d/%m/%Y")
         time_book = datetime.datetime(time_book.tm_year, time_book.tm_mon,
                                       time_book.tm_mday, time_book.tm_hour, time_book.tm_min, time_book.tm_sec)
@@ -81,11 +89,20 @@ class Bill:
                 return True
         return False
 
-    def cancel_bill(data_user,bill_id, list_of_bill):
+    def cancel_bill(data_user, bill_id, list_of_bill):
         for bill in list_of_bill:
             if bill.bill_id == bill_id:
                 data_user["bill"].remove(bill_id)
-                list_of_bill.remove(bill)
+                for room in bill.list_room:
+                    i = 0
+                    for i in range(len(room.user_book)):
+                        if room.user_book[i] == bill.user_book:
+                            break
+
+                    room.user_book.remove(room.user_book[i])
+                    room.date_check_in.remove(room.date_check_in[i])
+                    room.date_check_out.remove(room.date_check_out[i])
+                bill.cancel = True
                 return True
         return False
 
@@ -96,17 +113,17 @@ def find_bill_by_id(list_of_bill, id):
             return bill
     return None
 
+
 def find_bill_by_user(list_of_bill, user):
     for bill in list_of_bill:
         if bill.user_book == user:
             return bill
     return None
 
+
 def print_bill(bill):
     print('_'*30)
-    print("YOUR BILL WAS CREATED SUCCESSFULLY")
-    print('_'*30)
-    print("Bill ID: ", bill.bill_id)
+    print("Bill ID:   ", bill.bill_id)
     print("User book: ", bill.user_book)
     print("Time book: ", bill.time_book)
     print("_"*30)
