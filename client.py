@@ -55,6 +55,14 @@ def Login(client):
     sendList(client, account)
 
 
+def check_date_format(date_string):
+    try:
+        input_time = time.strptime(date_string, "%d/%m/%Y")
+        return True
+    except:
+        return False
+
+
 def search_interface():
     search_info = []
 
@@ -62,9 +70,15 @@ def search_interface():
     search_info.append(hotel_name)
 
     check_in_date = input("Check in date (DD/MM/YYYY): ")
+    while not check_date_format(check_in_date):
+        check_in_date = input("Invalid format (DD/MM/YYYY): ")
+
     search_info.append(check_in_date)
 
     check_out_date = input("Check out date (DD/MM/YYYY): ")
+    while not check_date_format(check_out_date):
+        check_out_date = input("Invalid format (DD/MM/YYYY): ")
+
     search_info.append(check_out_date)
 
     return search_info
