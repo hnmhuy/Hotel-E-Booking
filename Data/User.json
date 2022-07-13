@@ -9,7 +9,9 @@
             "cvv": "666",
             "expiration_date": "09/2022",
             "bill": [
-                "BH0_1"
+                "BH0_1",
+                "BH1_10",
+                "BH0_11"
             ]
         },
         {
@@ -53,6 +55,16 @@
             "bill": [
                 "BH2_2"
             ]
+        },
+        {
+            "fullname": "Tong Gia Huy",
+            "birthday": "19/12/2003",
+            "username": "Admin",
+            "password": "Admin@123",
+            "credit_card": "1234432155556666",
+            "cvv": "333",
+            "expiration_date": "03/2024",
+            "bill": []
         }
     ]
 }
