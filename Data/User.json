@@ -51,6 +51,16 @@
             "bill": [
                 "BH2_2"
             ]
+        },
+        {
+            "fullname": "Nguyen Khanh",
+            "birthday": "05/09/2003",
+            "username": "anhkiet",
+            "password": "Anhkiet214@",
+            "credit_card": "1111222233334444",
+            "cvv": "123",
+            "expiration_date": "05/2024",
+            "bill": []
         }
     ]
 }
