@@ -62,6 +62,7 @@ def send_image(conn, file_path):
     for i in range(number_of_packets):
         conn.send(image_packet)
         image_packet = image.read(BUFFER)
+        conn.recv(BUFFER)
 
     # while image_packet:
     #     conn.send(image_packet)

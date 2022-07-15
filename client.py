@@ -97,6 +97,7 @@ def receive_image(client, file_path):
         # print(file_path)
         image_packet = client.recv(BUFFER)
         image.write(image_packet)
+        client.send("Image packet received!".encode(FORMAT))
 
     image.close()
 
