@@ -48,18 +48,16 @@
             "credit_card": "1234567890123456",
             "cvv": "4423",
             "expiration_date": "12/2027",
-            "bill": [
-                "BH2_2"
-            ]
+            "bill": []
         },
         {
-            "fullname": "Nguyen Khanh",
-            "birthday": "05/09/2003",
-            "username": "anhkiet",
-            "password": "Anhkiet214@",
-            "credit_card": "1111222233334444",
-            "cvv": "123",
-            "expiration_date": "05/2024",
+            "fullname": "Tong Gia Huy",
+            "birthday": "19/12/2003",
+            "username": "Admin",
+            "password": "Admin@123",
+            "credit_card": "1234432155556666",
+            "cvv": "333",
+            "expiration_date": "03/2024",
             "bill": []
         }
     ]

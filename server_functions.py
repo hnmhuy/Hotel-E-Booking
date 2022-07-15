@@ -19,9 +19,6 @@ def find_available_rooms(hotel, user_check_in, user_check_out):
     user_start = time.strptime(user_check_in, "%d/%m/%Y %H:%M:%S")
     user_end = time.strptime(user_check_out, "%d/%m/%Y %H:%M:%S")
 
-    # if hotel.number_available_room == 0:
-    #     return room_count, room_list 
-
     for room in hotel.list_room:
         
         if room.user_book is not None:

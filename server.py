@@ -17,7 +17,7 @@ import bill
 import server_functions as sf
 # import feature
 
-HOST = "127.0.0.1"
+HOST = "26.165.5.75"
 SERVER_PORT = 55544
 FORMAT = "utf8"
 BUFFER_IMG = 4096
@@ -29,7 +29,7 @@ BOOKING = "booking"
 CANCEL_BOOKING = "cancel booking"
 EXIT = "exit"
 
-BUFFER = 10000
+BUFFER = 10240
 
 
 def recvList(conn):

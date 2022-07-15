@@ -7,7 +7,7 @@ import time
 import math
 import feature
 
-HOST = "127.0.0.1"
+HOST = "26.165.5.75"
 # HOST = "26.165.5.75"
 SERVER_PORT = 55544
 
@@ -20,7 +20,7 @@ SIGNUP = "signup"
 CANCEL_BOOKING = "cancel booking"
 EXIT = "exit"
 
-BUFFER = 10000
+BUFFER = 10240
 BUFFER_IMG = 4096
 
 
@@ -55,6 +55,14 @@ def Login(client):
     sendList(client, account)
 
 
+def check_date_format(date_string):
+    try:
+        input_time = time.strptime(date_string, "%d/%m/%Y")
+        return True
+    except:
+        return False
+
+
 def search_interface():
     search_info = []
 
@@ -62,9 +70,15 @@ def search_interface():
     search_info.append(hotel_name)
 
     check_in_date = input("Check in date (DD/MM/YYYY): ")
+    while not check_date_format(check_in_date):
+        check_in_date = input("Invalid format (DD/MM/YYYY): ")
+
     search_info.append(check_in_date)
 
     check_out_date = input("Check out date (DD/MM/YYYY): ")
+    while not check_date_format(check_out_date):
+        check_out_date = input("Invalid format (DD/MM/YYYY): ")
+
     search_info.append(check_out_date)
 
     return search_info
@@ -300,3 +314,5 @@ except Exception as e:
 
 
 client.close()
+
+# input("A")

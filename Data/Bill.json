@@ -3,46 +3,46 @@
     "bill_list": [
         {
             "cancel": true,
-            "bill_id": "BH0_1",
+            "bill_id": "BH1_1",
             "list_room_id": [
-                "H0_0D",
-                "H0_1D"
+                "H1_3D"
             ],
             "user_book": "mh3323",
-            "time_book": "20:42:42 12/07/2022",
-            "total_price": 11500000.0
-        },
-        {
-            "cancel": false,
-            "bill_id": "BH2_2",
-            "list_room_id": [
-                "H2_3D"
-            ],
-            "user_book": "mh3323",
-            "time_book": "20:43:05 12/07/2022",
-            "total_price": 8000000.0
+            "time_book": "14:59:16 15/07/2022",
+            "total_price": 9600000.0
         },
         {
             "cancel": true,
-            "bill_id": "BH0_3",
+            "bill_id": "BH1_2",
             "list_room_id": [
-                "H0_0D",
-                "H0_1D"
+                "H1_3D",
+                "H1_4D"
             ],
             "user_book": "mh3323",
-            "time_book": "20:48:32 12/07/2022",
-            "total_price": 11500000.0
+            "time_book": "14:59:56 15/07/2022",
+            "total_price": 12800000.0
         },
         {
             "cancel": true,
-            "bill_id": "BH0_4",
+            "bill_id": "BH1_3",
             "list_room_id": [
-                "H0_0D",
-                "H0_1D"
+                "H1_3D",
+                "H1_4D"
             ],
             "user_book": "mh3323",
-            "time_book": "20:49:00 12/07/2022",
-            "total_price": 23000000.0
+            "time_book": "15:01:23 15/07/2022",
+            "total_price": 12800000.0
+        },
+        {
+            "cancel": true,
+            "bill_id": "BH2_4",
+            "list_room_id": [
+                "H2_3D",
+                "H2_4D"
+            ],
+            "user_book": "mh3323",
+            "time_book": "15:02:56 15/07/2022",
+            "total_price": 24000000.0
         }
     ]
 }
