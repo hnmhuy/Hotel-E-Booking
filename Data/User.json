@@ -32,7 +32,9 @@
             "credit_card": "4444444444444444",
             "cvv": "123",
             "expiration_date": "12/2034",
-            "bill": []
+            "bill": [
+                "BH2_5"
+            ]
         },
         {
             "fullname": "Nguyen Khanh Anh Kiet",
