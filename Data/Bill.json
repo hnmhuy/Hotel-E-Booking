@@ -1,119 +1,48 @@
 {
-    "number_of_bill": 11,
+    "number_of_bill": 4,
     "bill_list": [
         {
             "cancel": true,
-            "bill_id": "BH0_1",
-            "list_room_id": [
-                "H0_0D",
-                "H0_1D"
-            ],
-            "user_book": "mh3323",
-            "time_book": "20:42:42 12/07/2022",
-            "total_price": 11500000.0
-        },
-        {
-            "cancel": false,
-            "bill_id": "BH2_2",
-            "list_room_id": [
-                "H2_3D"
-            ],
-            "user_book": "mh3323",
-            "time_book": "20:43:05 12/07/2022",
-            "total_price": 8000000.0
-        },
-        {
-            "cancel": true,
-            "bill_id": "BH0_3",
-            "list_room_id": [
-                "H0_0D",
-                "H0_1D"
-            ],
-            "user_book": "mh3323",
-            "time_book": "20:48:32 12/07/2022",
-            "total_price": 11500000.0
-        },
-        {
-            "cancel": true,
-            "bill_id": "BH0_4",
-            "list_room_id": [
-                "H0_0D",
-                "H0_1D"
-            ],
-            "user_book": "mh3323",
-            "time_book": "20:49:00 12/07/2022",
-            "total_price": 23000000.0
-        },
-        {
-            "cancel": true,
-            "bill_id": "BH0_5",
-            "list_room_id": [
-                "H0_0D"
-            ],
-            "user_book": "Huybu",
-            "time_book": "20:55:59 12/07/2022",
-            "total_price": 28750000.0
-        },
-        {
-            "cancel": true,
-            "bill_id": "BH2_6",
-            "list_room_id": [
-                "H2_0S"
-            ],
-            "user_book": "Huybu",
-            "time_book": "21:03:33 12/07/2022",
-            "total_price": 4400000.0
-        },
-        {
-            "cancel": true,
-            "bill_id": "BH0_7",
-            "list_room_id": [
-                "H0_0D"
-            ],
-            "user_book": "Huybu",
-            "time_book": "21:10:44 12/07/2022",
-            "total_price": 11500000.0
-        },
-        {
-            "cancel": true,
-            "bill_id": "BH2_8",
-            "list_room_id": [
-                "H2_0S"
-            ],
-            "user_book": "Huybu",
-            "time_book": "21:11:33 12/07/2022",
-            "total_price": 4400000.0
-        },
-        {
-            "cancel": true,
-            "bill_id": "BH0_9",
-            "list_room_id": [
-                "H0_0D",
-                "H0_1D"
-            ],
-            "user_book": "Admin",
-            "time_book": "21:22:36 12/07/2022",
-            "total_price": 23000000.0
-        },
-        {
-            "cancel": false,
-            "bill_id": "BH1_10",
+            "bill_id": "BH1_1",
             "list_room_id": [
                 "H1_3D"
             ],
-            "user_book": "Huybu",
-            "time_book": "22:37:57 12/07/2022",
-            "total_price": 6400000.0
+            "user_book": "mh3323",
+            "time_book": "14:59:16 15/07/2022",
+            "total_price": 9600000.0
         },
         {
-            "cancel": false,
-            "bill_id": "BH0_11",
+            "cancel": true,
+            "bill_id": "BH1_2",
             "list_room_id": [
-                "H0_0D"
+                "H1_3D",
+                "H1_4D"
             ],
-            "user_book": "Huybu",
-            "time_book": "08:03:57 13/07/2022",
-            "total_price": 11500000.0
+            "user_book": "mh3323",
+            "time_book": "14:59:56 15/07/2022",
+            "total_price": 12800000.0
+        },
+        {
+            "cancel": true,
+            "bill_id": "BH1_3",
+            "list_room_id": [
+                "H1_3D",
+                "H1_4D"
+            ],
+            "user_book": "mh3323",
+            "time_book": "15:01:23 15/07/2022",
+            "total_price": 12800000.0
+        },
+        {
+            "cancel": true,
+            "bill_id": "BH2_4",
+            "list_room_id": [
+                "H2_3D",
+                "H2_4D"
+            ],
+            "user_book": "mh3323",
+            "time_book": "15:02:56 15/07/2022",
+            "total_price": 24000000.0
         }
     ]
 }

@@ -57,16 +57,16 @@ def get_cancel_bill_id(list_available_cancel_bill):
         elif(choice.isnumeric() and int(choice) <= len(list_available_cancel_bill)):
             bill.print_bill(
                 list_available_cancel_bill[int(choice) - 1])
-        print("=========================")
-        print("Do you want to cancel this bill? (Y/N)")
-        is_cancel = input().upper()
-        if(is_cancel == "Y"):
-            return list_available_cancel_bill[int(choice) - 1].bill_id
-        elif(is_cancel == "N"):
-            continue
-        else:
-            print("Error: Invalid input")
-            continue
+            print("=========================")
+            print("Do you want to cancel this bill? (Y/N)")
+            is_cancel = input().upper()
+            if(is_cancel == "Y"):
+                return list_available_cancel_bill[int(choice) - 1].bill_id
+            elif(is_cancel == "N"):
+                continue
+            else:
+                print("Error: Invalid input")
+                continue
     return None
 
 

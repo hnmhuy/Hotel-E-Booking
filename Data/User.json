@@ -8,11 +8,7 @@
             "credit_card": "1234123412341234",
             "cvv": "666",
             "expiration_date": "09/2022",
-            "bill": [
-                "BH0_1",
-                "BH1_10",
-                "BH0_11"
-            ]
+            "bill": []
         },
         {
             "fullname": "Minh Huy",
@@ -52,9 +48,7 @@
             "credit_card": "1234567890123456",
             "cvv": "4423",
             "expiration_date": "12/2027",
-            "bill": [
-                "BH2_2"
-            ]
+            "bill": []
         },
         {
             "fullname": "Tong Gia Huy",

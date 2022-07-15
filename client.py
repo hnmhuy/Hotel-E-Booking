@@ -7,7 +7,7 @@ import time
 import math
 import feature
 
-HOST = "127.0.0.1"
+HOST = "26.165.5.75"
 # HOST = "26.165.5.75"
 SERVER_PORT = 55544
 
@@ -20,7 +20,7 @@ SIGNUP = "signup"
 CANCEL_BOOKING = "cancel booking"
 EXIT = "exit"
 
-BUFFER = 10000
+BUFFER = 10240
 BUFFER_IMG = 4096
 
 
