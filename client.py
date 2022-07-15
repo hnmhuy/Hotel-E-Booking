@@ -210,9 +210,9 @@ try:
 
             for i in range(number_of_results):
                 data = client.recv(BUFFER)
-                client.send(ack.encode())
                 hotel_room = pickle.loads(data)
                 search_result.append(hotel_room)
+                client.send(ack.encode())
 
             feature.display_search_results(info, search_result)
 

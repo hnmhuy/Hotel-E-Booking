@@ -8,7 +8,9 @@
             "credit_card": "1234123412341234",
             "cvv": "666",
             "expiration_date": "09/2022",
-            "bill": []
+            "bill": [
+                "BH0_9"
+            ]
         },
         {
             "fullname": "Minh Huy",
@@ -48,7 +50,9 @@
             "credit_card": "1234567890123456",
             "cvv": "4423",
             "expiration_date": "12/2027",
-            "bill": []
+            "bill": [
+                "BH1_6"
+            ]
         },
         {
             "fullname": "Tong Gia Huy",
@@ -59,6 +63,19 @@
             "cvv": "333",
             "expiration_date": "03/2024",
             "bill": []
+        },
+        {
+            "fullname": "Nguyen Khanh Anh Kiet",
+            "birthday": "05/09/2003",
+            "username": "Anhkiet05092003@",
+            "password": "Anhkeit05092003@",
+            "credit_card": "1111222233334444",
+            "cvv": "1234",
+            "expiration_date": "05/2025",
+            "bill": [
+                "BH1_7",
+                "BH1_8"
+            ]
         }
     ]
 }
