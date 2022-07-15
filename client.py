@@ -6,6 +6,7 @@ import pickle
 import time
 import math
 import feature
+import os
 
 HOST = "26.165.5.75"
 # HOST = "26.165.5.75"
@@ -229,6 +230,10 @@ try:
             client.send(confirm_send.encode(FORMAT))
 
             if confirm_send == "1":
+                if not os.path.exists("Client_Downloads"):
+                    os.mkdir("Client_Downloads")
+                    print("Directory Client_Downloads Created ")
+
                 downloaded_images = []
 
                 for each_room in search_result:
